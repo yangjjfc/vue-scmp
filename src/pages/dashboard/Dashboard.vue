@@ -19,8 +19,8 @@
 		</el-col>
 		<el-col :span="24" class="main">
 			<aside :class="collapsed?'menu-collapsed':'menu-expanded'" class="sidebar el-menu--dark">
-				<el-scrollbar tag="div" class="scrollbar-box">
-					<el-menu :default-active="$route.path" class="el-menu-vertical-demo" :default-openeds="opens" unique-opened router v-show="!collapsed" theme="dark">
+				<el-scrollbar tag="div" class="scrollbar-box" v-show="!collapsed">
+					<el-menu :default-active="$route.path" class="el-menu-vertical-demo"  unique-opened router  theme="dark">
 						<template v-for="(item,index) in menuList" v-if="!item.hidden">
 							<el-submenu :index="index+''" v-if="item.son&&item.son.length>0" :key="index">
 								<template slot="title">
@@ -33,6 +33,7 @@
 							</el-menu-item>
 						</template>
 					</el-menu>
+				</el-scrollbar>
 					<!--导航菜单-折叠后-->
 					<ul class="el-menu--dark el-menu-vertical-demo collapsed" v-show="collapsed" ref="menuCollapsed">
 						<li v-for="(item,index) in menuList" v-if="!item.hidden" class="el-submenu item">
@@ -53,7 +54,7 @@
 							</template>
 						</li>
 					</ul>
-				</el-scrollbar>
+			
 				<!--导航菜单-->
 				<div class="tools" @click.prevent="collapse">
 					<i :class="collapsed?'el-icon-d-arrow-right':'el-icon-d-arrow-left'"></i>
@@ -92,8 +93,7 @@ export default {
             collapsed: false, // 是否缩进
             sysUserName: '', // 客户名称
             menuList: '', // 菜单
-            sysUserAvatar: '',
-            opens: []
+            sysUserAvatar: ''
         };
     },
     methods: {
@@ -144,7 +144,6 @@ export default {
 		//     let $height = document.body.clientHeight || document.documentElement.clientHeight;
 		//     this.HEIGHTRESIZE($height);
 		// })();
-        this.opens = ['2'];
     },
     created () {
 		// 判断用户是否登录
