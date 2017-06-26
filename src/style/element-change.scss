@@ -1,0 +1,9 @@
+.staff-add-user{
+    width:600px;
+    .el-form-item {
+    margin-bottom: 3px;
+        .el-form-item__error{
+            position: relative;
+        }
+    }
+}
