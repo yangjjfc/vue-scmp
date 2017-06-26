@@ -107,7 +107,7 @@ export default {
             });
             if (!xflag) {
                 this.userLogin(param).then(msg => {
-                    this.$router.push({ name: 'charts' });
+                    this.$router.push({ name: 'index' });
                 }, err => {
                     // 记录错误信息
                     this.errorMsg = err.message;

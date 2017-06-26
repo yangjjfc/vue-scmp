@@ -1,5 +1,5 @@
 const dashboard = r => require.ensure([], () => r(require('../pages/dashboard/Dashboard')), 'dashboard');
-const charts = r => require.ensure([], () => r(require('../pages/echarts/echarts')), 'charts');
+const index = r => require.ensure([], () => r(require('../pages/index/index')), 'index');
 import Auth from '../pages/auth/Auth';
 export default [
     {
@@ -14,7 +14,7 @@ export default [
         name: 'dashboard',
         component: dashboard,
         children: [
-            { path: '/index', component: charts, name: 'charts' }
+            { path: '/index', component: index, name: 'index' }
         ]
     }
 ];
