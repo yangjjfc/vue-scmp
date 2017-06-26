@@ -20,41 +20,41 @@
 		<el-col :span="24" class="main">
 			<aside :class="collapsed?'menu-collapsed':'menu-expanded'" class="sidebar el-menu--dark">
 				<el-scrollbar tag="div" class="scrollbar-box" v-show="!collapsed">
-					<el-menu :default-active="$route.path" class="el-menu-vertical-demo"  unique-opened router  theme="dark">
+					<el-menu :default-active="$route.path" class="el-menu-vertical-demo" unique-opened router theme="dark">
 						<template v-for="(item,index) in menuList" v-if="!item.hidden">
 							<el-submenu :index="index+''" v-if="item.son&&item.son.length>0" :key="index">
 								<template slot="title">
-									<i :class="item.icon"></i>{{item.name}}
+									<i  :class="[font,item.icon]"></i>{{item.name}}
 								</template>
 								<el-menu-item v-for="child in item.son" :index="child.state" :key="child.state" v-if="!child.hidden">{{child.name}}</el-menu-item>
 							</el-submenu>
 							<el-menu-item v-if="!item.son" :index="item.state">
-								<i :class="item.icon"></i>{{item.name}}
+								<i :class="[font,item.icon]"></i>{{item.name}}
 							</el-menu-item>
 						</template>
 					</el-menu>
 				</el-scrollbar>
-					<!--导航菜单-折叠后-->
-					<ul class="el-menu--dark el-menu-vertical-demo collapsed" v-show="collapsed" ref="menuCollapsed">
-						<li v-for="(item,index) in menuList" v-if="!item.hidden" class="el-submenu item">
-							<template v-if="item.son&&item.son.length>0">
-								<div class="el-submenu__title" style="padding-left: 20px;" @mouseover="showMenu(index,true)" @mouseout="showMenu(index,false)">
-									<i :class="item.icon"></i>
+				<!--导航菜单-折叠后-->
+				<ul class="el-menu--dark el-menu-vertical-demo collapsed" v-show="collapsed" ref="menuCollapsed">
+					<li v-for="(item,index) in menuList" v-if="!item.hidden" class="el-submenu item">
+						<template v-if="item.son&&item.son.length>0">
+							<div class="el-submenu__title" style="padding-left: 20px;" @mouseover="showMenu(index,true)" @mouseout="showMenu(index,false)">
+								<i :class="[font,item.icon]"></i>
+							</div>
+							<ul class="el-menu submenu" :class="'submenu-hook-'+index" @mouseover="showMenu(index,true)" @mouseout="showMenu(index,false)">
+								<li v-for="child in item.son" v-if="!child.hidden" :key="child.state" class="el-menu-item" style="padding-left: 40px;" :class="$route.path==child.state?'is-active':''" @click="$router.push(child.state)">{{child.name}}</li>
+							</ul>
+						</template>
+						<template v-else>
+							<li class="el-submenu">
+								<div class="el-submenu__title el-menu-item" style="padding-left: 20px;height: 56px;line-height: 56px;padding: 0 20px;" :class="$route.path==item.state?'is-active':''" @click="$router.push(item.state)">
+									<i :class="[font,item.icon]"></i>
 								</div>
-								<ul class="el-menu submenu" :class="'submenu-hook-'+index" @mouseover="showMenu(index,true)" @mouseout="showMenu(index,false)">
-									<li v-for="child in item.son" v-if="!child.hidden" :key="child.state" class="el-menu-item" style="padding-left: 40px;" :class="$route.path==child.state?'is-active':''" @click="$router.push(child.state)">{{child.name}}</li>
-								</ul>
-							</template>
-							<template v-else>
-								<li class="el-submenu">
-									<div class="el-submenu__title el-menu-item" style="padding-left: 20px;height: 56px;line-height: 56px;padding: 0 20px;" :class="$route.path==item.state?'is-active':''" @click="$router.push(item.state)">
-										<i :class="item.icon"></i>
-									</div>
-								</li>
-							</template>
-						</li>
-					</ul>
-			
+							</li>
+						</template>
+					</li>
+				</ul>
+	
 				<!--导航菜单-->
 				<div class="tools" @click.prevent="collapse">
 					<i :class="collapsed?'el-icon-d-arrow-right':'el-icon-d-arrow-left'"></i>
@@ -62,14 +62,9 @@
 			</aside>
 			<section class="content-container">
 				<div class="grid-content bg-purple-light">
-					<!--<el-col :span="24" class="breadcrumb-container">
-												<strong class="title">{{$route.name}}</strong>
-												<el-breadcrumb separator="/" class="breadcrumb-inner">
-													<el-breadcrumb-item v-for="item in $route.matched" :key="item.path">
-														{{ item.name }}
-													</el-breadcrumb-item>
-												</el-breadcrumb>
-											</el-col>-->
+					<el-col :span="24" class="breadcrumb-container">
+						<i class="iconfont icon-index"></i><span>首页</span>
+					</el-col>     
 					<el-col :span="24" class="content-wrapper">
 						<transition name="fade" mode="out-in">
 							<router-view></router-view>
@@ -84,7 +79,7 @@
 <script>
 import createMenu from '@/config/menu.js';
 import SweetAlert from '@/services/sweetalert';
-import {mapState, mapMutations, mapActions} from 'vuex';
+import { mapState, mapMutations, mapActions } from 'vuex';
 // import CONFIG from '@/config/app.config';
 export default {
     data () {
@@ -93,7 +88,8 @@ export default {
             collapsed: false, // 是否缩进
             sysUserName: '', // 客户名称
             menuList: '', // 菜单
-            sysUserAvatar: ''
+            sysUserAvatar: '',
+            font: 'sidebar-iconfont iconfont'
         };
     },
     methods: {
@@ -266,6 +262,22 @@ $topColor: #20a0ff;
 		overflow: hidden;
 
 		aside {
+			.sidebar-iconfont{
+				vertical-align: baseline;
+				margin-right: 10px;
+				speak: none;
+				font-style: normal;
+				font-weight: 400;
+				font-variant: normal;
+				text-transform: none;
+				line-height: 1;
+				vertical-align: baseline;
+				display: inline-block;
+				-webkit-font-smoothing: antialiased;
+				position:relative;
+				font-size: 21px;
+				top:2px;
+			}
 			.scrollbar-box {
 				height: 100%;
 				.el-scrollbar__wrap {
@@ -361,26 +373,32 @@ $topColor: #20a0ff;
 
 			overflow-y: scroll;
 
-			padding: 20px;
+			padding:0 0 20px ;
+			
 
 			.breadcrumb-container {
-
-				.title {
-
-					width: 130px;
-
-					float: left;
-
-					color: #475669;
+				font-size: 14px;
+				font-weight: bold;
+				color: #666;
+				height:50px;
+				background: #fff;
+				line-height: 50px;
+				margin-bottom: 10px;
+				border-bottom: 1px solid #ccc;
+				i{
+					padding-left: 20px;
+					font-size:20px;
+					color:#999;
+					line-height: 50px;
 				}
-
-				.breadcrumb-inner {
-
-					float: right;
+				span{
+					position:relative;
+					top:-2px;
+					left: 5px;
 				}
 			}
-
 			.content-wrapper {
+				padding:0 20px;
 
 				background-color: #fff;
 

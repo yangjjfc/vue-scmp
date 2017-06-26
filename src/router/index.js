@@ -14,7 +14,7 @@ export default [
         name: 'dashboard',
         component: dashboard,
         children: [
-            { path: '/charts', component: charts, name: 'charts' }
+            { path: '/index', component: charts, name: 'charts' }
         ]
     }
 ];

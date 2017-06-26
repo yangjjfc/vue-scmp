@@ -3,28 +3,28 @@ const createMenu = () => {
     let roles = state.roles;
     let MENU = [{
         name: '首页',
-        icon: 'el-icon-message',
+        icon: 'icon-index',
         state: '/index',
         hidden: roles.indexOf('platform:index') === -1
     }, {
         name: '供应商管理',
-        icon: 'el-icon-menu',
+        icon: 'icon-qiye',
         state: '/index',
         hidden: roles.indexOf('platform:supplier') === -1
     }, {
         name: '客户管理',
-        icon: 'el-icon-menu',
+        icon: 'icon-iconfontyiyuan',
         state: '/index',
         hidden: roles.indexOf('platform:hospital') === -1
 
     }, {
         name: '产品管理',
-        icon: 'el-icon-menu',
+        icon: 'icon-chanpin1',
         state: '/product',
         hidden: roles.indexOf('platform:product') === -1
     }, {
         name: '证件管理',
-        icon: 'el-icon-menu',
+        icon: 'icon-zhengjian',
         hidden: roles.indexOf('platform:certificate') === -1,
         son: [
             {
@@ -65,27 +65,27 @@ const createMenu = () => {
         ]
     }, {
         name: '订单管理',
-        icon: 'el-icon-menu',
+        icon: 'icon-weifenxiaopcjiemianzhuanhuan',
         state: '/index',
         hidden: roles.indexOf('platform:order') === -1
     }, {
-        name: '配送订单',
-        icon: 'el-icon-menu',
+        name: '配送管理',
+        icon: 'icon-peisong',
         state: '/logistic',
         hidden: roles.indexOf('platform:logistic') === -1
     }, {
         name: '退货管理',
-        icon: 'el-icon-menu',
+        icon: 'icon-ccgl-tuihuoyugao-4',
         state: '/index',
         hidden: roles.indexOf('platform:return') === -1
     }, {
         name: '用户管理',
-        icon: 'el-icon-menu',
+        icon: 'icon-yonghuguanli',
         hidden: roles.indexOf('platform:user') === -1,
         state: '/stock'
     }, {
         name: '统计分析',
-        icon: 'el-icon-menu',
+        icon: 'icon-statistics',
         state: '/index',
         hidden: roles.indexOf('platform:chart') === -1,
         son: [
