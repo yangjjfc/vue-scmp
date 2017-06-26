@@ -24,7 +24,7 @@
 						<template v-for="(item,index) in menuList" v-if="!item.hidden">
 							<el-submenu :index="index+''" v-if="item.son&&item.son.length>0" :key="index">
 								<template slot="title">
-									<i  :class="[font,item.icon]"></i>{{item.name}}
+									<i :class="[font,item.icon]"></i>{{item.name}}
 								</template>
 								<el-menu-item v-for="child in item.son" :index="child.state" :key="child.state" v-if="!child.hidden">{{child.name}}</el-menu-item>
 							</el-submenu>
@@ -63,8 +63,9 @@
 			<section class="content-container">
 				<div class="grid-content bg-purple-light">
 					<el-col :span="24" class="breadcrumb-container">
-						<i class="iconfont icon-index"></i><span>首页</span>
-					</el-col>     
+						<i class="iconfont icon-index"></i>
+						<span>首页</span>
+					</el-col>
 					<el-col :span="24" class="content-wrapper">
 						<transition name="fade" mode="out-in">
 							<router-view></router-view>
@@ -166,103 +167,59 @@ export default {
  
 <style  lang="scss">
 $menuWidth: 180px;
-
 $menuHeight: 50px;
-
 $topColor: #20a0ff;
-
 .container {
-
 	position: absolute;
-
 	top: 0px;
-
 	bottom: 0px;
-
 	width: 100%;
-
 	.header {
-
 		height: $menuHeight;
-
 		line-height: $menuHeight;
-
 		background: $topColor;
-
 		color: #fff;
-
 		.userinfo {
-
 			text-align: right;
-
 			padding-right: 35px;
-
 			float: right;
-
 			.userinfo-inner {
-
 				cursor: pointer;
-
 				color: #fff;
-
 				img {
-
 					width: 30px;
-
 					height: 30px;
-
-					border-radius: 20px;
-
+					border-radius: 20px;   
 					margin: 10px 0px 10px 10px;
-
 					float: right;
 				}
 			}
 		}
-
 		.logo {
-
 			//width:230px;
 			height: $menuHeight;
-
 			font-size: 22px;
-
 			padding-left: 20px;
-
 			padding-right: 20px;
-
 			width: $menuWidth;
-
 			img {
-
 				width: 30px;
-
 				float: left;
-
 				margin: 10px 10px 10px 18px;
 			}
-
 			.txt {
-
 				color: #fff;
 			}
 		}
 	}
-
 	.main {
-
 		display: flex;
-
 		position: absolute;
-
 		top: $menuHeight;
-
 		bottom: 0px;
-
 		overflow: hidden;
-
 		aside {
-			.sidebar-iconfont{
+			.sidebar-iconfont {
 				vertical-align: baseline;
 				margin-right: 10px;
 				speak: none;
@@ -274,9 +231,9 @@ $topColor: #20a0ff;
 				vertical-align: baseline;
 				display: inline-block;
 				-webkit-font-smoothing: antialiased;
-				position:relative;
+				position: relative;
 				font-size: 21px;
-				top:2px;
+				top: 2px;
 			}
 			.scrollbar-box {
 				height: 100%;
@@ -288,120 +245,77 @@ $topColor: #20a0ff;
 				}
 			}
 			position: relative;
-
 			flex: 0 0 $menuWidth;
-
 			width: $menuWidth;
-
 			.el-menu {
-
 				height: 100%;
 			}
-
 			.collapsed {
-
 				width: 60px;
-
 				.item {
-
 					position: relative;
 				}
-
 				.submenu {
-
 					position: absolute;
-
 					top: 0px;
-
 					left: 60px;
-
 					z-index: 99999;
-
 					height: auto;
-
 					display: none;
 				}
 			}
-
 			.tools {
-
 				position: absolute;
-
 				top: 46%;
-
 				height: 87px;
-
 				width: 14px; //background:rgba(49,49,49,0.6);
 				border-radius: 2px;
-
 				right: -14px;
-
 				cursor: pointer;
-
 				i {
-
 					font-size: 14px;
-
 					line-height: 87px;
-
 					text-align: center;
-
 					color: $topColor;
 				}
 			}
 		}
-
 		.menu-collapsed {
-
 			flex: 0 0 60px;
-
 			width: 60px;
-
 			background: #324157;
 		}
-
 		.menu-expanded {
-
 			flex: 0 0 $menuWidth;
-
 			width: $menuWidth;
 		}
-
 		.content-container {
-
 			flex: 1;
-
 			overflow-y: scroll;
-
-			padding:0 0 20px ;
-			
-
+			padding: 0 0 20px 0;
 			.breadcrumb-container {
 				font-size: 14px;
 				font-weight: bold;
 				color: #666;
-				height:50px;
+				height: 50px;
 				background: #fff;
 				line-height: 50px;
 				margin-bottom: 10px;
 				border-bottom: 1px solid #ccc;
-				i{
+				i {
 					padding-left: 20px;
-					font-size:20px;
-					color:#999;
+					font-size: 20px;
+					color: #999;
 					line-height: 50px;
 				}
-				span{
-					position:relative;
-					top:-2px;
+				span {
+					position: relative;
+					top: -2px;
 					left: 5px;
 				}
 			}
 			.content-wrapper {
-				padding:0 20px;
-
-				background-color: #fff;
-
+				padding: 0 20px;
 				box-sizing: border-box;
 			}
 		}

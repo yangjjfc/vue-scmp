@@ -1,29 +1,10 @@
 <template>
-    <section>
+    <section class="container2">
     
-        <el-row class="chart-container">
+        <el-row >
     
-            <el-tabs type="border-card" @tab-click.once="openCahrt">
     
-                <el-tab-pane label="销售趋势">
-    
-                    <el-col :span="24">
-    
-                        <div class="charts_top" ref="charts_sell"></div>
-    
-                    </el-col>
-    
-                </el-tab-pane>
-    
-                <el-tab-pane label="订单趋势">
-    
-                    <el-col :span="24">
-    
-                        <div class="charts_top" ref="charts_order"></div>
-    
-                    </el-col>
-    
-                </el-tab-pane>
+              
     
                 <el-col :span="8">
                     <el-card class="box-card c_border">
@@ -59,7 +40,6 @@
                     </el-card>
     
                 </el-col>
-            </el-tabs>
         </el-row>
     </section>
 </template>
@@ -333,10 +313,11 @@ $charts_top:500px;
 
 $charts_bottom:440px;
 
-.chart-container {
-
+.container2 {
+    background: #fff;
+    border: 1px solid #d1dbe5;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,.12),0 0 6px 0 rgba(0,0,0,.04);
     width: 100%;
-
     .charts_top {
 
         width: 100%;
