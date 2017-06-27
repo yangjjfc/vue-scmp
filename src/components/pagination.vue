@@ -7,7 +7,8 @@ export default {
     name: 'pagination',
     data () {
         return {
-            size: this.pageSize
+            size: this.pageSize,
+            index: ''
         };
     },
   // 需要传的参数
@@ -27,7 +28,12 @@ export default {
     methods: {
         // 改变页码
         changePage (page) {
-            this.$emit('change', page, this.size);
+            if (this.index === page) {
+                return;
+            } else {
+                this.index = page;
+                this.$emit('change', page, this.size);
+            }
         },
         // 改变总条数
         changeSize (size) {

@@ -9,7 +9,7 @@ const createMenu = () => {
     }, {
         name: '供应商管理',
         icon: 'icon-qiye',
-        state: '/index',
+        state: '/supplier',
         hidden: roles.indexOf('platform:supplier') === -1
     }, {
         name: '客户管理',
