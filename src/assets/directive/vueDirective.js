@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import $ from 'jquery';
-import '../assets/js/boxer/jquery.fs.boxer.js';
-import '../assets/js/boxer/jquery.fs.boxer.css';
+import '../js/boxer/jquery.fs.boxer.js';
+import '../js/boxer/jquery.fs.boxer.css';
 // 时间插件
 Vue.directive('datetimepicker', {
     twoWay: true,

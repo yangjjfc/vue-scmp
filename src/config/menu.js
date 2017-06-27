@@ -76,7 +76,7 @@ const createMenu = () => {
     }, {
         name: '退货管理',
         icon: 'icon-ccgl-tuihuoyugao-4',
-        state: '/index',
+        state: '/return',
         hidden: roles.indexOf('platform:return') === -1
     }, {
         name: '用户管理',

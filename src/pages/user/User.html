@@ -1,4 +1,4 @@
-<section>
+<section class="container_setion">
     <!--工具条-->
     <el-row>
         <el-col :span="24" class="toolbar">
@@ -56,5 +56,8 @@
         <el-col :span="24" v-if="showaddUser">
             <addUser  :showx.sync="showaddUser" :title="addTitle" :type="addType" :eidtUser="userMsg" @refresh="getList"></addUser>
         </el-col> 
+        <el-col :span="24" v-if="showPermission">
+                <permission :showx.sync="showPermission" :useMsg="userMsg" ></permission>
+            </el-col>
     </el-row>
 </section>

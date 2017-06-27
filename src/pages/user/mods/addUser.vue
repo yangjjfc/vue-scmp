@@ -1,7 +1,7 @@
 //添加客户
 <template>
-    <section>
-        <dailog size="small" :show.sync="myshow" classx="staff-add-user"  :title="title" @ok="quire">
+    <section >
+        <dailog size="tiny" :show.sync="myshow" classx="staff-add-user"  :title="title" @ok="quire">
             <el-form slot="content" :rules="rules" ref="forms" label-width="100px" class="demo-dynamic" :model="msgx">
                 <el-form-item label="登录账号" prop="loginAccount" >
                    <el-input placeholder="登录账号"  v-model="msgx.loginAccount" size="small" :disabled="this.type=='edit'"></el-input>
@@ -40,17 +40,16 @@
 <script>
 'use strict';
 const URL = {
-    ADD: 'data/ypt.open.user.createUserForWeb', // 添加
-    CHECK: 'data/ypt.open.user.isExistUserByLoginAccountForWeb', // 检查用户名是否存在
-    ISEXIST: 'data/ypt.open.user.isExistMobileForWeb', // 判断手机号是否存在
+    ADD: 'ypt.open.user.createUserForWeb', // 添加
+    CHECK: 'ypt.open.user.isExistUserByLoginAccountForWeb', // 检查用户名是否存在
+    ISEXIST: 'ypt.open.user.isExistMobileForWeb', // 判断手机号是否存在
     STAFFINFO: 'ypt.open.user.findUserByNoForWeb', // 获取员工信息
     EDIT: 'scm.enterprise.modifyUser' // 编辑员工
 };
 import dailog from '@/components/Dailog';
 import fileUpload from '@/components/FileUpload';
 import { mapGetters } from 'vuex';
-import {encryption, Validate} from '@/components/global.common';
-import addUser from './mods/addUser';  // 添加客户
+import {encryption, Validate} from '@/services/global.common';
 export default {
     name: 'staff-addUser',
     props: {
@@ -230,6 +229,9 @@ export default {
 </script>
 
 <style scoped lang="scss" rel="stylesheet/scss">
+.el-form-item__error {
+    position: inherit;
+}
 .demo-dynamic{
     width: 80%
 }

@@ -73,7 +73,6 @@ export default {
 </script>
 
 <style  lang="scss" rel="stylesheet/scss">
- @import '../assets/style/element-change';
   .el-dialog{
       min-width: 560px;
   } 

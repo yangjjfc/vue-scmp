@@ -1,6 +1,8 @@
 <template src="./User.html"></template>
 <script>
     import pagination from '@/components/pagination';
+    import addUser from './mods/addUser';
+    import permission from './mods/permission';  // 添加用户权限
     const URL = {
         LIST: ' scm.enterprise.queryStaffList', // 查询员工列表
         ADD: ' ypt.open.user.createUserForWeb', // 添加
@@ -22,6 +24,11 @@
                 search: {
                     keywords: ''
                 },
+                addTitle: null,
+                showaddUser: false, // 显示添加用户
+                addType: false, // 添加用户类型
+                userMsg: null, // 数据
+                showPermission: false, // 显示权限配置
                 total: 0,
                 pageSize: 20,
                 pageIndex: 1,
@@ -48,9 +55,49 @@
                         });
                     });
             },
+            // 编辑用户
+            editUser (msg) {
+                this.addTitle = '编辑员工资料';
+                this.addType = 'edit';
+                this.userMsg = {...msg};
+                this.showaddUser = true;
+            },
             // 新增用户
             add () {
-
+                this.addTitle = '添加用户';
+                this.addType = 'add';
+                this.showaddUser = true;
+            },
+             // 启用,禁用,删除
+            enabled (msg, type) {
+                this.$confirm('您确定要' + (type === '1' ? '启用' : type === '2' ? '禁用' : type === '3' ? '删除' : '') + '用户【' + msg.userName + '】吗?', '员工状态更新', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    this.Http.post(URL.ENABLE, {
+                        params: {
+                            status: type,
+                            userNo: msg.userNo
+                        }
+                    }).then((re) => {
+                        if (re.data) {
+                            this.getList();
+                            if (type === '3') {
+                                this.$notify({
+                                    title: '成功',
+                                    message: '删除成功',
+                                    type: 'success'
+                                });
+                            }
+                        }
+                    });
+                }).catch(function () {});
+            },
+             // 配置权限
+            permission (msg) {
+                this.userMsg = {...msg};
+                this.showPermission = true;
             },
             // 重置
             reset () {
@@ -66,6 +113,8 @@
             this.getList();
         },
         components: {
+            addUser,
+            permission,
             pagination
         }
     };

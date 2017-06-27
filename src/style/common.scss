@@ -217,3 +217,26 @@ td{
     font-size:12px;
 }
 //,.el-form-item__label,.el-form-item__content
+
+ $gray: #dfe6ec;
+.ui-table{
+    width: 100%;
+    margin-bottom:10px;
+    th,td{
+        line-height: 21px;
+        vertical-align: middle;
+    }
+    tr:first-child td{
+        border-top:1px solid $gray;
+    }
+    td{
+        padding: 8px 10px;
+        border-bottom: 1px solid #eee;
+        max-width: 220px;
+        border-right: 1px solid $gray;
+        word-break: break-all;
+        &:first-child {
+            border-left: 1px solid $gray;
+        }
+    }
+}
