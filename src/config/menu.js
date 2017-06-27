@@ -82,20 +82,20 @@ const createMenu = () => {
         name: '用户管理',
         icon: 'icon-yonghuguanli',
         hidden: roles.indexOf('platform:user') === -1,
-        state: '/stock'
+        state: '/user'
     }, {
         name: '统计分析',
         icon: 'icon-statistics',
-        state: '/index',
+        // state: '/index',
         hidden: roles.indexOf('platform:chart') === -1,
         son: [
             {
                 name: '供应商销售',
-                state: '/chart'
+                state: '/supplierChart'
             },
             {
                 name: '客户采购',
-                state: '/chart'
+                state: '/hospitalChart'
             }
         ]
     }];
