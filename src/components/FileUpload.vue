@@ -19,8 +19,8 @@
 </template>
 <script>
 import $ from 'jquery';
-import '../directive/vueDirective.js'; // jq boxer指令
-import { changeImgSize, getFileType } from './global.common'; // 文件格式
+import '../assets/directive/vueDirective.js'; // jq boxer指令
+import { changeImgSize, getFileType } from '@/services/global.common'; // 文件格式
 import { mapGetters } from 'vuex';
 import CONFIG from '../config/app.config'; // 配置
 import pdf from '@/assets/images/pdf.png'; // daf
@@ -191,6 +191,9 @@ export default {
 
 <style lang="scss"  rel="stylesheet/scss">
 $width:100px;
+.el-form-item__content {
+    line-height: 1;
+}
 .el-upload--picture-card {
     background-color: #fbfdff;
     border: 1px dashed #c0ccda;
