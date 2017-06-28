@@ -73,13 +73,32 @@
                             <td class="table_name">登录账号</td>
                             <td>{{msgx.loginAccount}}</td>
                         </tr>
-                        <tr>
+                        <tr v-if="detailUser.type=='detail'">
                             <td class="table_name">审核状态</td>
                             <td v-html="msgx.auditStatusx"></td>
                         </tr>
-                        <tr>
+                        <tr v-if="detailUser.type=='detail'">
                             <td class="table_name">审核意见</td>
                             <td>{{msgx.remark}}</td>
+                        </tr>
+                        <tr v-if="detailUser.type=='audit'">
+                            <td class="table_name">审核结果</td>
+                            <td>
+                                <el-radio-group v-model="forms.radios">
+                                    <el-radio :label="1" >审核通过</el-radio>
+                                    <el-radio :label="2" >审核不通过</el-radio>
+                                </el-radio-group>
+                            </td>
+                        </tr>
+                        <tr v-if="detailUser.type=='audit'">
+                            <td class="table_name">审核备注</td>
+                            <td>
+                                <el-form :rules="rules" ref="forms"  :model="forms" >
+                                     <el-form-item  prop="resource">
+                                        <el-input type="textarea" v-model="forms.resource"></el-input>
+                                    </el-form-item>
+                                </el-form>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -109,7 +128,7 @@ export default {
             require: true
         },
         detailUser: { // 用户数据
-            type: String,
+            type: Object,
             require: true
         },
         title: { // 标题
@@ -120,7 +139,17 @@ export default {
     data () {
         return {
             myshow: false, // 是否显示弹框
-            msgx: {}
+            msgx: {},
+            forms: {
+                radios: 1,
+                resource: ''  
+            },
+            rules: {
+                resource: [
+                    { required: true, message: '审核不通过时,审核备注不能为空', trigger: 'change' },
+                    { pattern: /^\.{0,200}$/, message: '审核备注长度不能大于200个字符', trigger: 'change' }
+                ]
+            }  
         };
     },
     computed: {
@@ -128,7 +157,7 @@ export default {
     },
     methods: {
         quire () {
-
+           
         },
         auditStatus (item) {
             let _html = '';
@@ -151,7 +180,7 @@ export default {
         // 获取数据
         async getData () {
             await this.Http.post(URL.DETAIL, {
-                enterpriseNo: this.detailUser
+                enterpriseNo: this.detailUser.no
             }).then((re) => {
                 // 格式化logo
                 if (re.data.logo) {
@@ -160,7 +189,6 @@ export default {
                     re.data.logo = noimg; 
                 }
                 re.data.auditStatusx = this.auditStatus(re.data.auditStatus);
-                console.log(re.data.auditStatusx);
                 re.data.enterpriseCerts = re.data.enterpriseCerts.map(item => {
                     // 图片
                     if (item.fileUrl) {
@@ -208,7 +236,6 @@ export default {
     margin-right: 10px;
     float: left;
 }
-
 .enterprise_name {
     float: left;
     line-height: 40px;
@@ -219,4 +246,5 @@ export default {
     border-bottom:1px dashed #ddd;
     margin-bottom:10px;
 }
+
 </style>

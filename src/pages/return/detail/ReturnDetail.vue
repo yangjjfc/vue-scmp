@@ -122,7 +122,7 @@
                         this.list = re.data.rows.map((item, index) => {
                             item.index = index + 1 + (this.pageIndex - 1) * this.pageSize;
                             item.price = parseMone(item.price);
-                            item.total = parseMone(parseFloat(n.price) * parseFloat(n.rnum) || 0);
+                            item.total = parseMone(parseFloat(item.price) * parseFloat(item.rnum) || 0);
                             return item;
                         });
                     });

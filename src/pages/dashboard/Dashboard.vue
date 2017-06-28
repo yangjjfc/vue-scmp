@@ -222,7 +222,6 @@ $topColor: #20a0ff;
 			.sidebar-iconfont {
 				vertical-align: baseline;
 				margin-right: 10px;
-				speak: none;
 				font-style: normal;
 				font-weight: 400;
 				font-variant: normal;

@@ -56,11 +56,11 @@
                     </el-table-column>
                     <el-table-column label="操作"  width="300">
                         <template scope="scope">
-                            <el-button size="mini" type="primary"  @click="detailSuppiler(scope.row.supplierNo)">详情</el-button>
+                            <el-button size="mini" type="primary"  @click="detailSuppiler(scope.row.supplierNo,'detail')">详情</el-button>
+                            <el-button size="mini" type="warning"  @click="detailSuppiler(scope.row.supplierNo,'audit')" v-if="scope.row.status =='2'">审核</el-button>
                             <el-button size="mini" type="primary"  >日志</el-button>
                             <el-button size="mini" type="info"  >时间设置</el-button>
                             <el-button size="mini" type="warning"  v-if="scope.row.erp =='0' && scope.row.erp ==3">开通erp</el-button>
-                            <el-button size="mini" type="warning"  v-if="scope.row.status =='2'">审核</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -86,7 +86,7 @@ export default {
     data () {
         return {
             showDetail: false, // 显示详情/审核
-            detailUser: '', // 显示详情/审核 no
+            detailUser: {}, // 显示详情/审核 no
             detailTitle: '', // 显示详情/审核 no
             total: 0,
             pageSize: 20,
@@ -186,9 +186,10 @@ export default {
             this.getList();
         },
         // 详情
-        detailSuppiler (no) {
+        detailSuppiler (no, type) {
             this.detailTitle = '企业详情';
-            this.detailUser = no;
+            this.detailUser.no = no;
+            this.detailUser.type = type;
             this.showDetail = true;
         }
 
