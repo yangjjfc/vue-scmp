@@ -12,9 +12,9 @@
                     </el-form-item>
                 </el-form>
             </el-col>
-            <el-col :span="24">
+            <el-col :span="24" class="ui-table">
                 <h3>供应商信息</h3>
-                <table class="ui-table" width="100%" cellspacing="0" cellpadding="0">
+                <table  >
                     <tr>
                         <td>供应商: <span v-text="order.supplierName"></span></td>
                         <td>联系人: <span v-text="order.linkman"></span></td>
@@ -22,9 +22,9 @@
                     </tr>
                 </table>
             </el-col>
-            <el-col :span="24">
+            <el-col :span="24" class="ui-table">
                 <h3>退货信息</h3>
-                <table class="ui-table" width="100%" cellspacing="0" cellpadding="0">
+                <table >
                     <tr>
                         <td>客户名称: <span v-text="order.purchaser"></span></td>
                         <td>退货时间: <span v-text="order.orderTime"></span></td>
