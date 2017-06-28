@@ -58,8 +58,8 @@
                         <template scope="scope">
                             <el-button size="mini" type="primary"  @click="detailSuppiler(scope.row.supplierNo,'detail')">详情</el-button>
                             <el-button size="mini" type="warning"  @click="detailSuppiler(scope.row.supplierNo,'audit')" v-if="scope.row.status =='2'">审核</el-button>
-                            <el-button size="mini" type="primary"  >日志</el-button>
-                            <el-button size="mini" type="info"  >时间设置</el-button>
+                            <el-button size="mini" type="primary"  @click="detailLog(scope.row.supplierNo)" >日志</el-button>
+                            <el-button size="mini" type="info"  @click="setTime(scope.row.supplierNo)" >时间设置</el-button>
                             <el-button size="mini" type="warning"  v-if="scope.row.erp =='0' && scope.row.erp ==3">开通erp</el-button>
                         </template>
                     </el-table-column>
@@ -69,14 +69,22 @@
                 <pagination :total="total" :pageSize="pageSize" :pageIndex="pageIndex" @change="getList"></pagination>
             </el-col>
             <el-col :span="24" v-if="showDetail">
-                <detail :showx.sync="showDetail" :detailUser="detailUser" :title="detailTitle"  @refresh="getList"></detail>
+                <detail :showx.sync="showDetail" :detailUser="msgx" :title="detailTitle"  @refresh="getList"></detail>
             </el-col>  
+             <el-col :span="24" v-if="showLog">
+                <log :showx.sync="showLog" :logmsg="msgx" ></log>
+            </el-col> 
+            <el-col :span="24" v-if="showTime">
+                <cert-time-set :showx.sync="showTime" :transMsg="msgx" ></cert-time-set>
+            </el-col>   
         </el-row>
     </section>
 </template>
 <script>
 import pagination from '@/components/pagination';
 import detail from './mods/detail';
+import log from './mods/log';
+import certTimeSet from './mods/certTimeSet';
 const URL = {
     LIST: 'scm.platformSupplier.pageSupplier', // 分页列表
     DETAIL: 'scm.platformSupplier.findEnterprise' // 详情-
@@ -86,8 +94,10 @@ export default {
     data () {
         return {
             showDetail: false, // 显示详情/审核
-            detailUser: {}, // 显示详情/审核 no
-            detailTitle: '', // 显示详情/审核 no
+            msgx: {}, // 弹框数据
+            detailTitle: '', // 显示详情/审核标题 no
+            showLog: false, // 显示日志
+            showTime: false, // 显示设置时间
             total: 0,
             pageSize: 20,
             pageIndex: 1,
@@ -187,10 +197,20 @@ export default {
         },
         // 详情
         detailSuppiler (no, type) {
-            this.detailTitle = '企业详情';
-            this.detailUser.no = no;
-            this.detailUser.type = type;
+            this.detailTitle = (type === 'detail' ? '企业详情' : '审核'); 
+            this.msgx.no = no;
+            this.msgx.type = type;
             this.showDetail = true;
+        },
+        // 日志
+        detailLog (no) {
+            this.msgx.no = no;
+            this.showLog = true;
+        },
+        // 时间设置
+        setTime (no) {
+            this.msgx.no = no;
+            this.showTime = true;
         }
 
     },
@@ -199,7 +219,9 @@ export default {
     },
     components: {
         pagination,
-        detail
+        detail,
+        log,
+        certTimeSet
     }
 };
 

@@ -1,7 +1,7 @@
 //添加客户
 <template>
     <section>
-        <dailog size="small" :show.sync="myshow" classx="staff-add-user" :title="title" @ok="quire">
+        <dailog size="small" :show.sync="myshow" classx="staff-add-user" :title="title" @ok="quire" :hide="(detailUser.type=='detail')">
             <div class="ui-table" slot="content">
                 <div>
                     <img :src="msgx.logo" class="logo">
@@ -86,7 +86,7 @@
                             <td>
                                 <el-radio-group v-model="forms.radios">
                                     <el-radio :label="1" >审核通过</el-radio>
-                                    <el-radio :label="2" >审核不通过</el-radio>
+                                    <el-radio :label="0" >审核不通过</el-radio>
                                 </el-radio-group>
                             </td>
                         </tr>
@@ -109,7 +109,8 @@
 
 <script>
 const URL = {
-    DETAIL: 'scm.platformSupplier.findEnterprise' // 详情-
+    DETAIL: 'scm.platformSupplier.findEnterprise', // 详情
+    CHECK: 'scm.platformCustomer.auditEnterprise' // 审核
 };
 import CONFIG from '@/config/app.config'; // 配置
 import dailog from '@/components/Dailog';
@@ -142,12 +143,13 @@ export default {
             msgx: {},
             forms: {
                 radios: 1,
-                resource: ''  
+                resource: '',
+                ids: []
             },
+            patterns: { required: true, message: '审核不通过时,审核备注不能为空' },
             rules: {
                 resource: [
-                    { required: true, message: '审核不通过时,审核备注不能为空', trigger: 'change' },
-                    { pattern: /^\.{0,200}$/, message: '审核备注长度不能大于200个字符', trigger: 'change' }
+                     {pattern: /^.{1,200}$/, message: '审核备注长度不能大于200个字符'}
                 ]
             }  
         };
@@ -156,9 +158,40 @@ export default {
 
     },
     methods: {
+        // 审核
         quire () {
-           
+            let flag = true;
+            // 审核失败时校验
+            if (this.forms.radios === 0) {
+                this.rules.resource.unshift(this.patterns);
+                this.$refs.forms.validate((valid) => {
+                    this.rules.resource.shift(this.patterns);
+                    if (!valid) {
+                        flag = false;
+                        return; 
+                    }
+                });
+            }
+            if (flag) {
+                this.Http.post(URL.CHECK, {
+                    enterpriseNo: this.detailUser.no,
+                    ids: this.forms.ids,
+                    type: this.forms.radios + '',
+                    content: this.forms.resource
+                }).then((re) => {
+                    if (re.data) {    
+                        this.$notify({
+                            title: '成功',
+                            message: '提交成功',
+                            type: 'success'
+                        });
+                        this.myshow = false;
+                        this.$emit('refresh');
+                    }
+                });       
+            }
         },
+        // 审核状态
         auditStatus (item) {
             let _html = '';
             switch (item) {  
@@ -190,6 +223,7 @@ export default {
                 }
                 re.data.auditStatusx = this.auditStatus(re.data.auditStatus);
                 re.data.enterpriseCerts = re.data.enterpriseCerts.map(item => {
+                    this.forms.ids.push(item.id);
                     // 图片
                     if (item.fileUrl) {
                         item.fileUrl_format = formatFile(item.fileUrl);

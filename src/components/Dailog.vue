@@ -45,7 +45,7 @@ export default {
             }
         },
         classx: String, // 自定义class
-        hide: String // 隐藏按钮
+        hide: [String, Boolean] // 隐藏按钮
     },
     watch: {
         show (val, oldval) {
