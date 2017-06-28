@@ -88,6 +88,7 @@ html,body{
     float: right;
 }
 
+
 .hide{
     display: none;
 }
@@ -101,7 +102,9 @@ html,body{
 .show{
     display: block;
 }
-
+.mgr10{
+    margin-right: 10px;
+}
 .ellipsis{
     overflow: hidden;
     text-overflow: ellipsis;
@@ -195,6 +198,33 @@ td{
     padding-left: 18px;
     font-size:12px;
     line-height: 12px;
+}
+
+.ui-table{
+    table {
+        border-collapse:collapse;border-spacing:0;
+        border-left: 1px solid #ddd;
+        border-bottom: 1px solid #ddd;
+        td {
+            border-right: 1px solid #ddd;
+            border-top: 1px solid #ddd;
+            color: #333;
+            line-height: 24px;
+            padding: 5px;
+            word-break: break-all;
+            word-wrap: break-word;
+        }
+        .table_name{
+            width: 120px;
+            max-width: 150px;
+            background-color: #f9f9f9;
+            text-align: right;
+            padding: 5px 10px 5px 5px;
+            color: #666;
+            text-indent: 0;
+            vertical-align: middle;
+        }
+    }
 }
 
 

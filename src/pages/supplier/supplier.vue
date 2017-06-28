@@ -56,7 +56,7 @@
                     </el-table-column>
                     <el-table-column label="操作"  width="300">
                         <template scope="scope">
-                            <el-button size="mini" type="primary"  >详情</el-button>
+                            <el-button size="mini" type="primary"  @click="detailSuppiler(scope.row.supplierNo)">详情</el-button>
                             <el-button size="mini" type="primary"  >日志</el-button>
                             <el-button size="mini" type="info"  >时间设置</el-button>
                             <el-button size="mini" type="warning"  v-if="scope.row.erp =='0' && scope.row.erp ==3">开通erp</el-button>
@@ -68,11 +68,15 @@
             <el-col :span="24" class="toolbar">
                 <pagination :total="total" :pageSize="pageSize" :pageIndex="pageIndex" @change="getList"></pagination>
             </el-col>
+            <el-col :span="24" v-if="showDetail">
+                <detail :showx.sync="showDetail" :detailUser="detailUser" :title="detailTitle"  @refresh="getList"></detail>
+            </el-col>  
         </el-row>
     </section>
 </template>
 <script>
 import pagination from '@/components/pagination';
+import detail from './mods/detail';
 const URL = {
     LIST: 'scm.platformSupplier.pageSupplier', // 分页列表
     DETAIL: 'scm.platformSupplier.findEnterprise' // 详情-
@@ -81,6 +85,9 @@ export default {
     name: 'supplier',
     data () {
         return {
+            showDetail: false, // 显示详情/审核
+            detailUser: '', // 显示详情/审核 no
+            detailTitle: '', // 显示详情/审核 no
             total: 0,
             pageSize: 20,
             pageIndex: 1,
@@ -174,8 +181,15 @@ export default {
             this.from.search_erp.value = -1;
             this.getList(1);
         },
+        // select change event
         change () {
             this.getList();
+        },
+        // 详情
+        detailSuppiler (no) {
+            this.detailTitle = '企业详情';
+            this.detailUser = no;
+            this.showDetail = true;
         }
 
     },
@@ -183,7 +197,8 @@ export default {
         this.getList();
     },
     components: {
-        pagination
+        pagination,
+        detail
     }
 };
 

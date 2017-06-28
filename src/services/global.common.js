@@ -80,6 +80,27 @@ export const getFileType = (item) => {
     }
     return null;
 };
+
+// 格式化图片
+import CONFIG from '@/config/app.config'; // 配置
+import pdf from '@/assets/images/pdf.png'; // daf
+import noimg from '@/assets/images/noimage.png'; // 没有图片
+export const formatFile = (item) => {
+    let thumbnail = '';
+    switch (getFileType(item)) {
+    case 'image':
+        thumbnail = CONFIG.IMAGE_DOWNLOAD + changeImgSize(item);
+        break;
+    case 'pdf':
+        thumbnail = pdf;
+        break;
+    default:
+        thumbnail = noimg; 
+        break;
+    }
+    return thumbnail;
+};
+
 /**
  *
  * @param {*改变图片大小} src
