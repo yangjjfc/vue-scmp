@@ -74,7 +74,7 @@
 </template>
 <script>
     import pagination from '@/components/pagination';
-    import {parseMonep} from '@/services/global.common.js'; 
+    import {parseMone} from '@/services/global.common.js'; 
     const URL = {
         PEOPLE_LIST: 'scm.orderReturn.getReturnOrder' // 查询列表
     };
@@ -121,8 +121,8 @@
 
                         this.list = re.data.rows.map((item, index) => {
                             item.index = index + 1 + (this.pageIndex - 1) * this.pageSize;
-                            item.price = parseMonep(item.price);
-                            item.total = parseMonep(parseFloat(n.price) * parseFloat(n.rnum) || 0);
+                            item.price = parseMone(item.price);
+                            item.total = parseMone(parseFloat(n.price) * parseFloat(n.rnum) || 0);
                             return item;
                         });
                     });
