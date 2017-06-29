@@ -66,7 +66,7 @@ const createMenu = () => {
     }, {
         name: '订单管理',
         icon: 'icon-weifenxiaopcjiemianzhuanhuan',
-        state: '/index',
+        state: '/order',
         hidden: roles.indexOf('platform:order') === -1
     }, {
         name: '配送管理',
