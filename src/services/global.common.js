@@ -32,7 +32,7 @@ export const format = (time, fmt) => {
         's+': time.getSeconds(), // 秒
         'q+': Math.floor((time.getMonth() + 3) / 3), // 季度
         S: time.getMilliseconds()
-    // 毫秒
+        // 毫秒
     };
     if (/(y+)/.test(fmt)) {
         fmt = fmt.replace(RegExp.$1, (time.getFullYear() + '').substr(4 - RegExp.$1.length));
@@ -95,7 +95,7 @@ export const formatFile = (item) => {
         thumbnail = pdf;
         break;
     default:
-        thumbnail = noimg; 
+        thumbnail = noimg;
         break;
     }
     return thumbnail;
@@ -211,5 +211,38 @@ export const Validate = {
         }
     }
 
+};
+
+/**
+ * 监听事件
+ * @param {*对象名} obj 
+ * @param {*绑定类型} evtype 
+ * @param {*函数} fn 
+ * @param {*} useCapture 
+ */
+export const addEvent = (obj, evtype, fn, useCapture) => {
+    if (obj.addEventListener) {
+        obj.addEventListener(evtype, fn, useCapture);
+    } else if (obj.attachEvent) {
+        obj.attachEvent('on' + evtype, fn);// IE不支持事件捕获 
+    } else {
+        obj['on' + evtype] = fn;// 事实上这种情况不会存在 
+    }
+};
+/**
+ * 解绑监听事件
+ * @param {*对象名} obj 
+ * @param {*解绑类型} evtype 
+ * @param {*函数} fn 
+ * @param {*} useCapture 
+ */
+export const delEvent = (obj, evtype, fn, useCapture) => {
+    if (obj.removeEventListener) {
+        obj.removeEventListener(evtype, fn, useCapture);
+    } else if (obj.detachEvent) {
+        obj.detachEvent('on' + evtype, fn);
+    } else { 
+        obj['on' + evtype] = null;
+    }
 };
 

@@ -1,129 +1,94 @@
 //添加客户
 <template>
-    <section >
+    <section>
         <dailog size="small" :show.sync="myshow" title="添加供应商" @ok="quire">
             <el-form slot="content" :rules="rules" ref="forms" label-width="100px" class="demo-dynamic" :model="msgx">
-                    <div class="content_title">供应商信息</div>
-                 <el-form-item label="供应商类型" >
-                    <el-select v-model="msgx.supplierType.value" placeholder="供应商类型" size="small" style="width:100%">
-                        <el-option v-for="item in msgx.supplierType.options"  :label="item.label" :value="item.value" :key="item.label"></el-option>
+                <div class="content_title">供应商信息</div>
+                <el-form-item label="供应商类型">
+                    <el-select v-model="msgx.supplierType.value" placeholder="供应商类型" size="small" @change="changeSelect" style="width:100%">
+                        <el-option v-for="item in msgx.supplierType.options" :label="item.label" :value="item.value" :key="item.label"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="公司名称" prop="enterpriseName" >
-                    <template scope="scope">
-                        <el-input placeholder="公司名称"  v-model="msgx.enterpriseName" size="small"></el-input>
-                        <!--<query-list>
-                            <ul slot="quire_content">
-                                <li>21313</li>
-                                <li>21313</li>
-                                <li>21313</li>
-                                <li>21313</li>
-                                <li>21313</li>
-                                <li>21313</li>
-                                <li>21313</li>
-                                <li>21313</li>
-                                <li>21313</li>
-                                <li>21313</li>
-                                <li>21313</li>
-                                <li>21313</li>
-                                <li>21313</li>
-                                <li>21313</li>
-                                <li>21313</li>
-                                <li>21313</li>
-                                <li>21313</li>
-                            </ul>
-                        </query-list>-->
+                <el-form-item label="公司名称" prop="enterpriseName">
+                    <template scope="scope" >
+                        <el-input placeholder="公司名称" v-model="msgx.enterprise.enterpriseName" :readonly="msgx.enterprise.isEdit" @click.native="getNcList" size="small"></el-input>
+                        <query-list :showx.sync="msgx.enterprise.showNc" :pageSize="search.pageSize" :pageIndex="search.pageIndex" :total="search.total">
+                                <ul slot="quire_content">
+                                    <li>21313</li>
+                                    <li>21313</li>
+                                    <li>21313</li>
+                                    <li>21313</li>
+                                    <li>21313</li>
+                                    <li>21313</li>
+                                    <li>21313</li>
+                                    <li>21313</li>
+                                    <li>21313</li>
+                                    <li>21313</li>
+                                    <li>21313</li>
+                                    <li>21313</li>
+                                    <li>21313</li>
+                                    <li>21313</li>
+                                    <li>21313</li>
+                                    <li>21313</li>
+                                    <li>21313</li>
+                                </ul>
+                            </query-list>
                     </template>
                 </el-form-item>
-                <el-form-item label="法人代表" prop="legalPerson"  >
+                <el-form-item label="法人代表" prop="legalPerson">
                     <el-input placeholder="法人代表" type="legalPerson" v-model="msgx.legalPerson" size="small"></el-input>
                 </el-form-item>
-                <el-form-item label="联系人" prop="linkPerson"  >
+                <el-form-item label="联系人" prop="linkPerson">
                     <el-input placeholder="联系人" type="linkPerson" v-model="msgx.linkPerson" size="small"></el-input>
                 </el-form-item>
-                <el-form-item label="联系电话" prop="linkTelphone" >
-                    <el-input placeholder="联系电话" v-model="msgx.linkTelphone" size="small" ></el-input>
+                <el-form-item label="联系电话" prop="linkTelphone">
+                    <el-input placeholder="联系电话" v-model="msgx.linkTelphone" size="small"></el-input>
                 </el-form-item>
-                
-                 <el-form-item label="注册地址" prop="info_address" >
+    
+                <el-form-item label="注册地址" prop="info_address">
                     <template scope="scope">
-                        <region-picker></region-picker>
-                        <el-input placeholder="注册地址" v-model="msgx.info_address" size="small" ></el-input>
+                        <region-picker :region="this.address"></region-picker>
+                        <el-input placeholder="注册地址" v-model="msgx.info_address" size="small"></el-input>
                     </template>
                 </el-form-item>
                 <div class="content_title">账号信息</div>
-                <el-form-item label="登入账号" prop="userName" >
+                <el-form-item label="登入账号" prop="userName">
                     <el-input placeholder="登入账号" v-model="msgx.userName" size="small"></el-input>
                 </el-form-item>
-                <el-form-item label="密码" prop="password" >
+                <el-form-item label="密码" prop="password">
                     <el-input placeholder="密码" type="password" v-model="msgx.password" size="small"></el-input>
                 </el-form-item>
-                <el-form-item label="重复密码" prop="password2" >
-                    <el-input placeholder="重复密码" type="password"  v-model="msgx.password2" size="small"></el-input>
+                <el-form-item label="重复密码" prop="password2">
+                    <el-input placeholder="重复密码" type="password" v-model="msgx.password2" size="small"></el-input>
                 </el-form-item>
-                <el-form-item label="真实姓名" prop="userName" >
+                <el-form-item label="真实姓名" prop="userName">
                     <el-input placeholder="真实姓名" v-model="msgx.userName" size="small"></el-input>
                 </el-form-item>
-                <el-form-item label="登入账号" prop="loginAccount" >
+                <el-form-item label="登入账号" prop="loginAccount">
                     <el-input placeholder="登入账号" v-model="msgx.loginAccount" size="small"></el-input>
                 </el-form-item>
-                <el-form-item label="手机号码" prop="mobile" >
+                <el-form-item label="手机号码" prop="mobile">
                     <el-input placeholder="手机号码" v-model="msgx.mobile" size="small"></el-input>
                 </el-form-item>
-                <el-form-item label="邮箱" prop="email" >
+                <el-form-item label="邮箱" prop="email">
                     <el-input placeholder="邮箱" v-model="msgx.email" size="small"></el-input>
                 </el-form-item>
-                <template scoped="scoped" v-for="item in msgx.certList">
-                    <div class="contenttitle_certs_title"><p>营业证照 (必填)</p></div>
-                    <el-form-item label="证件号码" prop="mobilePhone" >
-                        <el-input placeholder="证件号码" v-model="msgx.mobilePhone" size="small"></el-input>
+                <template scoped="scoped" v-for="(item,index) in msgx.certList">
+                    <div class="contenttitle_certs_title">
+                        <p>{{item.name}}</p>
+                    </div>
+                    <el-form-item label="证件号码" :prop="item.certNo">
+                        <el-input placeholder="证件号码" v-model="item.certNo" size="small"></el-input>
                     </el-form-item>
                     <date-picker timeType="2"></date-picker>
-                    <el-form-item label="证件图片" prop="idcardCertImg" >
+                    <el-form-item label="证件图片" prop="idcardCertImg">
                         <template scope="scope">
-                            <el-input placeholder="证件图片"  size="small" v-show="false"></el-input>
-                            <file-upload :files="msgx.mobilePhone" :max="msgx.mobilePhone" classx="staff-adduser-img" @getUrl=""></file-upload>
+                            <el-input placeholder="证件图片" size="small" v-model="item.imgs" v-show="false"></el-input>
+                            <file-upload :files="item.imglist" :max="4" classx="12312" @getUrl=""></file-upload>
                             <span class="tips">支持格式 : png. jpg. bmp. gif. pdf , 大小不超过5MB</span>
                         </template>
                     </el-form-item>
                 </template>
-                 
-                 <div class="contenttitle_certs_title"><p>医疗器械经营企业许可证 (必填)</p></div>
-                 <el-form-item label="证件号码" prop="mobilePhone" >
-                    <el-input placeholder="证件号码" v-model="msgx.mobilePhone" size="small"></el-input>
-                </el-form-item>
-                <date-picker timeType="2"></date-picker>
-                <el-form-item label="证件图片" prop="idcardCertImg" >
-                    <template scope="scope">
-                        <el-input placeholder="证件图片"  size="small" v-show="false"></el-input>
-                        <file-upload :files="msgx.mobilePhone" :max="msgx.mobilePhone" classx="staff-adduser-img" @getUrl=""></file-upload>
-                        <span class="tips">支持格式 : png. jpg. bmp. gif. pdf , 大小不超过5MB</span>
-                    </template>
-                </el-form-item>
-                 <div class="contenttitle_certs_title"><p>税务登记证</p></div>
-                 <el-form-item label="证件号码" prop="mobilePhone" >
-                    <el-input placeholder="证件号码" v-model="msgx.mobilePhone" size="small"></el-input>
-                </el-form-item>
-                <date-picker timeType="2"></date-picker>
-                <el-form-item label="证件图片" prop="idcardCertImg" >
-                    <template scope="scope">
-                        <el-input placeholder="证件图片"  size="small" v-show="false"></el-input>
-                        <file-upload :files="msgx.mobilePhone" :max="msgx.mobilePhone" classx="staff-adduser-img" @getUrl=""></file-upload>
-                        <span class="tips">支持格式 : png. jpg. bmp. gif. pdf , 大小不超过5MB</span>
-                    </template>
-                </el-form-item>
-                <div class="contenttitle_certs_title"><p>组织机构代码证</p></div>
-                 <el-form-item label="证件号码" prop="mobilePhone" >
-                    <el-input placeholder="证件号码" v-model="msgx.mobilePhone" size="small"></el-input>
-                </el-form-item>
-                <date-picker timeType="2"></date-picker>
-                <el-form-item label="证件图片" prop="idcardCertImg" >
-                    <template scope="scope">
-                        <el-input placeholder="证件图片"  size="small" v-show="false"></el-input>
-                        <file-upload :files="msgx.mobilePhone" :max="msgx.mobilePhone" classx="staff-adduser-img" @getUrl=""></file-upload>
-                        <span class="tips">支持格式 : png. jpg. bmp. gif. pdf , 大小不超过5MB</span>
-                    </template>
-                </el-form-item>
             </el-form>
         </dailog>
     </section>
@@ -141,7 +106,7 @@ import regionPicker from '@/components/regionPicker';
 import datePicker from '@/components/datePicker';
 import fileUpload from '@/components/FileUpload';
 import { mapGetters } from 'vuex';
-import {encryption, Validate} from '@/services/global.common';
+import {encryption, Validate, addEvent} from '@/services/global.common';
 export default {
     name: 'staff-addUser',
     props: {
@@ -156,6 +121,15 @@ export default {
     data () {
         return {
             myshow: false, // 是否显示弹框
+           
+            search: {
+                pageIndex: 1,
+                pageSize: 10,
+                total: 10,
+                keywords: '',
+                info: ''
+            },
+            resetmsg: '',
             msgx: {
                 supplierType: {
                     options: [{
@@ -166,13 +140,22 @@ export default {
                         value: 21,
                         label: 'NC供应商'
                     }],
-                    value: 20 
+                    value: 20
                 },
-                enterpriseName: '',
+                enterprise: {
+                    enterpriseName: '',
+                    isEdit: false,
+                    showNc: false
+                },
                 legalPerson: '',
                 linkPerson: '',
                 linkTelphone: '',
-                info_address: '',
+                address: {
+                    province: '浙江省',
+                    city: '杭州市', 
+                    district: '西湖区',
+                    info_address: ''
+                },
                 loginAccount: '',
                 password: '',
                 password2: '',
@@ -181,47 +164,90 @@ export default {
                 email: '',
                 certList: [{
                     name: '营业证照 (必填)',
-                    certNo_yyzz: '',
-                    startTime_yyzz: '',
-                    endTime_yyzz: '',
-                    lonrTime_yyzz: '',
-                    imglist_yyzz: ''
+                    certNo: '',
+                    startTime: '',
+                    endTime: '',
+                    lonrTime: '',
+                    imglist: '',
+                    imgs: ''
                 }, {
-                    certNo_ylqxjyqyxkz: '',
-                    startTime_ylqxjyqyxkz: '',
-                    endTime_ylqxjyqyxkz: '',
-                    lonrTime_ylqxjyqyxkz: '',
-                    imglist_ylqxjyqyxkz: ''
+                    name: '医疗器械经营企业许可证 (必填)',
+                    certNo: '',
+                    startTime: '',
+                    endTime: '',
+                    lonrTime: '',
+                    imglist: '',
+                    imgs: ''
                 }, {
-                    certNo_swdjz: '',
-                    startTime_swdjz: '',
-                    endTime_swdjz: '',
-                    lonrTime_swdjz: '',
-                    imglist_swdjz: ''
+                    name: '税务登记证',
+                    certNo: '',
+                    startTime: '',
+                    endTime: '',
+                    lonrTime: '',
+                    imglist: '',
+                    imgs: ''
                 }, {
-                    certNo_zzjgdmz: '',
-                    startTime_zzjgdmz: '',
-                    endTime_zzjgdmz: '',
-                    lonrTime_zzjgdmz: '',
-                    imglist_zzjgdmz: ''
+                    name: '组织机构代码证',
+                    certNo: '',
+                    startTime: '',
+                    endTime: '',
+                    lonrTime: '',
+                    imglist: '',
+                    imgs: ''
                 }]
             },
             rules: {
-                userName: [
-                    { required: true, message: '请输入真实姓名', trigger: 'blur' },
-                      { pattern: /^\S{0,30}$/, message: '真实姓名不能超过30个字符', trigger: 'blur,change' }
+                enterpriseName: [
+                    { required: true, message: '请输入公司名称', trigger: 'change' },
+                    { pattern: /^\S{0,30}$/, message: '公司名称不能超过30个字符', trigger: 'blur,change' }
                 ],
-                mobilePhone: [
-                    { required: true, message: '请输入手机号码', trigger: 'blur' },
-                      { pattern: /^1[34578]\d{9}$/, message: '手机号码格式有误,不能超过11个字符', trigger: 'blur,change' },
-                     { validator: Validate.validatePhone.bind(this), trigger: 'blur' }
+                legalPerson: [
+                    { required: true, message: '请输入法人代表', trigger: 'blur,change' },
+                    { pattern: /^\S{0,30}$/, message: '法人代表不能超过30个字符', trigger: 'blur,change' }
+                ],
+                linkPerson: [
+                    { required: true, message: '请输入联系人', trigger: 'blur,change' },
+                    { pattern: /^\S{0,30}$/, message: '联系人不能超过30个字符', trigger: 'blur,change' }
+                ],
+                linkTelphone: [
+                    { pattern: /^(((13[0-9]{1})|(14[0-9]{1})|(15[0-9]{1})|(17[0-9]{1})|(18[0-9]{1}))+\d{8})$/, message: '联系电话格式有误,有效11个字符', trigger: 'blur,change' }
+                ],
+                info_address: [
+                    { required: true, message: '请输入注册地址', trigger: 'blur,change' },
+                    { pattern: /^\S{0,120}$/, message: '注册地址不能超过120个字符', trigger: 'blur,change' }
+                ],
+                loginAccount: [
+                    { required: true, message: '请输入登录账号', trigger: 'blur,change' },
+                    { pattern: /^\w{6,20}$/, message: '登录账号仅支持数字、字母、下划线“_”，长度6-20位', trigger: 'blur,change' }
+                ],
+                password: [
+                    { required: true, message: '请输入密码', trigger: 'blur,change' },
+                    { pattern: /^\S{0,120}$/, message: '密码长度只能在6-20个字符之间', trigger: 'blur,change' }
+                ],
+                password2: [
+                    { required: true, message: '请输入重复密码', trigger: 'blur,change' }
+
+                ],
+                userName: [
+                    { required: true, message: '请输入真实姓名', trigger: 'blur,change' },
+                    { pattern: /^\S{0,30}$/, message: '公司名称不能超过30个字符', trigger: 'blur,change' }
+                ],
+                mobile: [
+                    { required: true, message: '请输入手机号码', trigger: 'blur,change' },
+                    { pattern: /^(((13[0-9]{1})|(14[0-9]{1})|(15[0-9]{1})|(17[0-9]{1})|(18[0-9]{1}))+\d{8})$/, message: '手机号码格式有误,有效11个字符', trigger: 'blur,change' }
                 ],
                 email: [
-                     { pattern: /^(?=\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$).{5,50}$/, message: '电子邮箱格式不正确,长度5-50字符之间', trigger: 'blur,change' },
-                     { validator: Validate.validateEmail.bind(this), trigger: 'blur' }
+                    { pattern: /^(?=\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$).{5,50}$/, message: '电子邮箱格式不正确,长度5-50字符之间', trigger: 'blur,change' }
                 ],
-                idcard: [
-                     { pattern: /^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/, message: '身份证号码格式不正确,长度18个字符', trigger: 'blur,change' }
+                certNo: [
+                    { required: true, message: '请输入证件号码', trigger: 'blur,change' },
+                    { pattern: /^\S{0,30}$/, message: '证件号码不能超过30个字符', trigger: 'blur,change' }
+                ],
+                startTime: [
+                    { required: true, message: '请输入开始时间', trigger: 'blur,change' }
+                ],
+                endTime: [
+                    { required: true, message: '请输入结束时间或勾选长期', trigger: 'blur,change' }
                 ]
             }
         };
@@ -299,6 +325,33 @@ export default {
             } else {
                 this.msgx.cert = '';
             }
+        },
+        getNcList () {
+            console.log(1);
+            if (!this.msgx.enterprise.isEdit) {
+                return; 
+            }
+            this.Http.post(URL.PAGENCSUPPLIERS, {
+                params: {
+                    pageIndex: this.search.pageIndex,
+                    pageSize: this.search.pageSize,
+                    keywords: this.search.keywords
+                }
+            }).then((re) => {
+                this.msgx.enterprise.showNc = true;
+                this.search.total = re.data.total;
+                if (re.data.rows && re.data.rows.length > 0) {
+                    this.search.info = re.data.rows;
+                }
+            });
+        },
+        changeSelect (val) {
+            this.msgx = this.resetmsg;
+            if (val === 21) {
+                this.msgx.enterprise.isEdit = true;
+            } else { 
+                this.msgx.enterprise.isEdit = false;
+            }
         }
     },
     watch: {
@@ -307,9 +360,11 @@ export default {
                 this.$emit('update:showx', false);
             }
         }
+        
     },
     beforeMount () {
         this.myshow = this.showx;
+        this.resetmsg = this.msgx;
     },
     components: {
         dailog,
@@ -327,12 +382,15 @@ export default {
 .el-form-item__error {
     position: inherit;
 }
-.demo-dynamic{
+
+.demo-dynamic {
     // width: 80%
 }
-.staff-adduser-img{
+
+.staff-adduser-img {
     height: 100px;
 }
+
 .content_title {
     background: orange;
     color: #fff;
@@ -344,24 +402,26 @@ export default {
     font-weight: normal;
     line-height: 30px;
     padding: 0 8px;
-    margin:10px 0;
+    margin: 10px 0;
 }
+
 .contenttitle_certs_title {
     border-bottom: 3px solid orange;
     overflow: hidden;
-    margin:  10px 0;
-    p{
+    margin: 10px 0;
+    p {
         background: orange;
-    color: #fff;
-    height: 32px;
-    line-height: 32px;
-    padding: 0 20px;
-    font-weight: bold;
-    display: inline-block;
+        color: #fff;
+        height: 32px;
+        line-height: 32px;
+        padding: 0 20px;
+        font-weight: bold;
+        display: inline-block;
     }
 }
-.el-form-item{
+
+.el-form-item {
     margin: 0 auto;
-    width:80%;
+    width: 80%;
 }
 </style>

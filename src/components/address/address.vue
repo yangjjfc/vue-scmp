@@ -3,21 +3,21 @@
         <label class="province">
             <slot name="province"></slot>
             <el-select size="small" v-model="value_provinces" ref="provinceSelected" :placeholder="placeholder.province" class="province-select" :class="classx" :required="required" :disabled="disabled" @change="change1">
-                <el-option v-for="item in provinces" :key="item.label" :label="item.label" :value="item.value" :class="classx">
+                <el-option v-for="item in provinces" :key="item.label" :label="item.label" :value="item.value" >
                 </el-option>
             </el-select>
         </label>
         <label class="city" ref="citySelected" v-show="!auto || cities.length">
             <slot name="city"></slot>
             <el-select size="small" v-model="value_city" class="city-select" @change="change2" :required="required && cities.length > 0" :disabled="disabled" :class="classx">
-                <el-option v-for="item in cities" :key="item.label" :label="item.label" :value="item.value" :class="classx">
+                <el-option v-for="item in cities" :key="item.label" :label="item.label" :value="item.value" >
                 </el-option>
             </el-select>
         </label>
         <label class="district" v-if="!twoSelect" v-show="!auto || districts.length">
             <slot name="district"></slot>
             <el-select size="small" v-model="value_district" ref="districtSelected" class="district-select" @change="change3" :class="classx" :required="required && districts.length > 0" :disabled="disabled">
-                <el-option v-for="item in districts" :key="item.label" :label="item.label" :value="item.value" :class="classx">
+                <el-option v-for="item in districts" :key="item.label" :label="item.label" :value="item.value" >
                 </el-option>
             </el-select>
         </label>

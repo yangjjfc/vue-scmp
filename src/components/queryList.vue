@@ -1,11 +1,11 @@
 /**分页插件*/
 <template>
-    <div class="quire_box">
+    <div class="quire_box" v-show="showx" @click.stop="">
         <section class="quire_container">
             <slot name="quire_content"></slot>
         </section>
         <footer class="quire_footer">
-            <el-pagination  layout="prev, next" :total="50" class="left quire_pagination"></el-pagination>
+            <el-pagination  layout="prev, next" :pageIndex="pageIndex" :pageSize="pageSize" :total="total" class="left quire_pagination"></el-pagination>
             <div class="right mgr10">
                 <el-input placeholder=""   size="small" class="w200"></el-input>
                 <el-button type="primary" size="small" class="">筛选</el-button>
@@ -15,23 +15,41 @@
     </div>
 </template>
 <script>
+import {addEvent} from '@/services/global.common';
 export default {
     name: 'queryList',
     data () {
         return {
-
+            show: false
         };
     },
     // 需要传的参数
     props: {
-        datas: { // 数据
-            type: [String, Array],
-            required: true
-        },
         total: {
             type: [Number],
             required: true
+        },
+        pageIndex: {
+            type: [Number],
+            required: true
+        },
+        pageSize: {
+            type: [Number],
+            required: true
+        },
+        showx: {
+            type: Boolean,
+            default () {
+                return false;
+            }
         }
+    },
+    created () {
+        addEvent(window, 'click', () => {
+            if (this.showx) {
+                this.$emit('update:showx', false);
+            }
+        });
     }
 };
 </script>
