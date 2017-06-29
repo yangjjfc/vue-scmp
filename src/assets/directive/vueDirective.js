@@ -7,7 +7,7 @@ Vue.directive('datetimepicker', {
     twoWay: true,
     priority: 1000,
     params: ['onChange', 'options'],
-    bind: function () {
+    bind: function (el, binding, vnode) {
         let self = this;
         let options = $.extend({
             language: 'zh-CN',

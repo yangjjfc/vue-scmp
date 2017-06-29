@@ -8,6 +8,7 @@
 import adderss from '@/components/address/address';
 import REGION_DATA from 'china-area-data';
 export default {
+    name: 'regionPicker',
     data () {
         return {
             chinaAddr: REGION_DATA
@@ -36,6 +37,7 @@ export default {
 </script>
 <style lang="scss">
 .adderss {
-    width: 100px;
+    width: 32%;
+    margin-bottom: 5px;
 }
 </style>

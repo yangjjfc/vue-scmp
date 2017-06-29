@@ -24,7 +24,7 @@
                         <el-button @click="reset"  size="small">重置</el-button>
                     </el-form-item>
                     <el-form-item class="right">
-                        <el-button type="primary"  size="small">添加供应商</el-button>
+                        <el-button type="primary"  size="small" @click="add">添加供应商</el-button>
                     </el-form-item>
                 </el-form>
             </el-col>
@@ -76,7 +76,10 @@
             </el-col> 
             <el-col :span="24" v-if="showTime">
                 <cert-time-set :showx.sync="showTime" :transMsg="msgx" ></cert-time-set>
-            </el-col>   
+            </el-col> 
+            <el-col :span="24" v-if="showAdd">
+                <add-supplier :showx.sync="showAdd" :transMsg="msgx" ></add-supplier>
+            </el-col>     
         </el-row>
     </section>
 </template>
@@ -85,6 +88,7 @@ import pagination from '@/components/pagination';
 import detail from './mods/detail';
 import log from './mods/log';
 import certTimeSet from './mods/certTimeSet';
+import addSupplier from './mods/addSupplier';
 const URL = {
     LIST: 'scm.platformSupplier.pageSupplier', // 分页列表
     DETAIL: 'scm.platformSupplier.findEnterprise' // 详情-
@@ -98,6 +102,7 @@ export default {
             detailTitle: '', // 显示详情/审核标题 no
             showLog: false, // 显示日志
             showTime: false, // 显示设置时间
+            showAdd: false, // 添加供应商
             total: 0,
             pageSize: 20,
             pageIndex: 1,
@@ -211,6 +216,10 @@ export default {
         setTime (no) {
             this.msgx.no = no;
             this.showTime = true;
+        },
+        // 添加供应商
+        add () {
+            this.showAdd = true;
         }
 
     },
@@ -221,7 +230,8 @@ export default {
         pagination,
         detail,
         log,
-        certTimeSet
+        certTimeSet,
+        addSupplier
     }
 };
 
