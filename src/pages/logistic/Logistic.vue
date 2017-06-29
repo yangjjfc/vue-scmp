@@ -9,7 +9,7 @@
                             <el-option
                                     v-for="item in deliveryType"
                                     :label="item.text"
-                                    :value="item.id">
+                                    :value="item.id" :key="item.id">
                             </el-option>
                         </el-select>
                     </el-form-item>
@@ -18,7 +18,7 @@
                             <el-option
                                     v-for="item in status"
                                     :label="item.text"
-                                    :value="item.id">
+                                    :value="item.id" :key="item.id">
                             </el-option>
                         </el-select>
                     </el-form-item>

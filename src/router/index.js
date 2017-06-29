@@ -1,6 +1,6 @@
 ﻿const dashboard = r => require.ensure([], () => r(require('../pages/dashboard/Dashboard')), 'dashboard');
-const supplierChart = r => require.ensure([], () => r(require('../pages/chart/supplier/SupplierChart')), 'chart');
-const hospitalChart = r => require.ensure([], () => r(require('../pages/chart/hospital/HospitalChart')), 'chart');
+const supplierChart = r => require.ensure([], () => r(require('../pages/chart/supplier/SupplierChart')), 'SupplierChart');
+const hospitalChart = r => require.ensure([], () => r(require('../pages/chart/hospital/HospitalChart')), 'HospitalChart');
 const user = r => require.ensure([], () => r(require('../pages/user/User')), 'user');
 const index = r => require.ensure([], () => r(require('../pages/index/index')), 'index');
 const supplier = r => require.ensure([], () => r(require('../pages/supplier/supplier')), 'supplier');
@@ -8,11 +8,12 @@ const salesReturn = r => require.ensure([], () => r(require('../pages/return/Ret
 const returnDetail = r => require.ensure([], () => r(require('../pages/return/detail/ReturnDetail')), 'ReturnDetail');
 const logistic = r => require.ensure([], () => r(require('../pages/logistic/Logistic')), 'logistic');
 const logisticDetail = r => require.ensure([], () => r(require('../pages/logistic/mods/logisticDetail')), 'logisticDetail');
-const order = r => require.ensure([], () => r(require('../pages/order/Order')), 'order');
+const order = r => require.ensure([], () => r(require('../pages/order/Order.vue')), 'order');
+const orderDetail = r => require.ensure([], () => r(require('../pages/order/detail/orderDetail.vue')), 'orderDetail');
 import Auth from '../pages/auth/Auth';
 export default [
     {
-        path: '/', redirect: '/auth'
+        path: '/', redirect: '/dashboard'
     },
     {
         path: '/auth',
@@ -32,7 +33,8 @@ export default [
             { path: '/logistic', component: logistic, name: 'logistic' }, // 配送管理
             { path: '/logistic/detail/:deliveryNo/:passKey', component: logisticDetail, name: 'logisticDetail' },
             { path: '/supplier', component: supplier, name: 'supplier' },
-            { path: '/order', component: order, name: 'order' }
+            { path: '/order', component: order, name: 'order' },
+            { path: '/order/detail/:orderNo/:passkey', component: orderDetail, name: 'orderDetail' }
         ]
     }
 ];
