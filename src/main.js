@@ -9,7 +9,7 @@ import Http from './services/Http';
 Vue.use(iView);
 Vue.use(ElementUI);
 Vue.config.productionTip = false; // 在应用启动时，可以通过设置 Vue.config.productionTip = false 来关闭生产模式下给出的提示
-
+window._ = require('lodash');
 /**
  * axios添加原型链上
  */

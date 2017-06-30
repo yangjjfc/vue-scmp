@@ -5,11 +5,11 @@
             <slot name="quire_content"></slot>
         </section>
         <footer class="quire_footer">
-            <el-pagination  layout="prev, next" :pageIndex="pageIndex" :pageSize="pageSize" :total="total" class="left quire_pagination"></el-pagination>
+            <el-pagination  layout="prev, next" :pageIndex="pageIndex" @current-change="changePage" :pageSize="pageSize" :total="total" class="left quire_pagination"></el-pagination>
             <div class="right mgr10">
-                <el-input placeholder=""   size="small" class="w200"></el-input>
-                <el-button type="primary" size="small" class="">筛选</el-button>
-                <el-button   size="small" class="mgl5">重置</el-button>
+                <el-input placeholder=""  v-model="keyWordx" size="small" class="w200" @keyup.enter.native="search"></el-input>
+                <el-button type="primary" size="small" class="" @click="search">筛选</el-button>
+                <el-button   size="small" class="mgl5" @click="reset">重置</el-button>
             </div>
         </footer>
     </div>
@@ -20,7 +20,8 @@ export default {
     name: 'queryList',
     data () {
         return {
-            show: false
+            show: false,
+            keyWordx: ''
         };
     },
     // 需要传的参数
@@ -42,14 +43,40 @@ export default {
             default () {
                 return false;
             }
+        },
+        keyWords: {
+            type: [String],
+            required: true
         }
     },
     created () {
+        this.keyWordx = this.keyWords;
         addEvent(window, 'click', () => {
             if (this.showx) {
                 this.$emit('update:showx', false);
             }
         });
+    },
+    watch: {
+        keyWordx (val) { 
+            this.$emit('update:keyWords', val); 
+        }
+    },
+    methods: {
+        // 改变页码
+        changePage (page) {
+            this.$emit('update:pageIndex', page);
+            this.$emit('change');
+        },
+        search () {
+            this.$emit('change');
+        },
+        reset () {
+            this.keyWordx = '';
+            this.$emit('update:pageIndex', 1);
+            this.$emit('update:keyWords', ''); 
+            this.$emit('change');
+        }
     }
 };
 </script>
@@ -68,7 +95,11 @@ $bottom_height:45px;
     width: 100%;
     .quire_footer {
         height: $bottom_height;
-        border-top: 1px #f4f4f4 dashed;
+        border-top: 1px solid #d1dbe5;
+        .right{
+            position:relative;
+            top: 4px;
+        }
         .quire_pagination{
             position: relative;
             top:2px;

@@ -5,34 +5,19 @@
             <el-form slot="content" :rules="rules" ref="forms" label-width="100px" class="demo-dynamic" :model="msgx">
                 <div class="content_title">供应商信息</div>
                 <el-form-item label="供应商类型">
-                    <el-select v-model="msgx.supplierType.value" placeholder="供应商类型" size="small" @change="changeSelect" style="width:100%">
-                        <el-option v-for="item in msgx.supplierType.options" :label="item.label" :value="item.value" :key="item.label"></el-option>
+                    <el-select v-model="supplierType.value" placeholder="供应商类型" size="small" @change="changeSelect" style="width:100%">
+                        <el-option v-for="item in supplierType.options" :label="item.label" :value="item.value" :key="item.label"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="公司名称" prop="enterpriseName">
                     <template scope="scope" >
                         <el-input placeholder="公司名称" v-model="msgx.enterprise.enterpriseName" :readonly="msgx.enterprise.isEdit" @click.native="getNcList" size="small"></el-input>
-                        <query-list :showx.sync="msgx.enterprise.showNc" :pageSize="search.pageSize" :pageIndex="search.pageIndex" :total="search.total">
-                                <ul slot="quire_content">
-                                    <li>21313</li>
-                                    <li>21313</li>
-                                    <li>21313</li>
-                                    <li>21313</li>
-                                    <li>21313</li>
-                                    <li>21313</li>
-                                    <li>21313</li>
-                                    <li>21313</li>
-                                    <li>21313</li>
-                                    <li>21313</li>
-                                    <li>21313</li>
-                                    <li>21313</li>
-                                    <li>21313</li>
-                                    <li>21313</li>
-                                    <li>21313</li>
-                                    <li>21313</li>
-                                    <li>21313</li>
+                        <query-list @change="getNcList" :keyWords.sync="search.keywords":showx.sync="msgx.enterprise.showNc" :pageSize="search.pageSize" :pageIndex.sync="search.pageIndex" :total="search.total">
+                                <ul slot="quire_content" >
+                                    <li v-for="(item,index) in search.info" :key="index" v-if="search.info.length>0" @click="checkNc(item)">{{item.supplierName}}</li>
+                                    <li v-else>暂无数据</li>
                                 </ul>
-                            </query-list>
+                        </query-list>
                     </template>
                 </el-form-item>
                 <el-form-item label="法人代表" prop="legalPerson">
@@ -45,10 +30,10 @@
                     <el-input placeholder="联系电话" v-model="msgx.linkTelphone" size="small"></el-input>
                 </el-form-item>
     
-                <el-form-item label="注册地址" prop="info_address">
+                <el-form-item label="注册地址" prop="registAddr">
                     <template scope="scope">
-                        <region-picker :region="this.address"></region-picker>
-                        <el-input placeholder="注册地址" v-model="msgx.info_address" size="small"></el-input>
+                        <region-picker :region.sync="this.address"></region-picker>
+                        <el-input placeholder="注册地址" v-model="msgx.registAddr" size="small"></el-input>
                     </template>
                 </el-form-item>
                 <div class="content_title">账号信息</div>
@@ -84,7 +69,7 @@
                     <el-form-item label="证件图片" prop="idcardCertImg">
                         <template scope="scope">
                             <el-input placeholder="证件图片" size="small" v-model="item.imgs" v-show="false"></el-input>
-                            <file-upload :files="item.imglist" :max="4" classx="12312" @getUrl=""></file-upload>
+                            <file-upload :files="item.imglist" :max="2" classx="12312" @getUrl=""></file-upload>
                             <span class="tips">支持格式 : png. jpg. bmp. gif. pdf , 大小不超过5MB</span>
                         </template>
                     </el-form-item>
@@ -127,21 +112,22 @@ export default {
                 pageSize: 10,
                 total: 10,
                 keywords: '',
-                info: ''
+                info: []
             },
             resetmsg: '',
-            msgx: {
-                supplierType: {
-                    options: [{
-                        value: 20,
-                        label: '外部供应商'
-                    },
-                    {
-                        value: 21,
-                        label: 'NC供应商'
-                    }],
-                    value: 20
+            supplierType: {
+                options: [{
+                    value: 20,
+                    label: '外部供应商'
                 },
+                {
+                    value: 21,
+                    label: 'NC供应商'
+                }],
+                value: 20
+            },  
+            msgx: {
+                
                 enterprise: {
                     enterpriseName: '',
                     isEdit: false,
@@ -154,7 +140,7 @@ export default {
                     province: '浙江省',
                     city: '杭州市', 
                     district: '西湖区',
-                    info_address: ''
+                    registAddr: ''
                 },
                 loginAccount: '',
                 password: '',
@@ -168,7 +154,7 @@ export default {
                     startTime: '',
                     endTime: '',
                     lonrTime: '',
-                    imglist: '',
+                    imglist: [],
                     imgs: ''
                 }, {
                     name: '医疗器械经营企业许可证 (必填)',
@@ -176,7 +162,7 @@ export default {
                     startTime: '',
                     endTime: '',
                     lonrTime: '',
-                    imglist: '',
+                    imglist: [],
                     imgs: ''
                 }, {
                     name: '税务登记证',
@@ -184,7 +170,7 @@ export default {
                     startTime: '',
                     endTime: '',
                     lonrTime: '',
-                    imglist: '',
+                    imglist: [],
                     imgs: ''
                 }, {
                     name: '组织机构代码证',
@@ -192,7 +178,7 @@ export default {
                     startTime: '',
                     endTime: '',
                     lonrTime: '',
-                    imglist: '',
+                    imglist: [],
                     imgs: ''
                 }]
             },
@@ -212,8 +198,8 @@ export default {
                 linkTelphone: [
                     { pattern: /^(((13[0-9]{1})|(14[0-9]{1})|(15[0-9]{1})|(17[0-9]{1})|(18[0-9]{1}))+\d{8})$/, message: '联系电话格式有误,有效11个字符', trigger: 'blur,change' }
                 ],
-                info_address: [
-                    { required: true, message: '请输入注册地址', trigger: 'blur,change' },
+                registAddr: [
+                    { required: true, message: '请输入注册地址' },
                     { pattern: /^\S{0,120}$/, message: '注册地址不能超过120个字符', trigger: 'blur,change' }
                 ],
                 loginAccount: [
@@ -327,7 +313,6 @@ export default {
             }
         },
         getNcList () {
-            console.log(1);
             if (!this.msgx.enterprise.isEdit) {
                 return; 
             }
@@ -340,18 +325,26 @@ export default {
             }).then((re) => {
                 this.msgx.enterprise.showNc = true;
                 this.search.total = re.data.total;
-                if (re.data.rows && re.data.rows.length > 0) {
-                    this.search.info = re.data.rows;
-                }
+                this.search.info = re.data.rows;
             });
         },
         changeSelect (val) {
+            console.log(this.resetmsg);
             this.msgx = this.resetmsg;
+            this.$refs.forms.resetFields();
             if (val === 21) {
                 this.msgx.enterprise.isEdit = true;
             } else { 
                 this.msgx.enterprise.isEdit = false;
             }
+        },
+        checkNc (item) {
+            this.msgx.enterprise.showNc = false;
+            this.msgx.enterprise.enterpriseName = item.supplierName;
+            this.msgx.legalPerson = item.legalPerson;
+            this.msgx.linkPerson = item.linkPerson;
+            this.msgx.linkTelphone = item.linkTelphone;
+            this.msgx.registAddr = item.registAddr;
         }
     },
     watch: {
@@ -364,7 +357,9 @@ export default {
     },
     beforeMount () {
         this.myshow = this.showx;
-        this.resetmsg = this.msgx;
+        this.resetmsg = _.cloneDeep(this.msgx);
+        console.log(this.resetmsg === this.msgx);
+        console.log(this.resetmsg);
     },
     components: {
         dailog,

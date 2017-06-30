@@ -27,7 +27,7 @@ export default {
     },
     methods: {
         change (msg) {
-            this.region = msg;
+            this.$emit('update:region', msg);
         }
     },
     components: {
