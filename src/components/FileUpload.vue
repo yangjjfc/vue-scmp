@@ -6,7 +6,8 @@
      class="upload-demo"
      :on-error="errors"
      :on-preview="review" 
-     :before-upload="beforeUpload" 
+     :before-upload="beforeUpload"
+     :disabled = "disabled" 
      :multiple="multiple" :drag="drag" :file-list="fileLists" :on-remove="remove" :class="classx">
         <slot name='imgs'></slot>
         <el-button size="small" type="primary" v-if="!show">点击上传</el-button>
@@ -37,6 +38,9 @@ export default {
     },
     // props: ['files', 'max', 'classx', 'types', 'shows'],
     props: {
+        readonly: {
+            type: [Boolean, String]
+        },
         files: { // 图片地址
             type: [String, Array],
             required: true
@@ -48,8 +52,7 @@ export default {
             }
         },
         classx: {
-            type: String,
-            required: true
+            type: String
         }, // 自定义class
         type: { // 显示类型
             type: String,
@@ -77,12 +80,13 @@ export default {
             });
         }
     },
+    beforeMount () {
+        this.disabled = this.readonly ? JSON.parse(this.readonly) : false;
+    },
     mounted () {
         this.headers = {
             jtoken: this.token
         };
-        // 填充图片
-        this.chageFiles;
     },
     watch: {
         fileLists (val, oldval) {
