@@ -29,37 +29,37 @@ const createMenu = () => {
         son: [
             {
                 name: '产品注册证',
-                state: '/cert_register',
+                state: '/cert/register',
                 hidden: roles.indexOf('platform:certificate:cert_regist') === -1
             },
             {
                 name: '经销授权书',
-                state: '/cert_auth',
+                state: '/cert/promise',
                 hidden: roles.indexOf('platform:certificate:cert_auth') === -1
             },
             {
-                name: '生产厂商',
-                state: '/cert_entrust',
-                hidden: roles.indexOf('platform:certificate:cert_factory') === -1
-            },
-            {
                 name: '法人委托书',
-                state: '/signature',
+                state: '/cert/entrust',
                 hidden: roles.indexOf('platform:certificate:cert_entrust') === -1
             },
             {
                 name: '销售承诺书',
-                state: '/cert_promise',
+                state: '/cert/electronic',
                 hidden: roles.indexOf('platform:certificate:cert_commit') === -1
             },
             {
+                name: '生产厂商',
+                state: '/cert/vendor',
+                hidden: roles.indexOf('platform:certificate:cert_factory') === -1
+            },
+            {
                 name: '电子签章',
-                state: '/cert_expire',
+                state: '/cert/electronic',
                 hidden: roles.indexOf('platform:certificate:cert_sign') === -1
             },
             {
                 name: '证件维护',
-                state: '/cert_expire',
+                state: '/cert/preserve',
                 hidden: roles.indexOf('platform:certificate:cert_maintain') === -1
             }
         ]

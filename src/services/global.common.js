@@ -75,7 +75,7 @@ export const getFileType = (item) => {
         } else if (~['pdf'].indexOf(strPostfix)) {
             return 'pdf';
         } else {
-            return 'false'; // 不支持的文件类型
+            return 'other'; // 不支持的文件类型
         }
     }
     return null;
