@@ -18,23 +18,25 @@
             </el-date-picker>
         </div>
         <div v-if="timeType=='2'" >
-            <el-form-item label="开始时间" prop="mobilePhone" class="stateTime">
+            <el-form-item label="开始时间"  class="stateTime"  :rules="rules.startTime" :prop="prop.startTime">
                 <el-date-picker v-model="value_sta" 
                 :type="type" placeholder="开始日期" 
                 :picker-options="pickerOptions_sta" 
                 :readonly="readonly" :editable="editable" 
                 @change="dateChangeTime_sta"
-                ref="startTime" size="small" :class="[classx,timeCLassx]" >
+                ref="startTime" size="small" :class="[classx,timeCLassx]" 
+                >
                 </el-date-picker>
             </el-form-item>
-            <el-form-item label="截止日期" prop="mobilePhone" class="endTime">
+            <el-form-item label="截止日期"  class="endTime"  :rules="rules.endTime" :prop="prop.endTime">
                 <el-date-picker v-model="value_end" 
                 :type="type" placeholder="结束日期" 
                 :disabled="offEndTime"
                 :picker-options="pickerOptions_end" 
                 :readonly="readonly" :editable="editable" 
                 @change="dateChangeTime_end"
-                ref="endTime" size="small" :class="[classx,timeCLassx]">
+                ref="endTime" size="small" :class="[classx,timeCLassx]"
+                >
                 </el-date-picker>
                 <el-checkbox label="长期" name="type" v-model="checked" class="long"></el-checkbox>
             </el-form-item>
@@ -78,12 +80,27 @@ export default {
                 return 'date';
             }
         },
+        rules: { // 规则
+            type: Object,
+            default () {
+                return {startTime: [], endTime: []};
+            }
+        },
+        prop: { // 规则
+            type: Object,
+            default () {
+                return {startTime: '', endTime: ''};
+            }
+        },
         timeType: { // 模式 '1','2','3'
             type: String,
             default () {
                 return '1';
             }
         },
+        startTime: [String, Number],
+        endTime: [String, Number],
+        full: [String, Number],
         classx: String // 自定义class
     },
 
@@ -108,11 +125,13 @@ export default {
             };
         },
         checked (val, oldval) {
-            console.log(val, oldval);
+            this.$emit('update:isLong', val);
             if (val && !oldval) {
+                this.$emit('update:full', 1);
                 this.value_end = '';
                 this.offEndTime = true;
             } else {
+                this.$emit('update:full', '');
                 this.offEndTime = false;
             }
         }
@@ -121,11 +140,16 @@ export default {
         // 开始
         dateChangeTime_sta (val) {
             this.disabledDate_end = this.$refs.startTime.value;
+            this.$emit('update:startTime', val);
             this.$emit('changeTime_sta', val);
         },
         // 结束
         dateChangeTime_end (val) {
             this.disabledDate_sta = this.$refs.endTime.value;
+            if (!this.checked) {
+                this.$emit('update:full', val);
+            }
+            this.$emit('update:endTime', val);
             this.$emit('changeTime_end', val);
         }
     }
