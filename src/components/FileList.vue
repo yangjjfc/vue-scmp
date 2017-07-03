@@ -4,6 +4,9 @@
          <a class="boxer" :href="item.fullUrl" v-boxer="item.fullUrl" >
             <img :src="item.thumbnail" :width="width" :height="width">
         </a>
+        <p class="text-center" v-if="showChoose">
+            <input type="radio" v-model="checked" :value="item.url" />
+        </p>
         </li>
     </ul>
 </template>
@@ -16,11 +19,13 @@ import '../assets/directive/vueDirective.js'; // jq boxer指令
 export default {
     data () {
         return {
+            checked: '',
             width: '',
             list: []
         };
     },
     props: {
+        showChoose: '',
         files: {
             type: [Array, String]
         },
@@ -29,10 +34,7 @@ export default {
         }
     },
     beforeMount () {
-        let src = (typeof this.files === 'string' ? [this.files] : (this.files instanceof Array ? this.files : null));
-        src.forEach(item => {
-            this.list.push(this.formatFile(item));
-        });
+        this.init();
         switch (this.size) {
         case 'small':
             this.width = 60;
@@ -45,7 +47,25 @@ export default {
             break;
         }
     },
+    watch: {
+        checked () {
+            this.$emit('changeChecked', this.checked);
+        },
+        files (val, oldVal) {
+            this.init();
+        }
+    },
     methods: {
+        init () {
+            let src; 
+            if (this.files) {
+                src = (typeof this.files === 'string' ? this.files.split(';') : (this.files instanceof Array ? this.files : null));
+            }
+            this.list = [];
+            src && src.forEach(item => {
+                this.list.push(this.formatFile(item));
+            });
+        },
         // 格式化文件
         formatFile (item, uid) {
             let thumbnail;

@@ -61,7 +61,7 @@
             <pagination :total="total" :pageSize="pageSize" @change="getList"></pagination>
         </el-col>
         <el-col :span="24" v-if="showPreserve">
-            <checkLogistic :showx.sync="showPreserve" :useMsg="userMsg"></checkLogistic>
+            <preserveDetail :showx.sync ="showPreserve" :cert="checkedObj" @update="getList"></preserveDetail>
         </el-col>
     </el-row>
 </section>
@@ -69,6 +69,7 @@
 <script>
 import pagination from '@/components/pagination';
 import FileList from '@/components/FileList';
+import preserveDetail from './mods/PreserveDetail';
 const URL = {
     LIST: 'scm.platformCert.querySuppRegPlatform' // 查询列表
 };
@@ -77,6 +78,7 @@ export default {
     data () {
         return {
             showPreserve: false, // 显示维护
+            checkedObj: null,
             search: {
                 supplyRegist: '1',
                 supplierNo: '',
@@ -136,7 +138,8 @@ export default {
         
         // 查看
         detail (row) {
-            
+            this.showPreserve = true;
+            this.checkedObj = row;
         },
         // 重置
         reset () {
@@ -155,6 +158,7 @@ export default {
     },
     components: {
         FileList,
+        preserveDetail,
         pagination
     }
 };

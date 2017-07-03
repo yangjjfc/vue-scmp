@@ -1,4 +1,4 @@
-<template>
+﻿<template>
     <div ref="img-upload">
     <el-upload :action="action" :list-type="type" :headers="headers"
      :on-success="success" 
@@ -33,6 +33,7 @@ export default {
             fileLists: [],  // 文件地址[{name,url}]
             imgUrls: [],
             headers: null, // 添加头
+            maxLength: 0,
             drag: false // 是否支持拖拽上传
         };
     },
@@ -46,7 +47,7 @@ export default {
             required: true
         },
         max: { // 最大上传数量
-            type: Number,
+            type: [Number, String],
             default () {
                 return 5;
             }
@@ -71,6 +72,7 @@ export default {
         ...mapGetters([
             'token'
         ]),
+        
         chageFiles () {
             let src = (typeof this.files === 'string' ? [this.files] : (this.files instanceof Array ? this.files : null));
             src.forEach(item => {
@@ -82,6 +84,7 @@ export default {
     },
     beforeMount () {
         this.disabled = this.readonly ? JSON.parse(this.readonly) : false;
+        this.maxLength = Number(this.max);
     },
     mounted () {
         this.headers = {
@@ -91,9 +94,11 @@ export default {
     },
     watch: {
         fileLists (val, oldval) {
-            this.$emit('getUrl', this.imgUrls);
+            
+       
             this.$emit('update:files', this.imgUrls);
             if (this.fileLists.length === this.max) {
+            if (this.fileLists.length === this.maxLength) {
                 $('.' + this.classx).find('.el-upload--picture-card').hide();
             } else {
                 $('.' + this.classx).find('.el-upload--picture-card').show();
@@ -126,13 +131,13 @@ export default {
                 });
                 return false;
             }
-            if (this.fileLists.length === this.max - 1) {
+            if (this.fileLists.length === this.maxLength - 1) {
                 $('.' + this.classx).find('.el-upload--picture-card').hide();
             }
-            if (this.fileLists.length === this.max) {
+            if (this.fileLists.length === this.maxLength) {
                 this.$notify.error({
                     title: '错误',
-                    message: '最多上传' + this.max + '个文件'
+                    message: '最多上传' + this.maxLength + '个文件'
                 });
                 return false;
             }
