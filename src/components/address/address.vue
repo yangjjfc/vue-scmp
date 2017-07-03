@@ -105,9 +105,12 @@ export default {
         // 设置地址
         setAddress () {
             this.$emit('onchange', {
-                province: this.provinceSelected[0],
-                city: this.citySelected[0],
-                district: this.districtSelected[0]
+                provinceName: this.provinceSelected[1],
+                provinceCode: this.provinceSelected[0],
+                cityName: this.citySelected[1],
+                cityCode: this.citySelected[0],
+                townName: this.districtSelected[1],
+                townCode: this.districtSelected[0]
             });
         },
         // 过滤地址

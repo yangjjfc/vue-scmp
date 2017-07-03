@@ -32,7 +32,7 @@
                 <el-table :data="tableDate" border >
                     <el-table-column prop="index" label="序号" width="70" align="center" >
                     </el-table-column>
-                     <el-table-column prop="supplierNo" label="供应商编号" min-width="110" align="center" >
+                     <el-table-column prop="supplierNo" label="供应商编号" min-width="140" align="" >
                     </el-table-column>
                      <el-table-column prop="supplierName" label="供应商名称" min-width="150"  >
                     </el-table-column>
@@ -60,7 +60,7 @@
                             <el-button size="mini" type="warning"  @click="detailSuppiler(scope.row.supplierNo,'audit')" v-if="scope.row.status =='2'">审核</el-button>
                             <el-button size="mini" type="primary"  @click="detailLog(scope.row.supplierNo)" >日志</el-button>
                             <el-button size="mini" type="info"  @click="setTime(scope.row.supplierNo)" >时间设置</el-button>
-                            <el-button size="mini" type="warning"  v-if="scope.row.erp =='0' && scope.row.erp ==3">开通erp</el-button>
+                            <el-button size="mini" type="warning"  @click="enabled(scope.row)" v-if="scope.row.erp =='0' && scope.row.status ==3">开通erp</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -78,7 +78,7 @@
                 <cert-time-set :showx.sync="showTime" :transMsg="msgx" ></cert-time-set>
             </el-col> 
             <el-col :span="24" v-if="showAdd">
-                <add-supplier :showx.sync="showAdd" :transMsg="msgx" ></add-supplier>
+                <add-supplier :showx.sync="showAdd" :transMsg="msgx"  @refresh="getList"></add-supplier>
             </el-col>     
         </el-row>
     </section>
@@ -91,7 +91,9 @@ import certTimeSet from './mods/certTimeSet';
 import addSupplier from './mods/addSupplier';
 const URL = {
     LIST: 'scm.platformSupplier.pageSupplier', // 分页列表
-    DETAIL: 'scm.platformSupplier.findEnterprise' // 详情-
+    DETAIL: 'scm.platformSupplier.findEnterprise', // 详情-
+    ENABLE: 'scm.platformSupplier.addERPAuth' // 开通erp-
+    
 };
 export default {
     name: 'supplier',
@@ -220,7 +222,26 @@ export default {
         // 添加供应商
         add () {
             this.showAdd = true;
-        }
+        },
+        // 启用erp
+        enabled (msg) {
+            this.$confirm('您确定要开通erp?', '开通erp', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                this.Http.post(URL.ENABLE, {
+                    enterpriseNo: msg.supplierNo
+                }).then((re) => {
+                    this.getList();
+                    this.$notify({
+                        title: '成功',
+                        message: '开通成功',
+                        type: 'success'
+                    });  
+                });  
+            }).catch(function () {});
+        }        
 
     },
     mounted () {

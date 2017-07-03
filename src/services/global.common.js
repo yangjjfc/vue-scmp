@@ -134,9 +134,12 @@ export const Validate = {
     },
     // 用户名
     validateloginAccount: async function (rule, value, callback) {
+        if (!isNaN(value)) {
+            callback(new Error('不能是纯数字'));
+        }
         if (this.send_status) {
             await this.Http.post(Validate.URL.isExistUserByLoginAccountForWeb, {
-                loginAccount: this.msgx.loginAccount
+                loginAccount: this.msgx[rule.field]
             }).then((re) => {
                 if (re.data) {
                     this.loginAccount_state = false;
@@ -172,7 +175,7 @@ export const Validate = {
     validatePhone: async function (rule, value, callback) {
         if (this.send_status && value.length > 0) {
             await this.Http.post(Validate.URL.ISEXIST, {
-                params: this.msgx.mobilePhone
+                params: this.msgx[rule.field]
             }).then((re) => {
                 if (re.data) {
                     this.phone_state = false;
@@ -193,7 +196,7 @@ export const Validate = {
     validateEmail: async function (rule, value, callback) {
         if (this.send_status && value.length > 0) {
             await this.Http.post(Validate.URL.EXISTEMAIL, {
-                params: this.msgx.email
+                params: this.msgx[rule.field]
             }).then((re) => {
                 if (re.data) {
                     this.malis_state = false;

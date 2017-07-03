@@ -33,7 +33,7 @@
     
                     <el-form-item label="注册地址" prop="registAddr">
                         <template scope="scope">
-                            <region-picker :region.sync="this.address"></region-picker>
+                            <region-picker :region.sync="msgx.address"></region-picker>
                             <el-input placeholder="注册地址" v-model="msgx.registAddr" size="small"></el-input>
                         </template>
                     </el-form-item>
@@ -57,98 +57,7 @@
                         <el-input placeholder="邮箱" v-model="msgx.email" size="small"></el-input>
                     </el-form-item>
                 </el-form>
-                <el-form label-width="100px" class="demo-dynamic" :model="cert_yyzz" >
-                        <div class="contenttitle_certs_title">
-                            <p>{{cert_yyzz.name}}</p>
-                        </div>
-                        <el-form-item label="证件号码" prop="certNo"  :rules="[  { required: true, message: '请输入证件号码', trigger: 'blur,change' },
-                          { pattern: /^\S{0,30}$/, message: '证件号码不能超过30个字符', trigger: 'blur,change' }]">
-                            <el-input placeholder="证件号码" v-model="cert_yyzz.certNo" size="small"></el-input>
-                        </el-form-item>
-                        <date-picker timeType="2"
-                        :startTime.sync="cert_yyzz.startTime"
-                        :endTime.sync="cert_yyzz.endTime"
-                        :prop="yyy"
-                        :rules="xxx"
-                        :full.sync="cert_yyzz.full"
-                        :isLong.sync="cert_yyzz.lonrTime"
-                        ></date-picker>
-                        <el-form-item label="证件图片" prop="idcardCertImg" :rules="[{ required: true, message: '请输入姓名', trigger: 'blur' }]">
-                            <template scope="scope">
-                                <el-input placeholder="证件图片" size="small" v-model="cert_yyzz.imgs" v-show="false"></el-input>
-                                <file-upload :files="cert_yyzz.imglist" :max="2" classx="12312" @getUrl=""></file-upload>
-                                <span class="tips">支持格式 : png. jpg. bmp. gif. pdf , 大小不超过5MB</span>
-                            </template>
-                        </el-form-item>
-                </el-form>
-                <el-form label-width="100px" class="demo-dynamic" :model="cert_yljyxkz" >
-                        <div class="contenttitle_certs_title">
-                            <p>{{cert_yljyxkz.name}}</p>
-                        </div>
-                        <el-form-item label="证件号码" prop="certNo"  :rules="[  { required: true, message: '请输入证件号码', trigger: 'blur,change' },
-                          { pattern: /^\S{0,30}$/, message: '证件号码不能超过30个字符', trigger: 'blur,change' }]">
-                            <el-input placeholder="证件号码" v-model="cert_yljyxkz.certNo" size="small"></el-input>
-                        </el-form-item>
-                        <date-picker timeType="2"
-                        :startTime.sync="cert_yljyxkz.startTime"
-                        :endTime.sync="cert_yljyxkz.endTime"
-                        :prop="yyy"
-                        :rules="xxx"
-                        :full.sync="cert_yljyxkz.full"
-                        :isLong.sync="cert_yljyxkz.lonrTime"
-                        ></date-picker>
-                        <el-form-item label="证件图片" prop="idcardCertImg" :rules="[{ required: true, message: '请输入姓名', trigger: 'blur' }]">
-                            <template scope="scope">
-                                <el-input placeholder="证件图片" size="small" v-model="cert_yljyxkz.imgs" v-show="false"></el-input>
-                                <file-upload :files="cert_yljyxkz.imglist" :max="2" classx="12312" @getUrl=""></file-upload>
-                                <span class="tips">支持格式 : png. jpg. bmp. gif. pdf , 大小不超过5MB</span>
-                            </template>
-                        </el-form-item>
-                </el-form>
-                <el-form label-width="100px" class="demo-dynamic" :model="cert_swdjz" >
-                        <div class="contenttitle_certs_title">
-                            <p>{{cert_swdjz.name}}</p>
-                        </div>
-                        <el-form-item label="证件号码" prop="certNo"  :rules="[  
-                          { pattern: /^\S{0,30}$/, message: '证件号码不能超过30个字符', trigger: 'blur,change' }]">
-                            <el-input placeholder="证件号码" v-model="cert_swdjz.certNo" size="small"></el-input>
-                        </el-form-item>
-                        <date-picker timeType="2"
-                        :startTime.sync="cert_swdjz.startTime"
-                        :endTime.sync="cert_swdjz.endTime"
-                        :full.sync="cert_swdjz.full"
-                        :isLong.sync="cert_swdjz.lonrTime"
-                        ></date-picker>
-                        <el-form-item label="证件图片" prop="idcardCertImg" >
-                            <template scope="scope">
-                                <el-input placeholder="证件图片" size="small" v-model="cert_swdjz.imgs" v-show="false"></el-input>
-                                <file-upload :files="cert_swdjz.imglist" :max="2" classx="12312" @getUrl=""></file-upload>
-                                <span class="tips">支持格式 : png. jpg. bmp. gif. pdf , 大小不超过5MB</span>
-                            </template>
-                        </el-form-item>
-                </el-form>
-                <el-form label-width="100px" class="demo-dynamic" :model="cert_zzdmjgz" >
-                        <div class="contenttitle_certs_title">
-                            <p>{{cert_zzdmjgz.name}}</p>
-                        </div>
-                        <el-form-item label="证件号码" prop="certNo"  :rules="[ 
-                          { pattern: /^\S{0,30}$/, message: '证件号码不能超过30个字符', trigger: 'blur,change' }]">
-                            <el-input placeholder="证件号码" v-model="cert_zzdmjgz.certNo" size="small"></el-input>
-                        </el-form-item>
-                        <date-picker timeType="2"
-                        :startTime.sync="cert_zzdmjgz.startTime"
-                        :endTime.sync="cert_zzdmjgz.endTime"
-                        :full.sync="cert_zzdmjgz.full"
-                        :isLong.sync="cert_zzdmjgz.lonrTime"
-                        ></date-picker>
-                        <el-form-item label="证件图片" prop="idcardCertImg" >
-                            <template scope="scope">
-                                <el-input placeholder="证件图片" size="small" v-model="cert_zzdmjgz.imgs" v-show="false"></el-input>
-                                <file-upload :files="cert_zzdmjgz.imglist" :max="2" classx="12312" @getUrl=""></file-upload>
-                                <span class="tips">支持格式 : png. jpg. bmp. gif. pdf , 大小不超过5MB</span>
-                            </template>
-                        </el-form-item>
-                </el-form>
+                <certs :transMsg="item" :verify="msgx.childRule" :ref="'cert'+index" :key="index" v-for="(item,index) in msgx.certs" ></certs>
             </div>
         </dailog>
     </section>
@@ -160,13 +69,13 @@ const URL = {
     ADDSUPPLIERMASTER: 'scm.platformSupplier.addSupplierMaster', // 添加供应商
     PAGENCSUPPLIERS: 'scm.platformSupplier.pageNotRegNcSuppliers' // NC供应商列表
 };
+import certs from './certs';
 import dailog from '@/components/Dailog';
 import queryList from '@/components/queryList';
 import regionPicker from '@/components/regionPicker';
-import datePicker from '@/components/datePicker';
 import fileUpload from '@/components/FileUpload';
 import { mapGetters } from 'vuex';
-import { encryption, Validate, addEvent } from '@/services/global.common';
+import { encryption, Validate } from '@/services/global.common';
 export default {
     name: 'staff-addUser',
     props: {
@@ -185,14 +94,6 @@ export default {
             phone_state: true,
             loginAccount_state: true,
             send_status: true,
-            yyy: {
-                startTime: 'startTime',
-                endTime: 'full' 
-            },
-            xxx: {
-                startTime: [{ required: true, message: '请输入开始时间', trigger: 'blur,change' }],
-                endTime: [{ required: true, message: '请输入结束时间或勾选长期', trigger: 'blur,change' }]
-            },
             search: {
                 pageIndex: 1,
                 pageSize: 10,
@@ -213,44 +114,10 @@ export default {
                 }],
                 value: 20
             },
-            cert_yljyxkz: {
-                name: '医疗器械经营企业许可证 (必填)',
-                certNo: '',
-                startTime: '',
-                endTime: '',
-                lonrTime: false,
-                imglist: [],
-                imgs: ''
-            },  
-            cert_swdjz: {
-                name: '税务登记证',
-                certNo: '',
-                startTime: '',
-                endTime: '',
-                lonrTime: false,
-                imglist: [],
-                imgs: ''
-            },  
-            cert_zzdmjgz: {
-                name: '组织机构代码证',
-                certNo: '',
-                startTime: '',
-                endTime: '',
-                lonrTime: false,
-                imglist: [],
-                imgs: ''
-            },  
-            cert_yyzz: {
-                name: '营业证照 (必填)',
-                certNo: '',
-                startTime: '',
-                endTime: '',
-                lonrTime: false,
-                imglist: [],
-                imgs: ''
-            },   
+           
             msgx: {
                 enterpriseName: '',
+                enterNC: '',
                 enterprise: {
                     isEdit: false,
                     showNc: false
@@ -260,17 +127,64 @@ export default {
                 linkTelphone: '',
                 registAddr: '',
                 address: {
-                    province: '浙江省',
-                    city: '杭州市',
-                    district: '西湖区'
+                    provinceName: '浙江省',
+                    provinceCode: '330000',
+                    cityName: '杭州市',
+                    cityCode: '330100',
+                    townName: '西湖区', 
+                    townCode: '330102'
                 },
                 loginAccount: '',
                 password: '',
                 repassword: '',
                 userName: '',
                 mobile: '',
-                email: ''
-                
+                email: '',
+                certs: [
+                    {
+                        name: '营业证照 (必填)',
+                        certNo: '',
+                        startTime: '',
+                        endTime: '',
+                        lonrTime: false,
+                        imglist: [],
+                        imgs: '',
+                        require: true,
+                        class: 'img1'
+                    }, { 
+                        name: '医疗器械经营企业许可证 (必填)',
+                        certNo: '',
+                        startTime: '',
+                        endTime: '',
+                        lonrTime: false,
+                        imglist: [],
+                        imgs: '',
+                        require: true,
+                        class: 'img2'
+                    },  
+                    {
+                        name: '税务登记证',
+                        certNo: '',
+                        startTime: '',
+                        endTime: '',
+                        lonrTime: false,
+                        imglist: [],
+                        imgs: '',
+                        require: false,
+                        class: 'img3'
+                    },  
+                    {
+                        name: '组织机构代码证',
+                        certNo: '',
+                        startTime: '',
+                        endTime: '',
+                        lonrTime: false,
+                        imglist: [],
+                        imgs: '',
+                        require: false,
+                        class: 'img4'
+                    }],
+                childRule: false    
             },
             rules: {
                 enterpriseName: [
@@ -319,18 +233,7 @@ export default {
                     { pattern: /^(?=\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$).{5,50}$/, message: '电子邮箱格式不正确,长度5-50字符之间', trigger: 'blur,change' },
                     { validator: Validate.validateEmail.bind(this), trigger: 'blur' }
                 ]
-                // certList: {
-                //     certNo: [
-                //         { required: true, message: '请输入证件号码', trigger: 'blur,change' },
-                //         { pattern: /^\S{0,30}$/, message: '证件号码不能超过30个字符', trigger: 'blur,change' }
-                //     ],
-                //     startTime: [
-                //         { required: true, message: '请输入开始时间', trigger: 'blur,change' }
-                //     ],
-                //     endTime: [
-                //         { required: true, message: '请输入结束时间或勾选长期', trigger: 'blur,change' }
-                //     ]
-                // }
+               
             }
         };
     },
@@ -344,49 +247,102 @@ export default {
     methods: {
         // 确认
         quire () {
-            // this.send_status = false;
-            // this.$refs.forms.validate((valid) => {
-            //     this.send_status = true;
-            //     if (!valid) {
-            //         return false;
-            //     } else {
-            //         let url;
-            //         let _data = {
-            //             userName: this.msgx.userName,
-            //             mobilePhone: this.msgx.mobilePhone,
-            //             email: this.msgx.email,
-            //             idcard: this.msgx.idcard,
-            //             isSms: 1,
-            //             idcardCertImg: this.msgx.idcardCertImg,
-            //             appCode: 'YSCM'
-            //         };
-            //         // 添加
-            //         if (this.type === 'add') {
-            //             url = URL.ADD;
-            //             _data = {..._data,
-            //                 loginAccount: this.msgx.loginAccount,
-            //                 password: encryption(this.msgx.password, this.clientid, this.token),
-            //                 orderSpecialist: this.msgx.orderSpecialist ? '0' : '1'};
-            //         } else {
-            //             _data = {..._data, userNo: this.msgx.userNo};
-            //             // 编辑
-            //             url = URL.EDIT;
-            //         }
-            //         this.Http.post(url, {
-            //             params: _data
-            //         }).then((re) => {
-            //             if (re.data) {
-            //                 this.$notify({
-            //                     title: '成功',
-            //                     message: this.type === 'add' ? '添加成功' : '编辑成功',
-            //                     type: 'success'
-            //                 });
-            //                 this.myshow = false;
-            //                 this.$emit('refresh');
-            //             }
-            //         });
-            //     }
-            // });
+            this.send_status = false;
+            this.$refs.forms.validate((valid) => {
+                this.send_status = true;
+                let flag = true;
+                for (let i = 0; i < 4; i++) {
+                    this.$refs['cert' + i][0].$refs.forms.validate((valid) => {
+                        if (!valid) {
+                            flag = false;
+                        }
+                    });
+                }
+                if (!flag) {
+                    return false;
+                }    
+                if (!valid) {
+                    return false;
+                } else {
+                    let url = URL.ADDSUPPLIERMASTER;
+                    let _data = {
+                        ncCompanyNo: this.supplierType.value === 20 ? '' : this.msgx.enterNC,
+                        enterpriseType: this.supplierType.value, 
+                        enterpriseName: this.msgx.enterpriseName,
+                        legalPerson: this.msgx.legalPerson,
+                        linkPerson: this.msgx.linkPerson,
+                        linkTelphone: this.msgx.linkTelphone,
+                        provinceCode: this.msgx.address.provinceCode,
+                        provinceName: this.msgx.address.provinceName,
+                        cityCode: this.msgx.address.cityCode,
+                        cityName: this.msgx.address.cityName,
+                        townCode: this.msgx.address.townCode,
+                        townName: this.msgx.address.townName,
+                        regAddr: this.msgx.registAddr,
+                        loginAccount: this.msgx.loginAccount,
+                        password: encryption(this.msgx.password, this.clientid, this.token),
+                        userName: this.msgx.userName,
+                        mobile: this.msgx.mobile,
+                        email: this.msgx.email,
+                        certs: []
+                    };
+                    for (let i = 0; i < 4; i++) {
+                        let certInfo = this.createCert(i);
+                        if (certInfo) {
+                            _data.certs.push(certInfo);
+                        }
+                    }
+                    this.Http.post(url, {
+                        params: _data
+                    }).then((re) => {
+                        if (re.data) {
+                            this.$notify({
+                                title: '成功',
+                                message: '添加成功',
+                                type: 'success'
+                            });
+                            this.myshow = false;
+                            this.$emit('refresh');
+                        }
+                    });
+                }
+            });
+        }, 
+        createCert (num) {
+            let type = '';
+            switch (num) {
+            case 0:
+                type = 'yyzz';  
+                break;
+            case 1:
+                type = 'ylqxjyqyxkz';  
+                break;
+            case 2:
+                type = 'swdjz';  
+                break;
+            case 3:
+                type = 'zzjgdmz';  
+                break;
+            default:
+                break;
+            }
+            if (num === 2 || num === 3) {
+                if (!this.$refs['cert' + num][0].msg.certNo ||
+                 !this.$refs['cert' + num][0].msg.startTime || 
+                 (!this.$refs['cert' + num][0].msg.endTime && !this.$refs['cert' + num][0].msg.lonrTime && this.$refs['cert' + num][0].msg.endTime === '2099-01-01') || 
+                 this.$refs['cert' + num][0].msg.imglist.length === 0) {
+                    return;
+                }
+            } 
+            let imgUrl = {
+                certCode: this.$refs['cert' + num][0].msg.certNo,
+                startTime: this.$refs['cert' + num][0].msg.startTime,
+                endTime: this.$refs['cert' + num][0].msg.endTime,
+                longTerm: this.$refs['cert' + num][0].msg.lonrTime ? '1' : '0',
+                fileUrl: this.$refs['cert' + num][0].msg.imglist && this.$refs['cert' + num][0].msg.imglist[0],
+                certType: type
+            };  
+            return imgUrl;
         },
         // 确认
         async getData () {
@@ -398,15 +354,6 @@ export default {
                     this.files = this.msgx.idcardCertImg;
                 }
             });
-        },
-        // 模拟图片长传,添加input值,方便验证表单
-        getUrl (data) {
-            this.msgx.idcardCertImg = data;
-            if (data.length > 0) {
-                this.msgx.cert = '123';
-            } else {
-                this.msgx.cert = '';
-            }
         },
         getNcList () {
             if (!this.msgx.enterprise.isEdit) {
@@ -425,7 +372,6 @@ export default {
             });
         },
         changeSelect (val) {
-            console.log(this.resetmsg);
             this.msgx = this.resetmsg;
             this.$refs.forms.resetFields();
             if (val === 21) {
@@ -453,16 +399,14 @@ export default {
     },
     beforeMount () {
         this.myshow = this.showx;
-        this.resetmsg = _.cloneDeep(this.msgx);
-        console.log(this.resetmsg === this.msgx);
-        console.log(this.resetmsg);
+       // this.resetmsg = _.cloneDeep(this.msgx);
     },
     components: {
         dailog,
         fileUpload,
         queryList,
         regionPicker,
-        datePicker
+        certs
     }
 
 };
@@ -474,9 +418,6 @@ export default {
     position: inherit;
 }
 
-.demo-dynamic {
-    // width: 80%
-}
 
 .staff-adduser-img {
     height: 100px;

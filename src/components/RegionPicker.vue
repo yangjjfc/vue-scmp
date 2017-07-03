@@ -1,6 +1,6 @@
 <template>
     <div>
-        <adderss :regions="chinaAddr" :province="region.province" :city="region.city" :district="region.district" @onchange="change" classx="adderss">
+        <adderss :regions="chinaAddr" :province="region.provinceName" :city="region.cityName" :district="region.townName" @onchange="change" classx="adderss">
         </adderss>
     </div>
 </template>
@@ -18,9 +18,10 @@ export default {
         region: {
             type: Object,
             default () {
-                return { province: '浙江省', // you can set initial value or not.
-                    city: '杭州市', // by code or name.
-                    district: '西湖区'
+                return { 
+                    provinceName: '浙江省', // you can set initial value or not.
+                    cityName: '杭州市', // by code or name.
+                    townName: '西湖区'
                 };
             }
         }
@@ -37,7 +38,7 @@ export default {
 </script>
 <style lang="scss">
 .adderss {
-    width: 32%;
+    width: 32.5%;
     margin-bottom: 5px;
 }
 </style>

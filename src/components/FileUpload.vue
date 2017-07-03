@@ -87,20 +87,22 @@ export default {
         this.headers = {
             jtoken: this.token
         };
+        this.chageFiles;
     },
     watch: {
         fileLists (val, oldval) {
             this.$emit('getUrl', this.imgUrls);
+            this.$emit('update:files', this.imgUrls);
             if (this.fileLists.length === this.max) {
                 $('.' + this.classx).find('.el-upload--picture-card').hide();
             } else {
                 $('.' + this.classx).find('.el-upload--picture-card').show();
             }
-        },
-        // 图片数据变化
-        files () {
-            this.chageFiles;
         }
+        // // 图片数据变化
+        // files () {
+        //     this.chageFiles;
+        // }
     },
 
     methods: {
