@@ -63,8 +63,8 @@
 			<section class="content-container">
 				<div class="grid-content bg-purple-light">
 					<el-col :span="24" class="breadcrumb-container">
-						<i class="iconfont icon-index"></i>
-						<span>首页</span>
+						<i class="iconfont " :class="activeMenu.classx"></i>
+						<span v-text="activeMenu.name"></span>
 					</el-col>
 					<el-col :span="24" class="content-wrapper">
 						<transition name="fade" mode="out-in">
@@ -89,6 +89,10 @@ export default {
             collapsed: false, // 是否缩进
             sysUserName: '', // 客户名称
             menuList: '', // 菜单
+            activeMenu: {
+                classx: 'icon-index',
+                name: '首页'
+            },
             sysUserAvatar: '',
             font: 'sidebar-iconfont iconfont'
         };

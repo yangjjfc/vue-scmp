@@ -49,7 +49,7 @@
                         </el-table-column>
                          <el-table-column prop="index" label="注册证图片" width="120" align="center" >
                          <template scope="scope">
-                            <fileList  :files="scope.registImg"></fileList>
+                            <fileList size="small" :files="scope.row.registImg"></fileList>
                          </template>
                         </el-table-column>
                     </el-table>
@@ -62,11 +62,11 @@
                             <tbody>
                             <tr>
                                 <td class="table_name">注册证主图</td>
-                                <td> <FileUpload max = 1 :files= "files" ></FileUpload> </td>
+                                <td> <FileUpload max = 1 :files.sync= "files" ></FileUpload> </td>
                             </tr>
                             <tr>
                                 <td class="table_name">注册证附件</td>
-                                <td> <FileUpload max = 4 :files= "plugsImg"></FileUpload> </td>
+                                <td> <FileUpload max = 4 :files.sync= "plugsImg"></FileUpload> </td>
                             </tr>
                             </tbody>
                             </table>
@@ -192,8 +192,8 @@
                 } else { // 手工上传
                     if (this.files.length) {
                         this.commit({
-                            topUrl: this.files,
-                            registImgAttach: this.plugsImg
+                            topUrl: this.files.join(';'),
+                            registImgAttach: this.plugsImg.join(';')
                         });
                     } else {
                         this.$message({

@@ -94,14 +94,13 @@ export default {
     },
     watch: {
         fileLists (val, oldval) {
-            
-       
             this.$emit('update:files', this.imgUrls);
             if (this.fileLists.length === this.max) {
-            if (this.fileLists.length === this.maxLength) {
-                $('.' + this.classx).find('.el-upload--picture-card').hide();
-            } else {
-                $('.' + this.classx).find('.el-upload--picture-card').show();
+                if (this.fileLists.length === this.maxLength) {
+                    $('.' + this.classx).find('.el-upload--picture-card').hide();
+                } else {
+                    $('.' + this.classx).find('.el-upload--picture-card').show();
+                }
             }
         }
         // // 图片数据变化
