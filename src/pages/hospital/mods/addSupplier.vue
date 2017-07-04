@@ -1,27 +1,21 @@
 <template>
     <section>
-        <dailog size="small" :show.sync="myshow" title="添加供应商" @ok="quire">
+        <dailog size="small" :show.sync="myshow" title="添加客户" @ok="quire">
             <div slot="content">
                 <el-form :rules="rules" ref="forms" label-width="100px" class="demo-dynamic" :model="msgx">
-                    <div class="content_title">供应商信息</div>
-                    <el-form-item label="供应商类型">
-                        <el-select v-model="supplierType.value" placeholder="供应商类型" size="small" @change="changeSelect" style="width:100%">
-                            <el-option v-for="item in supplierType.options" :label="item.label" :value="item.value" :key="item.label"></el-option>
+                    <div class="content_title">客户信息</div>
+                    <el-form-item label="客户类型">
+                        <el-select v-model="curtomerType.value" placeholder="客户类型" size="small" @change="changeSelect" style="width:100%">
+                            <el-option v-for="item in curtomerType.options" :label="item.label" :value="item.value" :key="item.label"></el-option>
                         </el-select>
                     </el-form-item>
-                    <el-form-item label="公司名称" prop="enterpriseName">
+                    <el-form-item label="客户名称" prop="curtomerName">
                         <template scope="scope">
-                            <el-input placeholder="公司名称" v-model="msgx.enterpriseName" :readonly="msgx.enterprise.isEdit" @click.native="getNcList" size="small"></el-input>
-                            <query-list @change="getNcList" :keyWords.sync="search.keywords" :showx.sync="msgx.enterprise.showNc" :pageSize="search.pageSize" :pageIndex.sync="search.pageIndex" :total="search.total">
-                                <ul slot="quire_content">
-                                    <li v-if="search.info.length>0" v-for="(item,index) in search.info" :key="index"  @click="checkNc(item)">{{item.supplierName}}</li>
-                                    <li v-if="search.info.length==0" style="cursor:default">暂无数据</li>
-                                </ul>
-                            </query-list>
+                            <el-input placeholder="客户名称" v-model="msgx.curtomerName" :readonly="msgx.curtomer.isEdit" @click.native="getNcList" size="small"></el-input>
                         </template>
                     </el-form-item>
-                    <el-form-item label="法人代表" prop="legalPerson">
-                        <el-input placeholder="法人代表" type="legalPerson" v-model="msgx.legalPerson" size="small"></el-input>
+                    <el-form-item label="院长" prop="legalPerson">
+                        <el-input placeholder="院长" type="legalPerson" v-model="msgx.legalPerson" size="small"></el-input>
                     </el-form-item>
                     <el-form-item label="联系人" prop="linkPerson">
                         <el-input placeholder="联系人" type="linkPerson" v-model="msgx.linkPerson" size="small"></el-input>
@@ -35,6 +29,14 @@
                             <region-picker :region.sync="msgx.address"></region-picker>
                             <el-input placeholder="注册地址" v-model="msgx.registAddr" size="small"></el-input>
                         </template>
+                    </el-form-item>
+                    <el-form-item label="区域" prop="regionName">
+                        <el-input placeholder="区域" v-model="msgx.regionName" size="small"></el-input>
+                    </el-form-item>
+                    <el-form-item label="客户性质">
+                        <el-select v-model="msgx.curtomerType.value" placeholder="客户性质" size="small" @change="changeSelect" style="width:100%">
+                            <el-option v-for="item in msgx.curtomerType.options" :label="item.label" :value="item.value" :key="item.label"></el-option>
+                        </el-select>
                     </el-form-item>
                     <div class="content_title">账号信息</div>
                     <el-form-item label="登入账号" prop="loginAccount">
@@ -55,8 +57,11 @@
                     <el-form-item label="邮箱" prop="email">
                         <el-input placeholder="邮箱" v-model="msgx.email" size="small"></el-input>
                     </el-form-item>
+                     <el-form-item label="开通SCM" prop="email">
+                         <el-checkbox  name="type" v-model="msgx.scm"></el-checkbox>
+                    </el-form-item>
                 </el-form>
-                <certs :transMsg="item" :verify="msgx.childRule" :ref="'cert'+index" :key="index" v-for="(item,index) in msgx.certs" ></certs>
+                <certs :transMsg="item"  :ref="'cert'+index" :key="index" v-for="(item,index) in msgx.certs" ></certs>
             </div>
         </dailog>
     </section>
@@ -68,7 +73,7 @@ const URL = {
     ADDSUPPLIERMASTER: 'scm.platformSupplier.addSupplierMaster', // 添加供应商
     PAGENCSUPPLIERS: 'scm.platformSupplier.pageNotRegNcSuppliers' // NC供应商列表
 };
-import certs from './certs';
+import certs from '@/pages/supplier/mods/certs';
 import dailog from '@/components/Dailog';
 import queryList from '@/components/queryList';
 import regionPicker from '@/components/regionPicker';
@@ -101,21 +106,25 @@ export default {
                 info: []
             },
             resetmsg: '', // 初始化数据
-            supplierType: { // 供应商类型
+            curtomerType: { // 供应商类型
                 options: [{
                     value: 20,
-                    label: '外部供应商'
+                    label: '合作共建'
                 },
                 {
                     value: 21,
-                    label: 'NC供应商'
+                    label: '非合作共建'
+                },
+                {
+                    value: 22,
+                    label: '检验子公司'
                 }],
                 value: 20
             },
             msgx: { // 数据
-                enterpriseName: '',
-                enterNC: '',
-                enterprise: {
+                curtomerName: '',
+                ncCompanyNo: '',
+                curtomer: {
                     isEdit: false,
                     showNc: false
                 },
@@ -131,6 +140,19 @@ export default {
                     townName: '西湖区', 
                     townCode: '330102'
                 },
+                regionName: '',
+                regionNo: '',
+                curtomerType: { // 供应商类型
+                    options: [{
+                        value: 1,
+                        label: '公立医院'
+                    },
+                    {
+                        value: 0,
+                        label: '民营医院'
+                    }],
+                    value: 1
+                },  
                 loginAccount: '',
                 password: '',
                 repassword: '',
@@ -139,7 +161,7 @@ export default {
                 email: '',
                 certs: [
                     {
-                        name: '营业证照 (必填)',
+                        name: '医疗器械经营企业许可证 (必填)',
                         certNo: '',
                         startTime: '',
                         endTime: '',
@@ -149,7 +171,7 @@ export default {
                         require: true,
                         class: 'img1'
                     }, { 
-                        name: '医疗器械经营企业许可证 (必填)',
+                        name: '事业单位法人证 (必填)',
                         certNo: '',
                         startTime: '',
                         endTime: '',
@@ -158,52 +180,32 @@ export default {
                         imgs: '',
                         require: true,
                         class: 'img2'
-                    },  
-                    {
-                        name: '税务登记证',
-                        certNo: '',
-                        startTime: '',
-                        endTime: '',
-                        lonrTime: false,
-                        imglist: [],
-                        imgs: '',
-                        require: false,
-                        class: 'img3'
-                    },  
-                    {
-                        name: '组织机构代码证',
-                        certNo: '',
-                        startTime: '',
-                        endTime: '',
-                        lonrTime: false,
-                        imglist: [],
-                        imgs: '',
-                        require: false,
-                        class: 'img4'
-                    }],
-                childRule: false    
+                    }]
             },
             // 校验规则
             rules: {
-                enterpriseName: [
-                    { required: true, message: '请输入公司名称', trigger: 'blur' },
-                    { pattern: /^\S{0,30}$/, message: '公司名称不能超过30个字符', trigger: 'blur,change' }
+                curtomerName: [
+                    { required: true, message: '请输入客户名称', trigger: 'blur' },
+                    { pattern: /^\S{0,30}$/, message: '客户名称不能超过30个字符', trigger: 'blur,change' }
                 ],
                 legalPerson: [
-                    { required: true, message: '请输入法人代表', trigger: 'blur,change' },
-                    { pattern: /^\S{0,30}$/, message: '法人代表不能超过30个字符', trigger: 'blur,change' }
+                    { required: true, message: '请输入院长', trigger: 'blur,change' },
+                    { pattern: /^\S{0,30}$/, message: '院长不能超过30个字符', trigger: 'blur,change' }
                 ],
                 linkPerson: [
                     { required: true, message: '请输入联系人', trigger: 'blur,change' },
                     { pattern: /^\S{0,30}$/, message: '联系人不能超过30个字符', trigger: 'blur,change' }
                 ],
                 linkTelphone: [
-                    { pattern: /^(((13[0-9]{1})|(14[0-9]{1})|(15[0-9]{1})|(17[0-9]{1})|(18[0-9]{1}))+\d{8})$/, message: '联系电话格式有误,有效11个字符', trigger: 'blur,change' }
+                    { pattern: /^1[34578]\d{9}$/, message: '联系电话格式有误,有效11个字符', trigger: 'blur,change' }
                 ],
                 registAddr: [
                     { required: true, message: '请输入注册地址' },
                     { pattern: /^\S{0,120}$/, message: '注册地址不能超过120个字符', trigger: 'blur,change' }
                 ],
+                regionName: [
+                    { required: true, message: '请输入区域', trigger: 'blur,change' }
+                ], 
                 loginAccount: [
                     { required: true, message: '请输入登录账号', trigger: 'blur,change' },
                     { pattern: /^\w{6,20}$/, message: '登录账号仅支持数字、字母、下划线“_”，长度6-20位', trigger: 'blur,change' },
@@ -264,8 +266,8 @@ export default {
                 } else {
                     let url = URL.ADDSUPPLIERMASTER;
                     let _data = {
-                        ncCompanyNo: this.supplierType.value === 20 ? '' : this.msgx.enterNC,
-                        enterpriseType: this.supplierType.value, 
+                        ncCompanyNo: this.curtomerType.value === 20 ? '' : this.msgx.enterNC,
+                        enterpriseType: this.curtomerType.value, 
                         enterpriseName: this.msgx.enterpriseName,
                         legalPerson: this.msgx.legalPerson,
                         linkPerson: this.msgx.linkPerson,
@@ -345,7 +347,7 @@ export default {
         },
         // nc下拉列表
         getNcList () {
-            if (!this.msgx.enterprise.isEdit) {
+            if (!this.msgx.curtomer.isEdit) {
                 return;
             }
             this.Http.post(URL.PAGENCSUPPLIERS, {
@@ -355,7 +357,7 @@ export default {
                     keywords: this.search.keywords
                 }
             }).then((re) => {
-                this.msgx.enterprise.showNc = true;
+                this.msgx.curtomer.showNc = true;
                 this.search.total = re.data.total;
                 this.search.info = re.data.rows;
             });
@@ -365,14 +367,14 @@ export default {
             this.msgx = this.resetmsg;
             this.$refs.forms.resetFields();
             if (val === 21) {
-                this.msgx.enterprise.isEdit = true;
+                this.msgx.curtomer.isEdit = true;
             } else {
-                this.msgx.enterprise.isEdit = false;
+                this.msgx.curtomer.isEdit = false;
             }
         },
         // nc列表点击事件
         checkNc (item) {
-            this.msgx.enterprise.showNc = false;
+            this.msgx.curtomer.showNc = false;
             this.msgx.enterpriseName = item.supplierName;
             this.msgx.legalPerson = item.legalPerson;
             this.msgx.linkPerson = item.linkPerson;

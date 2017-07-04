@@ -14,7 +14,7 @@ const createMenu = () => {
     }, {
         name: '客户管理',
         icon: 'icon-iconfontyiyuan',
-        state: '/index',
+        state: '/hospital',
         hidden: roles.indexOf('platform:hospital') === -1
 
     }, {
