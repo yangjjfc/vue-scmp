@@ -7,7 +7,7 @@
         <footer class="quire_footer">
             <el-pagination  layout="prev, next" :pageIndex="pageIndex" @current-change="changePage" :pageSize="pageSize" :total="total" class="left quire_pagination"></el-pagination>
             <div class="right mgr10">
-                <el-input placeholder=""  v-model="keyWordx" size="small" class="w200" @keyup.enter.native="search"></el-input>
+                <el-input placeholder=""  v-model="keyWordx" size="small" class="w200 key" @keyup.enter.native="search"></el-input>
                 <el-button type="primary" size="small" class="" @click="search">筛选</el-button>
                 <el-button   size="small" class="mgl5" @click="reset">重置</el-button>
             </div>
@@ -100,6 +100,7 @@ $bottom_height:45px;
             position:relative;
             top: 4px;
         }
+       
         .quire_pagination{
             position: relative;
             top:2px;

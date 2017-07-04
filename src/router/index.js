@@ -13,6 +13,7 @@ const orderDetail = r => require.ensure([], () => r(require('../pages/order/deta
 const preserve = r => require.ensure([], () => r(require('../pages/cert/preserve/Preserve.vue')), 'preserve');
 const electronic = r => require.ensure([], () => r(require('../pages/cert/electronic/Electronic.vue')), 'electronic');
 const vendor = r => require.ensure([], () => r(require('../pages/cert/vendor/Vendor.vue')), 'vendor');
+const hospital = r => require.ensure([], () => r(require('../pages/hospital/hospital.vue')), 'hospital');
 import Auth from '../pages/auth/Auth';
 export default [
     {
@@ -36,6 +37,7 @@ export default [
             { path: '/logistic', component: logistic, name: 'logistic' }, // 配送管理
             { path: '/logistic/detail/:deliveryNo/:passKey', component: logisticDetail, name: 'logisticDetail' },
             { path: '/supplier', component: supplier, name: 'supplier' },
+            { path: '/hospital', component: hospital, name: 'hospital' },
             { path: '/order', component: order, name: 'order' },
             { path: '/order/detail/:orderNo/:passkey', component: orderDetail, name: 'orderDetail' },
             { path: '/cert/preserve', component: preserve, name: 'preserve' }, // 证件维护
