@@ -89,7 +89,9 @@ export default {
     data () {
         return {
             myshow: false, // 是否显示弹框
-            malis_state: true, // 邮件状态
+            enterpriseName_state: true, // 供应商状态
+            mobile_state: true, // 手机状态
+            email_state: true, // 邮件状态
             loginAccount_state: true, // 登入状态
             send_status: true, // 发送状态
             search: { // nc的搜索
@@ -187,7 +189,8 @@ export default {
             rules: {
                 enterpriseName: [
                     { required: true, message: '请输入公司名称', trigger: 'blur' },
-                    { pattern: /^\S{0,30}$/, message: '公司名称不能超过30个字符', trigger: 'blur,change' }
+                    { pattern: /^\S{0,30}$/, message: '公司名称不能超过30个字符', trigger: 'blur,change' },
+                    { validator: Validate.validateloginAccount.bind(this), trigger: 'blur' }
                 ],
                 legalPerson: [
                     { required: true, message: '请输入法人代表', trigger: 'blur,change' },
@@ -378,6 +381,7 @@ export default {
             this.msgx.linkPerson = item.linkPerson;
             this.msgx.linkTelphone = item.linkTelphone;
             this.msgx.registAddr = item.registAddr;
+            this.$refs.forms.validateField('enterpriseName');
         }
     },
     watch: {

@@ -134,25 +134,27 @@ export const Validate = {
     },
     // 用户名
     validateloginAccount: async function (rule, value, callback) {
-        if (!isNaN(value)) {
+        if (!isNaN(value) && value) {
             callback(new Error('不能是纯数字'));
         }
-        if (this.send_status) {
+        if (this.send_status && value) {
             await this.Http.post(Validate.URL.isExistUserByLoginAccountForWeb, {
                 loginAccount: this.msgx[rule.field]
             }).then((re) => {
                 if (re.data) {
-                    this.loginAccount_state = false;
+                    this[rule.field + '_state'] = false;
                     callback(new Error('用户名已存在'));
                 } else {
-                    this.loginAccount_state = true;
+                    this[rule.field + '_state'] = true;
                     callback();
                 }
             });
-        } else if (!this.loginAccount_state) {
+        } else if (!value.length) { 
+            callback();
+        } else if (!this[rule.field + '_state']) {
             callback(new Error('用户名已存在'));
         } else {
-            this.loginAccount_state = true;
+            this[rule.field + '_state'] = true;
             callback();
         }
     },
@@ -178,17 +180,19 @@ export const Validate = {
                 params: this.msgx[rule.field]
             }).then((re) => {
                 if (re.data) {
-                    this.phone_state = false;
+                    this[rule.field + '_state'] = false;
                     callback(new Error('该手机号已占用'));
                 } else {
-                    this.phone_state = true;
+                    this[rule.field + '_state'] = true;
                     callback();
                 }
             });
-        } else if (!this.phone_state) {
+        } else if (!value.length) { 
+            callback();
+        } else if (!this[rule.field + '_state']) {
             callback(new Error('该手机号已占用'));
         } else {
-            this.phone_state = true;
+            this[rule.field + '_state'] = true;
             callback();
         }
     },
@@ -199,17 +203,19 @@ export const Validate = {
                 params: this.msgx[rule.field]
             }).then((re) => {
                 if (re.data) {
-                    this.malis_state = false;
+                    this[rule.field + '_state'] = false;
                     callback(new Error('该邮箱已占用'));
                 } else {
-                    this.malis_state = true;
+                    this[rule.field + '_state'] = true;
                     callback();
                 }
             });
-        } else if (!this.malis_state) { // 提交时验证处理
+        } else if (!value.length) { 
+            callback();
+        } else if (!this[rule.field + '_state']) { // 提交时验证处理
             callback(new Error('该邮箱已占用'));
         } else {
-            this.malis_state = true;
+            this[rule.field + '_state'] = true;
             callback();
         }
     }
