@@ -17,6 +17,7 @@ const hospital = r => require.ensure([], () => r(require('../pages/hospital/hosp
 const entrust = r => require.ensure([], () => r(require('../pages/cert/entrust/Entrust.vue')), 'entrust');
 const promise = r => require.ensure([], () => r(require('../pages/cert/promise/Promise.vue')), 'promise');
 const certAuth = r => require.ensure([], () => r(require('../pages/cert/auth/CertAuth.vue')), 'promise');
+const product = r => require.ensure([], () => r(require('../pages/product/product.vue')), 'product');
 import Auth from '../pages/auth/Auth';
 export default [
     {
@@ -41,6 +42,7 @@ export default [
             { path: '/logistic/detail/:deliveryNo/:passKey', component: logisticDetail, name: 'logisticDetail' },
             { path: '/supplier', component: supplier, name: 'supplier' },
             { path: '/hospital', component: hospital, name: 'hospital' },
+            { path: '/product', component: product, name: 'product' },
             { path: '/order', component: order, name: 'order' },
             { path: '/order/detail/:orderNo/:passkey', component: orderDetail, name: 'orderDetail' },
             { path: '/cert/preserve', component: preserve, name: 'preserve' }, // 证件维护

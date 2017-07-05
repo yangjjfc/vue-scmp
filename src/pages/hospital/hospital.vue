@@ -232,8 +232,9 @@ export default {
         reset () {
             this.pageIndex = 1;
             this.from.keywords = '';
+            this.from.search_scm.value = -1;
+            this.from.search_type.value = -1;
             this.from.search_State.value = -1;
-            this.from.search_erp.value = -1;
             this.getList(1);
         },
         // select change event
