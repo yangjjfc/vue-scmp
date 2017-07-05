@@ -5,14 +5,19 @@
                 <el-form :rules="rules" ref="forms" label-width="100px" class="demo-dynamic" :model="msgx">
                     <div class="content_title">客户信息</div>
                     <el-form-item label="客户类型">
-                        <el-select v-model="curtomerType.value" placeholder="客户类型" size="small" @change="changeSelect" style="width:100%">
+                        <el-select v-model.lazy="curtomerType.value" placeholder="客户类型" size="small" @change="changeCurtomerType" style="width:100%">
                             <el-option v-for="item in curtomerType.options" :label="item.label" :value="item.value" :key="item.label"></el-option>
                         </el-select>
                     </el-form-item>
-                    <el-form-item label="客户名称" prop="curtomerName">
+                    <el-form-item label="客户名称" prop="companyName">
                         <template scope="scope">
-                            <el-input placeholder="客户名称" v-model="msgx.curtomerName" :readonly="msgx.curtomer.isEdit" @click.native="getNcList" size="small"></el-input>
+                            <el-input placeholder="客户名称" v-model="msgx.companyName" class="companyName" :readonly="msgx.curtomer.isEdit" @click.native="getNcList" size="small"></el-input>
+                            <ul class="nc_box" v-show="msgx.curtomer.showchild">
+                                <li v-if="!msgx.curtomer.childData.length">查询无结果</li>
+                                <li v-else v-for="(item,index) in msgx.curtomer.childData" :key="index" @click="checkChild(item)">{{item.companyName}}</li>
+                            </ul>
                         </template>
+    
                     </el-form-item>
                     <el-form-item label="院长" prop="legalPerson">
                         <el-input placeholder="院长" type="legalPerson" v-model="msgx.legalPerson" size="small"></el-input>
@@ -27,15 +32,27 @@
                     <el-form-item label="注册地址" prop="registAddr">
                         <template scope="scope">
                             <region-picker :region.sync="msgx.address"></region-picker>
-                            <el-input placeholder="注册地址" v-model="msgx.registAddr" size="small"></el-input>
+                            <el-input placeholder="注册地址" v-model="msgx.registAddr" size="small" style="margin-bottom:6px"></el-input>
                         </template>
                     </el-form-item>
                     <el-form-item label="区域" prop="regionName">
-                        <el-input placeholder="区域" v-model="msgx.regionName" size="small"></el-input>
+                        <template scope="scope">
+                            <el-input placeholder="区域" v-model="msgx.regionName" size="small" :readonly="true" @click.native="selcetregionName"></el-input>
+                            <el-tabs type="border-card" class="zone_box" v-if="msgx.regionShow" :activeName="msgx.regionData[0].areaNo" @click.native.stop="">
+                                <el-tab-pane v-for="(item,index) in msgx.regionData" :label="item.areaName" :name="item.areaNo" :key="item.areaNo">
+                                    <ul>
+                                        <li v-for="(itemx,index) in item.areaList" class="checkZone" @click="checkZone(item.areaName,itemx)">
+                                            {{itemx.areaName}}
+                                        </li>
+                                    </ul>
+                                </el-tab-pane>
+                            </el-tabs>
+                        </template>
                     </el-form-item>
                     <el-form-item label="客户性质">
-                        <el-select v-model="msgx.curtomerType.value" placeholder="客户性质" size="small" @change="changeSelect" style="width:100%">
-                            <el-option v-for="item in msgx.curtomerType.options" :label="item.label" :value="item.value" :key="item.label"></el-option>
+                        <el-input v-model="msgx.nature" size="small" v-if="msgx.nature" :readonly="true" ></el-input>
+                        <el-select v-else v-model="msgx.natureType.value" placeholder="客户性质" size="small" style="width:100%" @change="changeNatureType">
+                            <el-option v-for="item in msgx.natureType.options" :label="item.label" :value="item.value" :key="item.label"></el-option>
                         </el-select>
                     </el-form-item>
                     <div class="content_title">账号信息</div>
@@ -57,11 +74,11 @@
                     <el-form-item label="邮箱" prop="email">
                         <el-input placeholder="邮箱" v-model="msgx.email" size="small"></el-input>
                     </el-form-item>
-                     <el-form-item label="开通SCM" prop="email">
-                         <el-checkbox  name="type" v-model="msgx.scm"></el-checkbox>
+                    <el-form-item label="开通SCM" prop="scm" v-if="!msgx.nature">
+                        <el-checkbox name="type" v-model="msgx.scm" class="scm"></el-checkbox>
                     </el-form-item>
                 </el-form>
-                <certs :transMsg="item"  :ref="'cert'+index" :key="index" v-for="(item,index) in msgx.certs" ></certs>
+                <certs :transMsg="item" :ref="'cert'+index" :key="index" v-for="(item,index) in msgx.certs"></certs>
             </div>
         </dailog>
     </section>
@@ -70,8 +87,9 @@
 <script>
 'use strict';
 const URL = {
-    ADDSUPPLIERMASTER: 'scm.platformSupplier.addSupplierMaster', // 添加供应商
-    PAGENCSUPPLIERS: 'scm.platformSupplier.pageNotRegNcSuppliers' // NC供应商列表
+    GETCUSTOMAREA: 'scm.common.getCustomArea', // 查询自定义区域
+    SELECTNCCOMPANYS: 'scm.platformCustomer.selectNcCompanys', // 查询可以添加的检验子公司
+    ADDHOSPITALMASTER: 'scm.platformCustomer.addHospitalMaster' // 添加合作共建
 };
 import certs from '@/pages/supplier/mods/certs';
 import dailog from '@/components/Dailog';
@@ -79,7 +97,7 @@ import queryList from '@/components/queryList';
 import regionPicker from '@/components/regionPicker';
 import fileUpload from '@/components/FileUpload';
 import { mapGetters } from 'vuex';
-import { encryption, Validate } from '@/services/global.common';
+import { encryption, Validate, addEvent } from '@/services/global.common';
 export default {
     name: 'staff-addUser',
     props: {
@@ -94,7 +112,10 @@ export default {
     data () {
         return {
             myshow: false, // 是否显示弹框
-            malis_state: true, // 邮件状态
+            companyName_state: true, // 客户名称状态
+            linkTelphone_state: true, // 联系电话状态
+            mobile_state: true, // 手机号码状态
+            email_state: true, // 邮箱状态
             loginAccount_state: true, // 登入状态
             send_status: true, // 发送状态
             search: { // nc的搜索
@@ -104,9 +125,20 @@ export default {
                 full: '',
                 keywords: '',
                 info: []
-            },
+            }, 
+            cert_sydwfrz: {
+                name: '事业单位法人证 (必填)',
+                certNo: '',
+                startTime: '',
+                endTime: '',
+                lonrTime: false,
+                imglist: [],
+                imgs: '',
+                require: true,
+                class: 'img2'
+            }, 
             resetmsg: '', // 初始化数据
-            curtomerType: { // 供应商类型
+            curtomerType: { // 客户类型
                 options: [{
                     value: 20,
                     label: '合作共建'
@@ -122,11 +154,12 @@ export default {
                 value: 20
             },
             msgx: { // 数据
-                curtomerName: '',
-                ncCompanyNo: '',
+                companyName: '',
+                companyNo: '',
                 curtomer: {
                     isEdit: false,
-                    showNc: false
+                    showchild: false,
+                    childData: []
                 },
                 legalPerson: '',
                 linkPerson: '',
@@ -137,12 +170,15 @@ export default {
                     provinceCode: '330000',
                     cityName: '杭州市',
                     cityCode: '330100',
-                    townName: '西湖区', 
+                    townName: '西湖区',
                     townCode: '330102'
                 },
+                regionShow: false,
                 regionName: '',
                 regionNo: '',
-                curtomerType: { // 供应商类型
+                regionData: [],
+                nature: '',
+                natureType: { // 客户性质
                     options: [{
                         value: 1,
                         label: '公立医院'
@@ -152,13 +188,14 @@ export default {
                         label: '民营医院'
                     }],
                     value: 1
-                },  
+                },
                 loginAccount: '',
                 password: '',
                 repassword: '',
                 userName: '',
                 mobile: '',
                 email: '',
+                scm: false,
                 certs: [
                     {
                         name: '医疗器械经营企业许可证 (必填)',
@@ -170,23 +207,14 @@ export default {
                         imgs: '',
                         require: true,
                         class: 'img1'
-                    }, { 
-                        name: '事业单位法人证 (必填)',
-                        certNo: '',
-                        startTime: '',
-                        endTime: '',
-                        lonrTime: false,
-                        imglist: [],
-                        imgs: '',
-                        require: true,
-                        class: 'img2'
                     }]
             },
             // 校验规则
             rules: {
-                curtomerName: [
-                    { required: true, message: '请输入客户名称', trigger: 'blur' },
-                    { pattern: /^\S{0,30}$/, message: '客户名称不能超过30个字符', trigger: 'blur,change' }
+                companyName: [
+                    { required: true, message: '请输入客户名称', trigger: 'change' },
+                    { pattern: /^\S{0,30}$/, message: '客户名称不能超过30个字符', trigger: 'blur,change' },
+                    { validator: Validate.validateloginAccount.bind(this), trigger: 'blur' }
                 ],
                 legalPerson: [
                     { required: true, message: '请输入院长', trigger: 'blur,change' },
@@ -197,15 +225,16 @@ export default {
                     { pattern: /^\S{0,30}$/, message: '联系人不能超过30个字符', trigger: 'blur,change' }
                 ],
                 linkTelphone: [
-                    { pattern: /^1[34578]\d{9}$/, message: '联系电话格式有误,有效11个字符', trigger: 'blur,change' }
+                    { pattern: /^1[34578]\d{9}$/, message: '联系电话格式有误,有效11个字符', trigger: 'blur,change' },
+                     { validator: Validate.validatePhone.bind(this), trigger: 'blur' }
                 ],
                 registAddr: [
                     { required: true, message: '请输入注册地址' },
                     { pattern: /^\S{0,120}$/, message: '注册地址不能超过120个字符', trigger: 'blur,change' }
                 ],
                 regionName: [
-                    { required: true, message: '请输入区域', trigger: 'blur,change' }
-                ], 
+                    { required: true, message: '请输入区域', trigger: 'change' }
+                ],
                 loginAccount: [
                     { required: true, message: '请输入登录账号', trigger: 'blur,change' },
                     { pattern: /^\w{6,20}$/, message: '登录账号仅支持数字、字母、下划线“_”，长度6-20位', trigger: 'blur,change' },
@@ -250,7 +279,7 @@ export default {
                 this.send_status = true;
                 let flag = true;
                 // 校验证件状态
-                for (let i = 0; i < 4; i++) {
+                for (let i = 0; i < this.msgx.certs.length; i++) {
                     // 父组件调用子组件方法
                     this.$refs['cert' + i][0].$refs.forms.validate((valid) => {
                         if (!valid) {
@@ -260,15 +289,15 @@ export default {
                 }
                 if (!flag) {
                     return false;
-                }    
+                }
                 if (!valid) {
                     return false;
                 } else {
-                    let url = URL.ADDSUPPLIERMASTER;
+                    let url = URL.ADDHOSPITALMASTER;
                     let _data = {
-                        ncCompanyNo: this.curtomerType.value === 20 ? '' : this.msgx.enterNC,
-                        enterpriseType: this.curtomerType.value, 
-                        enterpriseName: this.msgx.enterpriseName,
+                        ncCompanyNo: this.curtomerType.value === 22 ? this.msgx.companyNo : '',
+                        enterpriseType: this.curtomerType.value,
+                        enterpriseName: this.msgx.companyName,
                         legalPerson: this.msgx.legalPerson,
                         linkPerson: this.msgx.linkPerson,
                         linkTelphone: this.msgx.linkTelphone,
@@ -279,14 +308,18 @@ export default {
                         townCode: this.msgx.address.townCode,
                         townName: this.msgx.address.townName,
                         regAddr: this.msgx.registAddr,
+                        regionName: this.msgx.regionName,
+                        regionNo: this.msgx.regionNo,
+                        nature: this.msgx.nature ? 2 : this.msgx.natureType.value,
                         loginAccount: this.msgx.loginAccount,
                         password: encryption(this.msgx.password, this.clientid, this.token),
                         userName: this.msgx.userName,
                         mobile: this.msgx.mobile,
                         email: this.msgx.email,
+                        enableScm: (this.msgx.scm && !this.msgx.nature) ? 1 : 0, 
                         certs: []
                     };
-                    for (let i = 0; i < 4; i++) {
+                    for (let i = 0; i < this.msgx.certs.length; i++) {
                         let certInfo = this.createCert(i);
                         if (certInfo) {
                             _data.certs.push(certInfo);
@@ -307,34 +340,20 @@ export default {
                     });
                 }
             });
-        }, 
+        },
         // 证件数据
         createCert (num) {
             let type = '';
             switch (num) {
             case 0:
-                type = 'yyzz';  
+                type = 'yljgzyxkz';
                 break;
             case 1:
-                type = 'ylqxjyqyxkz';  
-                break;
-            case 2:
-                type = 'swdjz';  
-                break;
-            case 3:
-                type = 'zzjgdmz';  
+                type = 'sydwfrz';
                 break;
             default:
                 break;
             }
-            if (num === 2 || num === 3) {
-                if (!this.$refs['cert' + num][0].msg.certNo ||
-                 !this.$refs['cert' + num][0].msg.startTime || 
-                 (!this.$refs['cert' + num][0].msg.endTime && !this.$refs['cert' + num][0].msg.lonrTime && this.$refs['cert' + num][0].msg.endTime === '2099-01-01') || 
-                 this.$refs['cert' + num][0].msg.imglist.length === 0) {
-                    return;
-                }
-            } 
             let imgUrl = {
                 certCode: this.$refs['cert' + num][0].msg.certNo,
                 startTime: this.$refs['cert' + num][0].msg.startTime,
@@ -342,45 +361,80 @@ export default {
                 longTerm: this.$refs['cert' + num][0].msg.lonrTime ? '1' : '0',
                 fileUrl: this.$refs['cert' + num][0].msg.imglist && this.$refs['cert' + num][0].msg.imglist[0],
                 certType: type
-            };  
+            };
             return imgUrl;
         },
-        // nc下拉列表
+        // 检验子公司下拉列表
         getNcList () {
             if (!this.msgx.curtomer.isEdit) {
                 return;
             }
-            this.Http.post(URL.PAGENCSUPPLIERS, {
-                params: {
-                    pageIndex: this.search.pageIndex,
-                    pageSize: this.search.pageSize,
-                    keywords: this.search.keywords
-                }
+            this.Http.post(URL.SELECTNCCOMPANYS, {
             }).then((re) => {
-                this.msgx.curtomer.showNc = true;
-                this.search.total = re.data.total;
-                this.search.info = re.data.rows;
+                this.msgx.curtomer.showchild = true;
+                this.msgx.curtomer.childData = re.data;
             });
         },
-        // 改变供应商类型
-        changeSelect (val) {
+        // 改变客户类型
+        changeCurtomerType (val) {
             this.msgx = this.resetmsg;
             this.$refs.forms.resetFields();
-            if (val === 21) {
+            if (val === 22) {
+                if (this.msgx.certs.length > 1) {
+                    this.msgx.certs.pop();
+                }
                 this.msgx.curtomer.isEdit = true;
+                this.msgx.nature = '检验子公司';
             } else {
+                if (this.msgx.certs.length === 1 && this.msgx.natureType.value === 0) {
+                    this.msgx.certs.push(this.cert_sydwfrz);
+                }
                 this.msgx.curtomer.isEdit = false;
+                this.msgx.nature = '';
             }
         },
-        // nc列表点击事件
-        checkNc (item) {
-            this.msgx.curtomer.showNc = false;
-            this.msgx.enterpriseName = item.supplierName;
-            this.msgx.legalPerson = item.legalPerson;
-            this.msgx.linkPerson = item.linkPerson;
-            this.msgx.linkTelphone = item.linkTelphone;
-            this.msgx.registAddr = item.registAddr;
+        // 检验子公司li事件
+        checkChild (item) {
+            this.msgx.curtomer.showchild = false;
+            let { entries } = Object;
+
+            for (let [key, value] of entries(item)) {
+                this.msgx[key] = value;
+            }
+            this.$refs.forms.validateField('companyName');
+        },
+        // 选择区域
+        selcetregionName () {
+            this.Http.post(URL.GETCUSTOMAREA, {
+            }).then((re) => {
+                this.msgx.regionShow = true;
+                this.msgx.regionData = re.data;
+            });
+        },
+        // 选择区域
+        checkZone (name, item) {
+            this.msgx.regionShow = false;
+            this.msgx.regionName = name + ' : ' + item.areaName;
+            this.msgx.regionNo = item.areaNo;
+        }, 
+        // 更改医院性质
+        changeNatureType (val) {
+            if (val === 0) {
+                this.msgx.certs.push(this.cert_sydwfrz);
+            } else {
+                this.msgx.certs.pop();
+            }
         }
+    },
+    created () {
+        addEvent(window, 'click', () => {
+            if (this.msgx.curtomer.showchild) {
+                this.msgx.curtomer.showchild = false;
+            }
+            if (this.msgx.regionShow) {
+                this.msgx.regionShow = false;
+            }
+        });
     },
     watch: {
         myshow (val, oldval) {
@@ -392,7 +446,7 @@ export default {
     },
     beforeMount () {
         this.myshow = this.showx;
-        this.resetmsg = {...this.msgx};
+        this.resetmsg = { ...this.msgx };
     },
     components: {
         dailog,
@@ -448,5 +502,55 @@ export default {
 .el-form-item {
     margin: 0 auto;
     width: 80%;
+}
+
+.scm {
+    position: relative;
+    top: 8px;
+}
+
+.nc_box {
+    min-height: 100px;
+    position: absolute;
+    z-index: 3333;
+    background: #fff;
+    max-height: 300px;
+    border: 1px solid #d1dbe5;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .12), 0 0 6px 0 rgba(0, 0, 0, .04);
+    width: 100%;
+    overflow: auto;
+    li {
+        line-height: 20px;
+        color: #666;
+        padding: 5px 10px;
+        cursor: pointer;
+        &:hover {
+            background-color: #f4f4f4;
+            color: #00a2b3;
+        }
+    }
+}
+
+.zone_box {
+    .el-tabs__content{
+        padding: 0 !important;
+    }
+    position: absolute;
+    z-index: 3333;
+    width: 100%;
+    ul {
+         max-height: 200px;
+        overflow: auto;
+        .checkZone {
+            line-height: 20px;
+            color: #666;
+            padding: 5px 10px;
+            cursor: pointer;
+            &:hover {
+                background-color: #f4f4f4;
+                color: #00a2b3;
+            }
+        }
+    }
 }
 </style>
