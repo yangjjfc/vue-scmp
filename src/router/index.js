@@ -14,6 +14,9 @@ const preserve = r => require.ensure([], () => r(require('../pages/cert/preserve
 const electronic = r => require.ensure([], () => r(require('../pages/cert/electronic/Electronic.vue')), 'electronic');
 const vendor = r => require.ensure([], () => r(require('../pages/cert/vendor/Vendor.vue')), 'vendor');
 const hospital = r => require.ensure([], () => r(require('../pages/hospital/hospital.vue')), 'hospital');
+const entrust = r => require.ensure([], () => r(require('../pages/cert/entrust/Entrust.vue')), 'entrust');
+const promise = r => require.ensure([], () => r(require('../pages/cert/promise/Promise.vue')), 'promise');
+const certAuth = r => require.ensure([], () => r(require('../pages/cert/auth/CertAuth.vue')), 'promise');
 import Auth from '../pages/auth/Auth';
 export default [
     {
@@ -42,7 +45,10 @@ export default [
             { path: '/order/detail/:orderNo/:passkey', component: orderDetail, name: 'orderDetail' },
             { path: '/cert/preserve', component: preserve, name: 'preserve' }, // 证件维护
             { path: '/cert/electronic', component: electronic, name: 'electronic' }, // 电子签章
-            { path: '/cert/vendor', component: vendor, name: 'vendor' } // 生产厂商
+            { path: '/cert/vendor', component: vendor, name: 'vendor' }, // 生产厂商
+            { path: '/cert/entrust', component: entrust, name: 'entrust' }, // 法人委托书
+            { path: '/cert/promise', component: promise, name: 'promise' }, // 销售承诺书
+            { path: '/cert/auth', component: certAuth, name: 'certAuth' } // 销售承诺书
         ]
     }
 ];

@@ -34,18 +34,18 @@ const createMenu = () => {
             },
             {
                 name: '经销授权书',
-                state: '/cert/promise',
+                state: '/cert/auth',
                 hidden: roles.indexOf('platform:certificate:cert_auth') === -1
+            },
+            {
+                name: '销售承诺书',
+                state: '/cert/promise',
+                hidden: roles.indexOf('platform:certificate:cert_commit') === -1
             },
             {
                 name: '法人委托书',
                 state: '/cert/entrust',
                 hidden: roles.indexOf('platform:certificate:cert_entrust') === -1
-            },
-            {
-                name: '销售承诺书',
-                state: '/cert/electronic',
-                hidden: roles.indexOf('platform:certificate:cert_commit') === -1
             },
             {
                 name: '生产厂商',

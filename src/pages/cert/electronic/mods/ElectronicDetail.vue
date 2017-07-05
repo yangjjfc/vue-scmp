@@ -6,38 +6,38 @@
                     <el-form :model="checkForm" :rules="rules" ref="checkForm"  class="demo-ruleForm">
                     <table  >
                         <tr>
-                            <td>企业名称: </td>
+                            <td class="table_name">企业名称: </td>
                             <td><span v-text="result.enterpriseName"></span></td>
                         </tr>
                         <tr>
-                            <td>签章地址: </td>
+                            <td class="table_name">签章地址: </td>
                             <td>
                                 <fileList :files="result.signatureAddr"></fileList>
                             </td>
                         </tr>
                         <tr v-if="type == 'detail'">
-                            <td>认证次数: </td>
+                            <td class="table_name">认证次数: </td>
                             <td>
                               <span v-text="result.authTimes"></span>
                             </td>
                         </tr>
                         <tr v-if="type == 'detail'">
-                            <td>认证状态: </td>
+                            <td class="table_name">认证状态: </td>
                             <td> <span v-html="result.text"></span></td>
                         </tr>
                         <tr v-if="type == 'detail' && result.status == 4">
-                            <td>认证失败原因: </td>
+                            <td class="table_name">认证失败原因: </td>
                             <td> <span v-html="result.reason"></span></td>
                         </tr>
                         <tr v-if="type == 'check'" >   
-                            <td>审核结果:</td>
+                            <td class="table_name">审核结果:</td>
                             <td>
                                 <el-radio class="radio" v-model="checkForm.status" label="1" @click.native="resetForm">审核通过</el-radio>
                                 <el-radio class="radio" v-model="checkForm.status" label="4" @click.native="resetForm">审核不通过</el-radio>  
                             </td>
                         </tr>
                         <tr v-if="type == 'check'">
-                            <td>审核备注:</td>
+                            <td class="table_name">审核备注:</td>
                             <td > 
                                 <el-form-item prop="reason" >
                                     <el-input v-model="checkForm.reason" placeholder="请输入内容"></el-input>

@@ -1,26 +1,26 @@
 <section class="container_setion">
-    <dailog size="small" :show.sync="myshow" classx="staff-add-user" title="证件详情【生产厂商证照】" @ok="quire">
+    <dailog size="tiny" :show.sync="myshow" classx="staff-add-user" title="证件详情【生产厂商证照】" @ok="quire">
         <div slot="content">
             <el-col :span="24" class="ui-table">
                 <table>
                     <tr>
-                        <td>供应商名称: </td>
+                        <td class="table_name">供应商名称: </td>
                         <td><span v-text="result.supplierName"></span></td>
                     </tr>
                     <tr>
-                        <td>厂商类型: </td>
+                        <td class="table_name">厂商类型: </td>
                         <td>
                             <span>{{ result.factoryType == '1' ? '境内':'境外' }}</span>
                         </td>
                     </tr>
                     <tr>
-                        <td>厂商名称: </td>
+                        <td class="table_name">厂商名称: </td>
                         <td>
                             <span v-text="result.factoryName"></span>
                         </td>
                     </tr>
                     <tr>
-                        <td>证件图片: </td>
+                        <td class="table_name">证件图片: </td>
                         <td>
                             <ul class="factoryCertList">
                                 <li class="clear" v-for="item in result.factoryCertList">
