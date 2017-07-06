@@ -5,13 +5,13 @@
         <el-col :span="24" class="toolbar">
             <el-form :inline="true">
                 <el-form-item>
-                    <el-select size="small" v-model="search.status" placeholder="请选择" @change="getList()">
+                    <el-select size="small" v-model="search.status" placeholder="请选择" @change="getList()" class="w160">
                         <el-option v-for="item in source" :label="item.text" :value="item.id" :key='item.id'>
                         </el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item>
-                    <el-input placeholder="供应商名称/客户名称" v-model="search.keywords" class="w300" size="small"></el-input>
+                    <el-input placeholder="供应商名称/客户名称" v-model="search.keywords"   @keyup.native.enter="getList(1)" class="w300" size="small"></el-input>
                 </el-form-item>
                
                 <el-form-item>
@@ -55,7 +55,7 @@
             </el-table>
         </el-col>
         <el-col :span="24" class="toolbar">
-            <pagination :total="total" :pageSize="pageSize" @change="getList"></pagination>
+            <pagination :total="total" :pageSize.sync="pageSize"  :pageIndex.sync="pageIndex"  @change="getList"></pagination>
         </el-col>
         <el-col :span="24" v-if="showDetail">
             <EntrustDetail :showx.sync ="showDetail" :cert="checkedObj"></EntrustDetail>

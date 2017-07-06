@@ -5,7 +5,7 @@
             <el-col :span="24" class="toolbar">
                 <el-form :inline="true">
                     <el-form-item>
-                        <el-select size="small" v-model="search.deliveryType" placeholder="请选择" @change="getList()">
+                        <el-select size="small" v-model="search.deliveryType" placeholder="请选择" @change="getList(1)" class="w100">
                             <el-option
                                     v-for="item in deliveryType"
                                     :label="item.text"
@@ -14,7 +14,7 @@
                         </el-select>
                     </el-form-item>
                     <el-form-item>
-                        <el-select size="small" v-model="search.status" placeholder="请选择" @change="getList()">
+                        <el-select size="small" v-model="search.status" placeholder="请选择" @change="getList(1)" class="w100">
                             <el-option
                                     v-for="item in status"
                                     :label="item.text"
@@ -23,14 +23,12 @@
                         </el-select>
                     </el-form-item>
                     <el-form-item>
-
                     </el-form-item>
                     <el-form-item>
-                        <datePicker @changeTime_sta="changeTime_sta" @changeTime_end="changeTime_end" placeholder="请选择时间"></datePicker>
+                        <datePicker :startTime.sync='search.startTime'  :endTime.sync='search.endTime' classx="w140" ></datePicker>
                     </el-form-item>
-
                     <el-form-item>
-                        <el-input placeholder="配送单号/订单编号/出库单号/供应商/客户名称" v-model="search.keys" class="w300" size="small"></el-input>
+                        <el-input placeholder="配送单号/订单编号/出库单号/供应商/客户名称" v-model="search.keys" @keyup.native.enter="getList(1)" class="w300" size="small"></el-input>
                     </el-form-item>
                     <el-form-item>
                         <el-button type="primary" @click="getList(1)"  size="small">查询</el-button>
@@ -76,7 +74,7 @@
                 </el-table>
             </el-col>
             <el-col :span="24" class="toolbar">
-                <pagination :total="total" :pageSize="pageSize"  @change="getList"></pagination>
+                <pagination :total="total" :pageSize.sync="pageSize"  :pageIndex.sync="pageIndex"  @change="getList"></pagination>
             </el-col>
             <el-col :span="24" v-if="showLogistic">
                 <checkLogistic :showx.sync="showLogistic" :useMsg="userMsg" ></checkLogistic>
@@ -152,12 +150,6 @@
                             return item;
                         });
                     });
-            },
-            changeTime_sta (value) {
-                this.search.startTime = value;
-            },
-            changeTime_end (value) {
-                this.search.endTime = value;
             },
             // 物流跟踪
             checkLogistic (row) {

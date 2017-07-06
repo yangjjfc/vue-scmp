@@ -5,13 +5,13 @@
         <el-col :span="24" class="toolbar">
             <el-form :inline="true">
                 <el-form-item>
-                    <el-select size="small" v-model="search.status" placeholder="请选择" @change="getList()">
+                    <el-select size="small" v-model="search.status" placeholder="请选择" @change="getList(1)" class="w160">
                         <el-option v-for="item in source" :label="item.text" :value="item.id" :key='item.id'>
                         </el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item>
-                    <el-input placeholder="企业名称" v-model="search.keywords" class="w300" size="small"></el-input>
+                    <el-input placeholder="企业名称" v-model="search.keywords"   @keyup.native.enter="getList(1)" class="w200" size="small"></el-input>
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="getList(1)" size="small">查询</el-button>
@@ -48,7 +48,7 @@
             </el-table>
         </el-col>
         <el-col :span="24" class="toolbar">
-            <pagination :total="total" :pageSize="pageSize" @change="getList"></pagination>
+            <pagination :total="total" :pageSize.sync="pageSize"  :pageIndex.sync="pageIndex" @change="getList"></pagination>
         </el-col>
         <el-col :span="24" v-if="showPreserve" >
             <ElectronicDetail :showx.sync="showPreserve" :cert="checkedObj" :type="oprateType"></ElectronicDetail>

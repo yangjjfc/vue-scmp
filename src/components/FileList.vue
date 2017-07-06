@@ -1,4 +1,4 @@
-<template>
+﻿<template>
     <ul class="fileList list-inline">
         <li v-for="item in list" :key="item">
          <a class="boxer" :href="item.fullUrl" v-boxer="item.fullUrl" >
