@@ -19,6 +19,7 @@ const returnDetail = r => require.ensure([], () => r(require('../pages/return/de
 const user = r => require.ensure([], () => r(require('../pages/user/User')), 'user'); // 用户管理
 const supplierChart = r => require.ensure([], () => r(require('../pages/chart/supplier/SupplierChart')), 'chart'); // 供应商销售
 const hospitalChart = r => require.ensure([], () => r(require('../pages/chart/hospital/HospitalChart')), 'chart'); // 客户销售
+const register = r => require.ensure([], () => r(require('../pages/cert/register/Register.vue')), 'register');
 export default [
     {
         path: '/', redirect: '/dashboard'
@@ -91,6 +92,7 @@ export default [
             { path: '/user', component: user, name: 'user' }, // 用户管理
             { path: '/supplierChart', component: supplierChart, name: 'supplierChart' }, // 供应商销售
             { path: '/hospitalChart', component: hospitalChart, name: 'hospitalChart' }, // 客户销售
+            { path: '/cert/register', component: register, name: 'register' }, // 产品注册证
             { path: '*', redirect: '/index' } 
         ]
     }

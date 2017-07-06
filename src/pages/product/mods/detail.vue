@@ -60,7 +60,7 @@
                                  <tr>
                                     <td class="table_name">证照图片</td>
                                     <td >
-                                        <fileList :files="msgx.product.registImg" :master="true"></fileList>
+                                        <fileList :files="msgx.product.registImg" :isMaster="true"></fileList>
                                         <fileList :files="msgx.product.registImgAttach"></fileList>
                                     </td>
                                 </tr>
