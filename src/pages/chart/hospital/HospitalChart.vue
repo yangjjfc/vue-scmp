@@ -1,5 +1,5 @@
 <template >
-    <section>
+    <section class="container_setion">
         <!--工具条-->
         <el-row>
             <el-col :span="24" class="toolbar">
@@ -46,7 +46,6 @@
                     </el-table-column>
                     <el-table-column prop="onum" label="采购数" width="100" align="center" >
                     </el-table-column>
-
                     <el-table-column  prop="ototal" label="采购金额" min-width="140" align="right" >
                     </el-table-column>
                     <el-table-column  prop="cnum" label="取消数" min-width="140" align="center" >

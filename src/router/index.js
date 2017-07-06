@@ -73,26 +73,154 @@ export default [
                 component: preserve,
                 name: 'preserve',
                 meta: {
-                    name: '产品注册证',
-                    state: '/cert/register',  
+                    name: '证件维护',
+                    state: '/cert/preserve', 
                     icon: 'icon-zhengjian'  
                 }
             }, // 证件维护
-            { path: '/cert/electronic', component: electronic, name: 'electronic' }, // 电子签章
-            { path: '/cert/vendor', component: vendor, name: 'vendor' }, // 生产厂商
-            { path: '/cert/entrust', component: entrust, name: 'entrust' }, // 法人委托书
-            { path: '/cert/promise', component: promise, name: 'promise' }, // 销售承诺书
-            { path: '/cert/auth', component: certAuth, name: 'certAuth' }, // 销售承诺书
-            { path: '/order', component: order, name: 'order' }, // 订单管理
-            { path: '/order/detail/:orderNo/:passkey', component: orderDetail, name: 'orderDetail' }, // 订单管理详情
-            { path: '/logistic', component: logistic, name: 'logistic' }, // 配送管理
-            { path: '/logistic/detail/:deliveryNo/:passKey', component: logisticDetail, name: 'logisticDetail' }, // 配送管理详情
-            { path: '/return', component: salesReturn, name: 'return' }, // 退货管理
-            { path: '/return/detail/:returnOrderNo/:passKey', component: returnDetail, name: 'returnDetail' }, // 退货管理详情
-            { path: '/user', component: user, name: 'user' }, // 用户管理
-            { path: '/supplierChart', component: supplierChart, name: 'supplierChart' }, // 供应商销售
-            { path: '/hospitalChart', component: hospitalChart, name: 'hospitalChart' }, // 客户销售
-            { path: '/cert/register', component: register, name: 'register' }, // 产品注册证
+            { path: '/cert/register',
+                component: register,
+                name: 'register',
+                meta: {
+                    name: '产品注册证',
+                    state: '/cert/register',  
+                    icon: 'icon-zhengjian',
+                    open: ['4'] 
+                }
+            }, // 产品注册证
+            { path: '/cert/electronic',
+                component: electronic,
+                name: 'electronic', 
+                meta: {
+                    name: '电子签章',
+                    state: '/cert/electronic',
+                    icon: 'icon-zhengjian',
+                    open: ['4']  
+                }
+            }, // 电子签章
+            { path: '/cert/vendor',
+                component: vendor,
+                name: 'vendor', 
+                meta: {
+                    name: '生产厂商',
+                    state: '/cert/vendor',
+                    icon: 'icon-zhengjian',
+                    open: ['4']   
+                }
+            }, // 生产厂商
+            { path: '/cert/entrust',
+                component: entrust,
+                name: 'entrust', 
+                meta: {
+                    name: '法人委托书',
+                    state: '/cert/entrust',
+                    icon: 'icon-zhengjian',
+                    open: ['4'] 
+                }
+            }, // 法人委托书
+            { path: '/cert/promise',
+                component: promise,
+                name: 'promise', 
+                meta: {
+                    name: '销售承诺书',
+                    state: '/cert/promise', 
+                    icon: 'icon-zhengjian',
+                    open: ['4'] 
+                }
+            }, // 销售承诺书
+            { path: '/cert/auth',
+                component: certAuth,
+                name: 'certAuth',
+                meta: {
+                    name: '经销授权书',
+                    state: '/cert/auth',  
+                    icon: 'icon-zhengjian',
+                    open: ['4']   
+                }
+            }, // 经销授权书
+            { path: '/order',
+                component: order,
+                name: 'order',
+                meta: {
+                    name: '订单管理',
+                    icon: 'icon-weifenxiaopcjiemianzhuanhuan',
+                    state: '/order'   
+                }
+            }, // 订单管理
+            { path: '/order/detail/:orderNo/:passkey',
+                component: orderDetail,
+                name: 'orderDetail', 
+                meta: {
+                    name: '订单管理',
+                    icon: 'icon-weifenxiaopcjiemianzhuanhuan',
+                    state: '/order'   
+                }
+            }, // 订单管理详情
+            { path: '/logistic',
+                component: logistic,
+                name: 'logistic',
+                meta: {
+                    name: '配送管理',
+                    icon: 'icon-peisong',
+                    state: '/logistic'
+                }
+            }, // 配送管理
+            { path: '/logistic/detail/:deliveryNo/:passKey',
+                component: logisticDetail,
+                name: 'logisticDetail', 
+                meta: {
+                    name: '配送管理', 
+                    icon: 'icon-peisong',
+                    state: '/logistic'    
+                }
+            }, // 配送管理详情
+            { path: '/return',
+                component: salesReturn,
+                name: 'return',
+                meta: {
+                    name: '退货管理',
+                    icon: 'icon-ccgl-tuihuoyugao-4',
+                    state: '/return'  
+                }
+            }, // 退货管理
+            { path: '/return/detail/:returnOrderNo/:passKey',
+                component: returnDetail,
+                name: 'returnDetail',
+                meta: {
+                    name: '退货管理',
+                    icon: 'icon-ccgl-tuihuoyugao-4',
+                    state: '/return' 
+                }
+            }, // 退货管理详情
+            { path: '/user',
+                component: user,
+                name: 'user',
+                meta: {
+                    name: '用户管理',
+                    icon: 'icon-yonghuguanli',
+                    state: '/user' 
+                }
+            }, // 用户管理
+            { path: '/supplierChart',
+                component: supplierChart,
+                name: 'supplierChart',
+                meta: {
+                    name: '供应商销售',
+                    state: '/supplierChart',
+                    icon: 'icon-statistics',
+                    open: ['9'] 
+                } 
+            }, // 供应商销售
+            { path: '/hospitalChart',
+                component: hospitalChart,
+                name: 'hospitalChart',
+                meta: {
+                    name: '客户采购',
+                    state: '/hospitalChart',   
+                    icon: 'icon-statistics',
+                    open: ['9'] 
+                }
+            }, // 客户销售
             { path: '*', redirect: '/index' } 
         ]
     }

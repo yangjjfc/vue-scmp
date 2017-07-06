@@ -18,7 +18,6 @@ const router = new VueRouter({
  * router interceptor
  */
 router.beforeEach((to, from, next) => {
-    console.log(to.matched);
     if (to.path !== '/auth' && from.path !== '/') {
         if (state.userInfo && state.userInfo.enterpriseNo) {
             next();
