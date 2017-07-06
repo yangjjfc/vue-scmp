@@ -175,7 +175,6 @@ export default {
     methods: {
         // 获取列表
         getList (pageIndex = this.pageIndex, pageSize = this.pageSize) {
-            console.log(1);
             this.Http.post(URL.LIST,
                 {
                     params: {

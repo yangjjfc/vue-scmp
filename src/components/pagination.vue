@@ -32,7 +32,6 @@ export default {
     },
     watch: {
         pageIndex (val, oldval) {
-            console.log(this.index, val);
             if (this.index !== val) {
                 this.index = val;
                 this.flag = false;  
