@@ -2,15 +2,15 @@
 <template>
     <section>
         <dailog size="tiny" :show.sync="myshow"  title="产品强制下架" @ok="ok" >
-            <el-form slot="content" ref="edits" label-width="100px" class="demo-dynamic" :model="msgx">
+            <el-form slot="content" ref="forms" label-width="100px" class="demo-dynamic" :model="msgx">
                 <el-form-item label="请选择" >
-                     <el-select v-model.lazy="curtomerType.value" size="small" @change="changeCurtomerType" style="width:100%">
-                            <el-option v-for="item in curtomerType.options" :label="item.label" :value="item.value" :key="item.label"></el-option>
+                     <el-select v-model="msgx.search_date.value" size="small" @change="change" style="width:100%">
+                            <el-option v-for="item in msgx.search_date.options" :label="item.label" :value="item.value" :key="item.label"></el-option>
                         </el-select>
                 </el-form-item>
-                <el-form-item label="解除原因" prop="relieve"   
-                :rules="[{ required: true, message: '请输入解除原因', trigger: 'blur,change' }]">
-                    <el-input type="textarea" v-model="msgx.relieve"  :rows="4" size="small"></el-input>
+                <el-form-item label="解除原因" prop="reson"   
+                :rules="[{ required: true, message: '请输入强制下架原因', trigger: 'blur,change' }]">
+                    <el-input type="textarea" placeholder="强制下架原因" v-model="msgx.reson"  :rows="4" size="small"></el-input>
                 </el-form-item>
             </el-form>
         </dailog>
@@ -19,40 +19,56 @@
 
 <script>
 const URL = {
-    'replyCustomer': 'scm.supplier.replyCustomer'
+    DOWN: 'scm.product.modOffShelfForceProduct'
 };
 import dailog from '@/components/Dailog';
 export default {
     name: 'relieve',
-    props: ['showx', 'msg'],
+    props: ['showx', 'transMsg'],
     data () {
         return {
             myshow: false, // 是否显示弹框
             msgx: {
-                customerName: '',
-                relieve: ''
+                search_date: {
+                    options: [{
+                        value: 1,
+                        label: '无需理由'
+                    },
+                    {
+                        value: 2,
+                        label: '非法销售'
+                    },
+                    {
+                        value: 3,
+                        label: '产品已过期'
+                    },
+                    {
+                        value: 4,
+                        label: '其他'
+                    }],
+                    value: 1
+                },
+                reson: '无需理由'
             }// 数据
         };
     },
     methods: {
         // 确认
         ok () {
-            this.$refs.edits.validate((valid) => {
+            this.$refs.forms.validate((valid) => {
                 if (!valid) {
                     return false;
                 } else {
-                    this.Http.post(URL.replyCustomer, {
+                    this.Http.post(URL.DOWN, {
                         params: {
-                            customerNo: this.msg.customerNo,
-                            reason: this.msgx.relieve,
-                            status: 3,
-                            supplierNo: this.msg.supplierNo
+                            productNo: this.transMsg.no,
+                            reason: this.msgx.reson
                         }
                     }).then((re) => {
                         if (re.code === 'SUCCESS') {
                             this.$notify({
                                 title: '成功',
-                                message: '解除成功',
+                                message: '产品强制下架成功',
                                 type: 'success'
                             });
                             this.$emit('refresh');
@@ -61,6 +77,13 @@ export default {
                     });
                 }
             });
+        },
+        change (val) {
+            for (let item of this.msgx.search_date.options) {
+                if (item.value === val) {
+                    this.msgx.reson = item.label;
+                }
+            }
         }
     },
     watch: {
@@ -71,7 +94,6 @@ export default {
         }
     },
     beforeMount () {
-        this.msgx = this.msg;
         this.myshow = this.showx;
     },
     components: {
@@ -84,6 +106,6 @@ export default {
 
 <style scoped lang="scss" rel="stylesheet/scss">
 .el-form-item {
-    margin-bottom: 22px;
+    margin-bottom: 10px;
 }
 </style>

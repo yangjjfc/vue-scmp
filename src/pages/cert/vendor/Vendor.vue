@@ -5,10 +5,10 @@
         <el-col :span="24" class="toolbar">
             <el-form :inline="true">
                 <el-form-item>
-                    <el-input placeholder="供应商名称" v-model="search.searchParm" class="w300" size="small"></el-input>
+                    <el-input placeholder="供应商名称" v-model="search.searchParm"  @keyup.native.enter="getList(1)" class="w300" size="small" ></el-input>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" @click="getList(1)" size="small">查询</el-button>
+                    <el-button type="primary" @click="getList(1)" size="small" >查询</el-button>
                 </el-form-item>
                 <el-form-item>
                     <el-button @click="reset" size="small">重置</el-button>
@@ -44,7 +44,7 @@
             </el-table>
         </el-col>
         <el-col :span="24" class="toolbar">
-            <pagination :total="total" :pageSize="pageSize" @change="getList"></pagination>
+            <pagination :total="total" :pageSize.sync="pageSize"  :pageIndex.sync="pageIndex"  @change="getList"></pagination>
         </el-col>
         <el-col :span="24" v-if="showDetail">
             <VendorDetail :showx.sync ="showDetail" :cert="checkedObj" ></VendorDetail>

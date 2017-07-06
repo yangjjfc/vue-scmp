@@ -29,7 +29,7 @@
                         <el-button @click="reset"  size="small">重置</el-button>
                     </el-form-item>
                     <el-form-item class="right">
-                        <el-button type="primary"  size="small" @click="add">导入模板管理</el-button>
+                        <el-button type="primary"  size="small" >导入模板管理</el-button>
                     </el-form-item>
                 </el-form>
             </el-col>
@@ -69,28 +69,25 @@
                     <el-table-column label="操作"  width="300">
                         <template scope="scope">
                             <el-button size="mini" type="primary"  @click="detailSuppiler(scope.row.productNo,'detail')">详情</el-button>
-                            <el-button size="mini" type="primary"  @click="detailLog(scope.row.supplierNo)" >日志</el-button>
+                            <el-button size="mini" type="primary"  @click="detailLog(scope.row.productNo)" >日志</el-button>
                             <el-button size="mini" type="warning"  @click="detailSuppiler(scope.row.productNo,'audit')" v-if="scope.row.status =='2' && scope.row.certType !=1">审核</el-button>
-                            <el-button size="mini" type="warning"  @click="enabled(scope.row)" v-if="scope.row.status =='5'">强制下架</el-button>
+                            <el-button size="mini" type="warning"  @click="handleDown(scope.row.productNo)" v-if="scope.row.status =='5'">强制下架</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
             </el-col>
             <el-col :span="24" class="toolbar">
-                <pagination :total="total" :pageSize="pageSize" :pageIndex="pageIndex" @change="getList"></pagination>
+                <pagination :total="total" :pageSize.sync="pageSize" :pageIndex.sync="pageIndex" @change="getList"></pagination>
             </el-col>
             <el-col :span="24" v-if="showDetail">
                 <detail :showx.sync="showDetail" :detailUser="msgx" :title="detailTitle"  @refresh="getList"></detail>
             </el-col>  
-             <!--<el-col :span="24" v-if="showLog">
+            <el-col :span="24" v-if="showDown">
+                <down :showx.sync="showDown" :transMsg="msgx" @refresh="getList"></down>
+            </el-col> 
+             <el-col :span="24" v-if="showLog">
                 <log :showx.sync="showLog" :logmsg="msgx" ></log>
             </el-col> 
-            <el-col :span="24" v-if="showTime">
-                <cert-time-set :showx.sync="showTime" :transMsg="msgx" ></cert-time-set>
-            </el-col> 
-            <el-col :span="24" v-if="showAdd">
-                <add-supplier :showx.sync="showAdd" :transMsg="msgx"  @refresh="getList"></add-supplier>
-            </el-col>     -->
         </el-row>
     </section>
 </template>
@@ -100,9 +97,8 @@ import CONFIG from '@/config/app.config'; // 配置
 import pagination from '@/components/pagination';
 import detail from './mods/detail';
 import picture from '@/assets/images/zhu.png'; // daf
-// import log from './mods/log';
-// import certTimeSet from './mods/certTimeSet';
-// import addSupplier from './mods/addSupplier';
+import log from './mods/log';
+import down from './mods/down';
 const URL = {
     LIST: 'scm.product.queryProductListPlatform', // 分页列表
     DETAIL: 'scm.platformSupplier.findEnterprise', // 详情-
@@ -116,8 +112,7 @@ export default {
             msgx: {}, // 弹框数据
             detailTitle: '', // 显示详情/审核标题 no
             showLog: false, // 显示日志
-            showTime: false, // 显示设置时间
-            showAdd: false, // 添加供应商
+            showDown: false, // 显示下架
             total: 0,
             pageSize: 20,
             pageIndex: 1,
@@ -278,7 +273,7 @@ export default {
         },
         // select change event
         change () {
-            this.getList();
+            this.getList(1);
         },
         // 详情
         detailSuppiler (no, type) {
@@ -293,13 +288,9 @@ export default {
             this.showLog = true;
         },
         // 时间设置
-        setTime (no) {
+        handleDown (no) {
             this.msgx.no = no;
-            this.showTime = true;
-        },
-        // 添加供应商
-        add () {
-            this.showAdd = true;
+            this.showDown = true;
         },
         // 启用erp
         enabled (msg) {
@@ -327,8 +318,9 @@ export default {
     },
     components: {
         pagination,
-        detail
-        // log,
+        detail,
+        down, 
+        log
         // certTimeSet,
         // addSupplier
     }

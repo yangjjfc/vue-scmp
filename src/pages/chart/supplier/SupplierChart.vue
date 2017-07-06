@@ -5,7 +5,7 @@
             <el-col :span="24" class="toolbar">
                 <el-form :inline="true">
                     <el-form-item>
-                        <el-select size="small" v-model="search.type" placeholder="请选择" @change="changeType()">
+                        <el-select size="small" v-model="search.type" placeholder="请选择" @change="changeType()" class="w140">
                             <el-option
                                     v-for="item in options"
                                     :label="item.label"
@@ -19,13 +19,13 @@
                             <el-date-picker size="small"
                                 v-model="search.time"
                                 :format="timeOpt.format"
-                                :type="timeOpt.type" @change="changeTime">
+                                :type="timeOpt.type" @change="changeTime" class="w140">
                             </el-date-picker>
                         </div>
                     </el-form-item>
 
                     <el-form-item>
-                        <el-input placeholder="供应商" v-model="search.keywords" class="w300" size="small"></el-input>
+                        <el-input placeholder="供应商" v-model="search.keywords" class="w300" @keyup.native.enter="getList(1)" size="small"></el-input>
                     </el-form-item>
                     <el-form-item>
                         <el-button type="primary" @click="getList(1)"  size="small">查询</el-button>
@@ -61,7 +61,7 @@
                 </el-table>
             </el-col>
             <el-col :span="24" class="toolbar">
-                <pagination :total="total" :pageSize="pageSize"  @change="getList"></pagination>
+                <pagination :total="total" :pageSize.sync="pageSize"  :pageIndex.sync="pageIndex"   @change="getList"></pagination>
             </el-col>
         </el-row>
     </section>
@@ -151,7 +151,7 @@
                     };
                     this.search.time = format(new Date(), 'yyyy-MM');
                 }
-                this.getList();
+                this.getList(1);
             },
             changeTime (value) {
                 this.search.time = value;

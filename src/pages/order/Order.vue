@@ -5,31 +5,31 @@
         <el-col :span="24" class="toolbar">
             <el-form :inline="true">
                 <el-form-item>
-                    <el-select size="small" v-model="search.source" placeholder="请选择" @change="getList()">
+                    <el-select size="small" v-model="search.source" placeholder="请选择" @change="getList(1)" class="w100 ">
                         <el-option v-for="item in source" :label="item.text" :value="item.id" :key='item.id'>
                         </el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item>
-                    <el-select size="small" v-model="search.orderType" placeholder="请选择" @change="getList()">
+                    <el-select size="small" v-model="search.orderType" placeholder="请选择" @change="getList(1)" class="w100 ">
                         <el-option v-for="item in orderType" :label="item.text" :value="item.id" :key='item.id'>
                         </el-option>
                     </el-select>
                 </el-form-item>
 
                 <el-form-item>
-                    <el-select size="small" v-model="search.status" placeholder="请选择" @change="getList()">
+                    <el-select size="small" v-model="search.status" placeholder="请选择" @change="getList(1)" class="w100 ">
                         <el-option v-for="item in status" :label="item.text" :value="item.id" :key='item.id'>
                         </el-option>
                     </el-select>
                 </el-form-item>
 
                 <el-form-item>
-                    <datePicker @changeTime_sta="changeTime_sta" @changeTime_end="changeTime_end" placeholder="请选择时间"></datePicker>
+                    <datePicker :startTime.sync='search.startTime'  :endTime.sync='search.endTime' classx="w140"></datePicker>
                 </el-form-item>
 
                 <el-form-item>
-                    <el-input placeholder="订单编号/SCM订单编号/供应商/客户名称" v-model="search.keys" class="w300" size="small"></el-input>
+                    <el-input placeholder="订单编号/SCM订单编号/供应商/客户名称" v-model="search.keys" @keyup.native.enter="getList(1)" class="w300" size="small"></el-input>
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="getList(1)" size="small">查询</el-button>
@@ -84,7 +84,7 @@
             </el-table>
         </el-col>
         <el-col :span="24" class="toolbar">
-            <pagination :total="total" :pageSize="pageSize" @change="getList"></pagination>
+            <pagination :total="total" :pageSize.sync="pageSize"  :pageIndex.sync="pageIndex" @change="getList"></pagination>
         </el-col>
         <el-col :span="24" v-if="showLogistic">
             <checkLogistic :showx.sync="showLogistic" :useMsg="userMsg"></checkLogistic>
@@ -221,12 +221,6 @@ export default {
                         return item;
                     });
                 });
-        },
-        changeTime_sta (value) {
-            this.search.startTime = value;
-        },
-        changeTime_end (value) {
-            this.search.endTime = value;
         },
         // 物流跟踪
         checkLogistic (row) {

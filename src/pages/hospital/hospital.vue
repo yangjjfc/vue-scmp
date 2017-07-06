@@ -20,10 +20,10 @@
                         </el-select>
                     </el-form-item>
                      <el-form-item>
-                        <el-input placeholder="客户名称/联系人" v-model="from.keywords" class="w300" size="small"></el-input>
+                        <el-input placeholder="客户名称/联系人" v-model="from.keywords" @keyup.native.enter="getList(1)" class="w300" size="small"></el-input>
                     </el-form-item>
                     <el-form-item>
-                        <el-button type="primary" @click="getList()"  size="small">筛选</el-button>
+                        <el-button type="primary" @click="getList(1)"  size="small">筛选</el-button>
                     </el-form-item>
                     <el-form-item>
                         <el-button @click="reset"  size="small">重置</el-button>
@@ -75,7 +75,7 @@
                 </el-table>
             </el-col>
             <el-col :span="24" class="toolbar">
-                <pagination :total="total" :pageSize="pageSize" :pageIndex="pageIndex" @change="getList"></pagination>
+                <pagination :total="total" :pageSize.sync="pageSize" :pageIndex.sync="pageIndex" @change="getList"></pagination>
             </el-col>
             <el-col :span="24" v-if="showDetail">
                 <detail :showx.sync="showDetail" :detailUser="msgx" :title="detailTitle"  @refresh="getList"></detail>
@@ -98,7 +98,6 @@ const URL = {
     LIST: 'scm.platformCustomer.pageCustomer', // 分页列表
     DETAIL: 'scm.platformSupplier.findEnterprise', // 详情-
     ENABLE: 'scm.platformCustomer.addRegisterScmAuth' // 开通erp-
-    
 };
 export default {
     name: 'hospital',
@@ -239,7 +238,7 @@ export default {
         },
         // select change event
         change () {
-            this.getList();
+            this.getList(1);
         },
         // 详情
         detailSuppiler (no, type) {

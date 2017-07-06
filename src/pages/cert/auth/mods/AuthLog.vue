@@ -8,16 +8,16 @@
                         <el-table :data="list" border>
                             <el-table-column prop="index" label="序号" width="70" align="center">
                             </el-table-column>
-                            <el-table-column prop="operatorName" label="审核人" width="160" align="center">
+                            <el-table-column prop="operatorName" label="操作人" width="160" align="center">
                             </el-table-column>
-                             <el-table-column prop="createTime" label="审核时间" width="160" align="center">
+                             <el-table-column prop="createTime" label="操作时间" width="160" align="center">
                             </el-table-column>
                              <el-table-column prop="" label="状态" width="160" align="center">
                             <template scope="scope">
                                 <div v-html="scope.row.statusStr"></div>
                             </template>
                             </el-table-column>
-                             <el-table-column prop="remark" label="审核内容" width="160" align="center">
+                             <el-table-column prop="remark" label="操作内容" width="160" align="center">
                             </el-table-column>
                         </el-table>
                         
@@ -41,7 +41,7 @@
                     </el-tab-pane>
                 </el-tabs>
                 <el-col :span="24" class="toolbar">
-                    <pagination :total="page.total" :pageSize="page.pageSize" @change="getData"></pagination>
+                    <pagination :total="page.total" :pageSize.sync="page.pageSize" :pageIndex.sync="page.pageIndex" @change="getData"></pagination>
                 </el-col>
             </el-col>
         </div>
