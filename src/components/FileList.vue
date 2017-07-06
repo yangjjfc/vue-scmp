@@ -2,6 +2,7 @@
     <ul class="fileList list-inline">
         <li v-for="item in list" :key="item">
          <a class="boxer" :href="item.fullUrl" v-boxer="item.fullUrl" >
+            <i class="masterCert" v-if="isMaster">主图</i>
             <img :src="item.thumbnail" :width="width" :height="width">
         </a>
         <p class="text-center" v-if="showChoose">
@@ -25,6 +26,7 @@ export default {
         };
     },
     props: {
+        isMaster: false,
         showChoose: '',
         files: {
             type: [Array, String]
@@ -97,6 +99,15 @@ export default {
         li{
             float:left;
             margin-right:5px;
+            position:relative;
+            .masterCert{
+                position: absolute;
+                background-color: rgba(255,0,0,.8);
+                color: #fff;
+                font-style: normal;
+                padding: 0px 5px;
+                line-height: 18px;
+            }
         }
     }
 </style>
