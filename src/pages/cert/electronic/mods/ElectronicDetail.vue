@@ -53,10 +53,7 @@
     </section>
 </template>
 <script>
-    import pagination from '@/components/pagination';
-    import dailog from '@/components/Dailog';
     import fileList from '@/components/FileList.vue';
-    
     const URL = {
         DETAIL: 'ypt.open.yscm.getSignatureByPlatform', // 平台端-查询企业签章详细
         CHECK: 'ypt.open.yscm.modAuditSignature' // 平台端-企业签章审核
@@ -180,9 +177,7 @@
         
         },
         components: {
-            dailog,
-            fileList,
-            pagination
+            fileList
         }
     };
 

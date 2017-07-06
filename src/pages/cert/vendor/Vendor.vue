@@ -53,7 +53,6 @@
 </section>
 </template>
 <script>
-import pagination from '@/components/pagination';
 import FileList from '@/components/FileList';
 import VendorDetail from './mods/VendorDetail';
 const URL = {
@@ -118,8 +117,7 @@ export default {
     },
     components: {
         FileList,
-        VendorDetail,
-        pagination
+        VendorDetail
     }
 };
 

@@ -50,8 +50,6 @@
 </section>
 </template>
 <script>
-    import pagination from '@/components/pagination';
-    import dailog from '@/components/Dailog';
     import fileList from '@/components/FileList.vue';
     import {getFileType} from '@/services/global.common';
     import CONFIG from '@/config/app.config'; // 配置
@@ -123,9 +121,7 @@
         
         },
         components: {
-            dailog,
-            fileList,
-            pagination
+            fileList
         }
     };
 

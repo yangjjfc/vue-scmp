@@ -55,8 +55,6 @@
 </div>
 </template>
 <script>
-import pagination from '@/components/pagination';
-
 import RegisterDetail from './mods/RegisterDetail';
 import SetStatus from './mods/SetStatus';
 import RegisterLog from './mods/RegisterLog';
@@ -180,8 +178,7 @@ export default {
     components: {
         RegisterDetail,
         SetStatus,
-        RegisterLog,
-        pagination
+        RegisterLog
     }
 };
 

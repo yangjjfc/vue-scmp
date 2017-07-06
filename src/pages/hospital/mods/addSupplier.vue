@@ -92,7 +92,6 @@ const URL = {
     ADDHOSPITALMASTER: 'scm.platformCustomer.addHospitalMaster' // 添加合作共建
 };
 import certs from '@/pages/supplier/mods/certs';
-import dailog from '@/components/Dailog';
 import queryList from '@/components/queryList';
 import regionPicker from '@/components/regionPicker';
 import fileUpload from '@/components/FileUpload';
@@ -449,7 +448,6 @@ export default {
         this.resetmsg = { ...this.msgx };
     },
     components: {
-        dailog,
         fileUpload,
         queryList,
         regionPicker,

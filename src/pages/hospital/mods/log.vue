@@ -33,8 +33,6 @@
 const URL = { 
     'log': 'scm.platformCustomer.listEnterpriseAuditLog' // 审核日志
 };
-import dailog from '@/components/Dailog';
-import pagination from '@/components/pagination';
 export default {
     name: 'hospital-log',
     props: ['showx', 'logmsg'],
@@ -80,12 +78,8 @@ export default {
         this.getData().then(() => {
             this.myshow = this.showx;
         });
-    },
-    components: {
-        dailog,
-        pagination
     }
-
+    
 };
 
 </script>

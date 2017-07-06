@@ -1,0 +1,21 @@
+// element-ui全局样式改写
+.el-dialog__footer{
+        border-top: 1px solid #e9eaec;
+}
+.el-dialog__header{
+    border-bottom: 1px solid #e9eaec;
+    padding: 14px 16px;
+    line-height: 1;
+}
+.el-dialog__body{
+    padding: 20px 20px 10px 20px;
+}
+.el-form-item{
+    margin-bottom: 0;
+}
+.el-table{
+    font-size:12px;
+}
+.el-form-item__error{
+    position: inherit;
+}

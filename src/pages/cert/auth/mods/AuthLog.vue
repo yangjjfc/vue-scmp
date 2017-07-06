@@ -49,8 +49,6 @@
 </section>
 </template>
 <script>
-    import pagination from '@/components/pagination';
-    import dailog from '@/components/Dailog';
     const URL = {
         LOG: 'scm.platformCert.pageAuthorizeLogs' // 
        
@@ -144,11 +142,8 @@
         },
         mounted () {
         
-        },
-        components: {
-            dailog,
-            pagination
         }
+      
     };
 
 </script>

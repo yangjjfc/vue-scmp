@@ -20,7 +20,6 @@
 </section>
 </template>
 <script>
-    import dailog from '@/components/Dailog';
     const URL = {
         COMMIT: 'scm.platformCert.updateNeedPaper' // 
     };
@@ -74,10 +73,8 @@
                         this.myshow = false;
                     });
             }
-        },
-        components: {
-            dailog
         }
+       
     };
 
 </script>

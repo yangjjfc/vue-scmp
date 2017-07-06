@@ -46,7 +46,6 @@ const URL = {
     STAFFINFO: 'ypt.open.user.findUserByNoForWeb', // 获取员工信息
     EDIT: 'scm.enterprise.modifyUser' // 编辑员工
 };
-import dailog from '@/components/Dailog';
 import fileUpload from '@/components/FileUpload';
 import { mapGetters } from 'vuex';
 import {encryption, Validate} from '@/services/global.common';
@@ -220,7 +219,6 @@ export default {
         }
     },
     components: {
-        dailog,
         fileUpload
     }
 

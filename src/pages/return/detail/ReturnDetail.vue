@@ -73,7 +73,6 @@
     </section>
 </template>
 <script>
-    import pagination from '@/components/pagination';
     import {parseMone} from '@/services/global.common.js'; 
     const URL = {
         PEOPLE_LIST: 'scm.orderReturn.getReturnOrder' // 查询列表
@@ -151,10 +150,8 @@
         },
         mounted () {
             this.getList();
-        },
-        components: {
-            pagination
         }
+      
     };
 
 </script>

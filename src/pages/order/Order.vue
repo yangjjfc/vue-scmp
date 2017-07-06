@@ -93,7 +93,6 @@
 </section>
 </template>
 <script>
-import pagination from '@/components/pagination';
 import datePicker from '@/components/datePicker';
 const URL = {
     PEOPLE_LIST: 'scm.order.queryOrderByPlatform' // 查询列表
@@ -250,8 +249,7 @@ export default {
         this.getList();
     },
     components: {
-        datePicker,
-        pagination
+        datePicker
     }
 };
 

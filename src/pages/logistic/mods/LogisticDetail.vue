@@ -1,7 +1,6 @@
 <template src="./LogisticDetail.html">
 </template>
 <script>
-    import pagination from '@/components/pagination';
     import {parseMone} from '@/services/global.common'; 
     const URL = {
         PEOPLE_LIST: 'scm.orderDelivery.getDeliveryOrder' // 查询列表
@@ -49,10 +48,8 @@
         },
         mounted () {
             this.getList();
-        },
-        components: {
-            pagination
         }
+      
     };
 
 </script>

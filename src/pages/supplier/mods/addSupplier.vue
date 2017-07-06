@@ -69,7 +69,6 @@ const URL = {
     PAGENCSUPPLIERS: 'scm.platformSupplier.pageNotRegNcSuppliers' // NC供应商列表
 };
 import certs from './certs';
-import dailog from '@/components/Dailog';
 import queryList from '@/components/queryList';
 import regionPicker from '@/components/regionPicker';
 import fileUpload from '@/components/FileUpload';
@@ -397,7 +396,6 @@ export default {
         this.resetmsg = {...this.msgx};
     },
     components: {
-        dailog,
         fileUpload,
         queryList,
         regionPicker,

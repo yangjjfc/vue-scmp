@@ -67,7 +67,6 @@
 </section>
 </template>
 <script>
-import pagination from '@/components/pagination';
 import FileList from '@/components/FileList';
 import preserveDetail from './mods/PreserveDetail';
 const URL = {
@@ -158,8 +157,7 @@ export default {
     },
     components: {
         FileList,
-        preserveDetail,
-        pagination
+        preserveDetail
     }
 };
 

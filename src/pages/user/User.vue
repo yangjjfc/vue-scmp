@@ -63,7 +63,6 @@
     </section>
 </template>
 <script>
-import pagination from '@/components/pagination';
 import addUser from './mods/addUser';
 import permission from './mods/permission';  // 添加用户权限
 const URL = {
@@ -177,8 +176,7 @@ export default {
     },
     components: {
         addUser,
-        permission,
-        pagination
+        permission
     }
 };
 

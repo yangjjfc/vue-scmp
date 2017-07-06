@@ -83,7 +83,6 @@
     </section>
 </template>
 <script>
-    import pagination from '@/components/pagination';
     import datePicker from '@/components/datePicker';
     import checkLogistic from './mods/CheckLogistic';
     const URL = {
@@ -179,8 +178,7 @@
         },
         components: {
             datePicker,
-            checkLogistic,
-            pagination
+            checkLogistic
         }
     };
 

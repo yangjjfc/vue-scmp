@@ -57,7 +57,6 @@
 </section>
 </template>
 <script>
-import pagination from '@/components/pagination';
 import FileList from '@/components/FileList';
 import PromiseDetail from './mods/PromiseDetail';
 const URL = {
@@ -150,8 +149,7 @@ export default {
     },
     components: {
         FileList,
-        PromiseDetail,
-        pagination
+        PromiseDetail
     }
 };
 

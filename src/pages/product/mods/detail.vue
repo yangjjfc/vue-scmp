@@ -197,7 +197,6 @@ const URL = {
 };
 import fileList from '@/components/FileList.vue';
 import CONFIG from '@/config/app.config'; // 配置
-import dailog from '@/components/Dailog';
 import { formatFile } from '@/services/global.common';
 import noimg from '@/assets/images/noimage.png'; // 没有图片
 import '@/assets/directive/vueDirective.js'; // jq boxer指令
@@ -347,7 +346,6 @@ export default {
         });
     },
     components: {
-        dailog,
         fileList
     }
 };

@@ -21,7 +21,6 @@ const URL = {
     getTime: 'scm.platformSupplier.getSupplierPaperTime',
     updateTime: 'scm.platformSupplier.updateProviderPaperTime'
 };
-import dailog from '@/components/Dailog';
 export default {
     name: 'supplier-certTimeSet',
     props: ['showx', 'transMsg'],
@@ -69,9 +68,6 @@ export default {
         this.getData().then(() => {
             this.myshow = this.showx;
         });
-    },
-    components: {
-        dailog
     }
 
 };

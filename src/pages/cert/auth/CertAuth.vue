@@ -74,7 +74,6 @@
 </section>
 </template>
 <script>
-import pagination from '@/components/pagination';
 import FileList from '@/components/FileList';
 import AuthDetail from './mods/AuthDetail';
 import AuthLog from './mods/AuthLog';
@@ -181,8 +180,7 @@ export default {
     components: {
         FileList,
         AuthDetail,
-        AuthLog,
-        pagination
+        AuthLog
     }
 };
 

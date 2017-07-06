@@ -1,6 +1,7 @@
 ﻿import axios from 'axios';
 import CONFIG from '../config/app.config';
-import iView from 'iview';
+import NProgress from 'nprogress'; // Progress 进度条
+import 'nprogress/nprogress.css';// Progress 进度条 样式
 import { Message } from 'element-ui';
 class Interceptor {
   // 对请求数据做些什么
@@ -36,7 +37,7 @@ class Interceptor {
             return result.join('&');
         };
         axios.interceptors.request.use(function (request) {
-            iView.LoadingBar.start();
+            NProgress.start();
       // 本地
             if (CONFIG.DEV_MODE === 0) {
                 request.method = 'GET';
@@ -58,7 +59,7 @@ class Interceptor {
   // 对响应数据做点什么
     response () {
         axios.interceptors.response.use(function (response) {
-            iView.LoadingBar.finish();
+            NProgress.done();
             if (response.data) {
                 if (response.data.code === 'SUCCESS' || response.data.code === '0') {
                     return response.data;

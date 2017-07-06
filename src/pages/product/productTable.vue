@@ -59,7 +59,6 @@
 <script>
 import '@/assets/directive/vueDirective.js'; // jq boxer指令
 import CONFIG from '@/config/app.config'; // 配置
-import pagination from '@/components/pagination';
 import detail from './mods/detail';
 import picture from '@/assets/images/zhu.png'; // daf
 import log from './mods/log';
@@ -191,7 +190,6 @@ export default {
         this.getList();
     },
     components: {
-        pagination,
         detail,
         down, 
         log

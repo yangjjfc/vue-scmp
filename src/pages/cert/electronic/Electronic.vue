@@ -57,7 +57,6 @@
 </section>
 </template>
 <script>
-import pagination from '@/components/pagination';
 import ElectronicDetail from './mods/ElectronicDetail';
 import FileList from '@/components/FileList';
 
@@ -163,8 +162,7 @@ export default {
     },
     components: {
         FileList,
-        ElectronicDetail,
-        pagination
+        ElectronicDetail
     }
 };
 

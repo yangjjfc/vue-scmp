@@ -113,7 +113,6 @@ const URL = {
     CHECK: 'scm.platformCustomer.auditEnterprise' // 审核
 };
 import CONFIG from '@/config/app.config'; // 配置
-import dailog from '@/components/Dailog';
 import { formatFile } from '@/services/global.common';
 import noimg from '@/assets/images/noimage.png'; // 没有图片
 import '@/assets/directive/vueDirective.js'; // jq boxer指令
@@ -254,10 +253,8 @@ export default {
         this.getData().then(() => {
             this.myshow = this.showx;
         });
-    },
-    components: {
-        dailog
     }
+    
 };
 </script>
 

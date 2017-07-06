@@ -64,7 +64,6 @@
 </section>
 </template>
 <script>
-import pagination from '@/components/pagination';
 import FileList from '@/components/FileList';
 import EntrustDetail from './mods/EntrustDetail';
 const URL = {
@@ -158,8 +157,7 @@ export default {
     },
     components: {
         FileList,
-        EntrustDetail,
-        pagination
+        EntrustDetail
     }
 };
 

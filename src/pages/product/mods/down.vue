@@ -21,7 +21,6 @@
 const URL = {
     DOWN: 'scm.product.modOffShelfForceProduct'
 };
-import dailog from '@/components/Dailog';
 export default {
     name: 'relieve',
     props: ['showx', 'transMsg'],
@@ -95,9 +94,6 @@ export default {
     },
     beforeMount () {
         this.myshow = this.showx;
-    },
-    components: {
-        dailog
     }
 
 };

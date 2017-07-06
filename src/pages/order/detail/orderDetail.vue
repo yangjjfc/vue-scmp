@@ -109,7 +109,6 @@
     </section>
 </template>
 <script>
-    import pagination from '@/components/pagination';
     import {parseMone} from '@/services/global.common.js';
     import Step from '@/components/Step'; 
     const URL = {
@@ -210,8 +209,7 @@
             this.getDetail();
         },
         components: {
-            Step,
-            pagination
+            Step
         }
     };
 

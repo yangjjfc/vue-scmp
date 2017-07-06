@@ -33,10 +33,7 @@
 </section>
 </template>
 <script>
-    import pagination from '@/components/pagination';
-    import dailog from '@/components/Dailog';
     import fileList from '@/components/FileList.vue';
-    
     const URL = {
         DETAIL: 'scm.platformCert.getSupplierCommitment' // 
        
@@ -92,9 +89,7 @@
         
         },
         components: {
-            dailog,
-            fileList,
-            pagination
+            fileList
         }
     };
 

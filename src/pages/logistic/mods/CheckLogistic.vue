@@ -35,7 +35,6 @@
 const URL = {
     DATA: 'scm.orderDelivery.queryLogistics' // 物流信息
 };
-import dailog from '@/components/Dailog';
 export default {
     name: 'CheckLogistic',
     props: {
@@ -81,9 +80,6 @@ export default {
     beforeMount () {
         this.getData();
         this.myshow = this.showx;
-    },
-    components: {
-        dailog
     }
 
 };

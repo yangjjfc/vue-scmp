@@ -90,7 +90,6 @@
     </section>
 </template>
 <script>
-import pagination from '@/components/pagination';
 import detail from './mods/detail';
 import log from './mods/log';
 import addSupplier from './mods/addSupplier';
@@ -281,7 +280,6 @@ export default {
         this.getList();
     },
     components: {
-        pagination,
         detail,
         log,
         addSupplier

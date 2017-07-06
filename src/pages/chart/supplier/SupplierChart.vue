@@ -67,7 +67,6 @@
     </section>
 </template>
 <script>
-    import pagination from '@/components/pagination';
     import {parseMone, format} from '@/services/global.common';
     const URL = {
         PEOPLE_LIST: 'scm.statistics.supplierSalesByPlatform', // 查询列表
@@ -173,10 +172,8 @@
         mounted () {
             this.changeType();
             this.getList();
-        },
-        components: {
-            pagination
         }
+        
     };
 
 </script>

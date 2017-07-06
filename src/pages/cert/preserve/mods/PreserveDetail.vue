@@ -90,8 +90,6 @@
     </section>
 </template>
 <script>
-    import pagination from '@/components/pagination';
-    import dailog from '@/components/Dailog';
     import fileList from '@/components/FileList.vue';
     import FileUpload from '@/components/FileUpload.vue';
     const URL = {
@@ -226,10 +224,8 @@
         
         },
         components: {
-            dailog,
             FileUpload,
-            fileList,
-            pagination
+            fileList
         }
     };
 

@@ -14,7 +14,6 @@ const URL = {
     RIGHTS_EDIT: 'ypt.open.right.updateUserRights', // 设置权限
     RIGHTS_LIST: 'ypt.open.right.findUserRights' // 所有可选权限
 };
-import dailog from '@/components/Dailog';
 export default {
     name: 'staff-permission',
     props: {
@@ -101,9 +100,6 @@ export default {
         this.getData().then(() => {
             this.myshow = this.showx;
         });
-    },
-    components: {
-        dailog
     }
 
 };
