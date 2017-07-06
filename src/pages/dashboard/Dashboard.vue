@@ -24,12 +24,12 @@
 						<template v-for="(item,index) in menuList" v-if="!item.hidden">
 							<el-submenu :index="index+''" v-if="item.son&&item.son.length>0" :key="index">
 								<template slot="title">
-									<i :class="[font,item.icon]"></i>{{item.name}}
+									<i  class="sidebar-iconfont iconfont" :class="[item.icon]"></i>{{item.name}}
 								</template>
 								<el-menu-item v-for="child in item.son" :index="child.state" :key="child.state" v-if="!child.hidden">{{child.name}}</el-menu-item>
 							</el-submenu>
 							<el-menu-item v-if="!item.son" :index="item.state">
-								<i :class="[font,item.icon]"></i>{{item.name}}
+								<i class="sidebar-iconfont iconfont"  :class="[item.icon]"></i>{{item.name}}
 							</el-menu-item>
 						</template>
 					</el-menu>
@@ -39,7 +39,7 @@
 					<li v-for="(item,index) in menuList" v-if="!item.hidden" class="el-submenu item">
 						<template v-if="item.son&&item.son.length>0">
 							<div class="el-submenu__title" style="padding-left: 20px;" @mouseover="showMenu(index,true)" @mouseout="showMenu(index,false)">
-								<i :class="[font,item.icon]"></i>
+								<i class="sidebar-iconfont iconfont" :class="[item.icon]"></i>
 							</div>
 							<ul class="el-menu submenu" :class="'submenu-hook-'+index" @mouseover="showMenu(index,true)" @mouseout="showMenu(index,false)">
 								<li v-for="child in item.son" v-if="!child.hidden" :key="child.state" class="el-menu-item" style="padding-left: 40px;" :class="$route.path==child.state?'is-active':''" @click="$router.push(child.state)">{{child.name}}</li>
@@ -48,7 +48,7 @@
 						<template v-else>
 							<li class="el-submenu">
 								<div class="el-submenu__title el-menu-item" style="padding-left: 20px;height: 56px;line-height: 56px;padding: 0 20px;" :class="$route.path==item.state?'is-active':''" @click="$router.push(item.state)">
-									<i :class="[font,item.icon]"></i>
+									<i class="sidebar-iconfont iconfont" :class="[item.icon]"></i>
 								</div>
 							</li>
 						</template>
@@ -63,8 +63,8 @@
 			<section class="content-container">
 				<div class="grid-content bg-purple-light">
 					<el-col :span="24" class="breadcrumb-container">
-						<i class="iconfont " :class="activeMenu.classx"></i>
-						<span v-text="activeMenu.name"></span>
+						<i class="iconfont " :class="$route.matched[1].meta.icon"></i>
+						<span v-text="$route.matched[1].meta.name"></span>
 					</el-col>
 					<el-col :span="24" class="content-wrapper">
 						<transition name="fade" mode="out-in">
@@ -93,8 +93,7 @@ export default {
                 classx: 'icon-index',
                 name: '首页'
             },
-            sysUserAvatar: '',
-            font: 'sidebar-iconfont iconfont'
+            sysUserAvatar: ''
         };
     },
     methods: {

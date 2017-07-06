@@ -32,11 +32,51 @@ export default [
         name: 'dashboard',
         component: dashboard,
         children: [
-            { path: '/index', component: index, name: 'index' }, // 首页
-            { path: '/supplier', component: supplier, name: 'supplier' }, // 供应商管理
-            { path: '/hospital', component: hospital, name: 'hospital' }, // 医院管理
-            { path: '/product', component: product, name: 'product' }, // 产品管理
-            { path: '/cert/preserve', component: preserve, name: 'preserve' }, // 证件维护
+            { path: '/index', // 首页
+                component: index,
+                name: 'index', 
+                meta: {
+                    name: '首页',
+                    icon: 'icon-index',
+                    state: '/index'     
+                }
+            }, 
+            { path: '/supplier',
+                component: supplier,
+                name: 'supplier',
+                meta: {
+                    name: '供应商管理',
+                    icon: 'icon-qiye',
+                    state: '/supplier'      
+                }
+            }, // 供应商管理
+            { path: '/hospital',
+                component: hospital,
+                name: 'hospital',
+                meta: {
+                    name: '客户管理',
+                    icon: 'icon-iconfontyiyuan',
+                    state: '/hospital'     
+                }
+            }, // 医院管理
+            { path: '/product',
+                component: product,
+                name: 'product', 
+                meta: {
+                    name: '产品管理',
+                    icon: 'icon-chanpin1',
+                    state: '/product'      
+                }
+            }, // 产品管理
+            { path: '/cert/preserve',
+                component: preserve,
+                name: 'preserve',
+                meta: {
+                    name: '产品注册证',
+                    state: '/cert/register',  
+                    icon: 'icon-zhengjian'  
+                }
+            }, // 证件维护
             { path: '/cert/electronic', component: electronic, name: 'electronic' }, // 电子签章
             { path: '/cert/vendor', component: vendor, name: 'vendor' }, // 生产厂商
             { path: '/cert/entrust', component: entrust, name: 'entrust' }, // 法人委托书
