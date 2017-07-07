@@ -26,7 +26,7 @@ module.exports = {
     port: 8090,
     autoOpenBrowser: true,
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/',
+    assetsPublicPath: './',
     proxyTable: {
        '/gateway': {
                 target: 'http://scmp.dev.cloudyigou.com',
