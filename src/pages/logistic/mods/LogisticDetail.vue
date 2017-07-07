@@ -39,7 +39,7 @@
             
             // 查看
             returns () {
-                this.$router.push('/logistic');
+                this.$router.back();
             }
     
         },

@@ -228,7 +228,7 @@ export default {
         },
         // 查看
         detail (row) {
-            this.$router.push('/order/detail/' + row.orderNo + '/' + row.passKey);
+            this.$router.push('order/detail/' + row.orderNo + '/' + row.passKey);
         },
         // 重置
         reset () {

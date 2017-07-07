@@ -129,7 +129,7 @@
             
             // 查看
             returns () {
-                this.$router.push('/return');
+                this.$router.go('-1');
             },
             // 重置
             reset () {

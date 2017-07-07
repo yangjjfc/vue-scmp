@@ -44,11 +44,7 @@ class Interceptor {
                 request.url = 'static/data/' + request.url + '.json?' + getParams(request.data || {});
         // 线上
             } else if (CONFIG.DEV_MODE === 1 && request.method.toLowerCase() === 'post') {
-                if (process.env.NODE_ENV === 'production') {
-                    request.url = request.url.split('.').length === 1 ? request.url : 'call'; 
-                } else { 
-                    request.url = '/gateway/' + (request.url.split('.').length === 1 ? request.url : 'call');
-                }
+                request.url = '/gateway/' + (request.url.split('.').length === 1 ? request.url : 'call');
             }
           //  clearNoneValueObj(request);
             return request;

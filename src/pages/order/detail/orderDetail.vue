@@ -194,10 +194,10 @@
                     });
             },
             returns () {
-                this.$router.push('/order');
+                this.$router.back();
             },
             detail (row) {
-                this.$router.push('/logistic/detail/' + row.deliveryNo + '/' + row.passKey);
+                this.$router.push('/dashboard/logistic/detail/' + row.deliveryNo + '/' + row.passKey);
             }
 
         },
