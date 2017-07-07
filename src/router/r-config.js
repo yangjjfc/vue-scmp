@@ -4,7 +4,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import routes from './index.js';
-import { state } from '@/store/index';
+import store from '@/store/index';
 /**
  * router
  */
@@ -18,8 +18,8 @@ const router = new VueRouter({
  * router interceptor
  */
 router.beforeEach((to, from, next) => {
-    if (to.path !== '/auth' && from.path !== '/') {
-        if (state.userInfo && state.userInfo.enterpriseNo) {
+    if (to.path !== '/auth' && from.path !== '/') { // 非登入页或不是'/'跳转
+        if (store.state.roles) {
             next();
         } else {
             next({

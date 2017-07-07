@@ -50,7 +50,7 @@ export default {
             }).then(res => {
                 if (res.data.permissionSet) {
                     commit('GETROLES', res.data.permissionSet);
-                    resolve();
+                    resolve(state.roles);
                 }
             }).catch(err => {
                 throw new Error(err);

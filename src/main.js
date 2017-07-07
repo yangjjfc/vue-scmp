@@ -1,5 +1,4 @@
 import Vue from 'vue';
-import App from './App';
 import store from './store/index.js'; // vuex store
 import {router} from './router/r-config.js'; // router配置
 import ElementUI from 'element-ui';
@@ -8,6 +7,7 @@ import Http from './services/Http';
 import vueWaves from '@/assets/directive/waves';// 水波纹指令
 import pagination from '@/components/pagination'; // 分页组件
 import dailog from '@/components/Dailog'; // 弹框组件
+import App from './App';
 // register globally
 Vue.use(ElementUI);
 Vue.use(vueWaves);

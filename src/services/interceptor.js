@@ -2,7 +2,7 @@
 import CONFIG from '../config/app.config';
 import NProgress from 'nprogress'; // Progress 进度条
 import 'nprogress/nprogress.css';// Progress 进度条 样式
-import { Message } from 'element-ui';
+import { Notification } from 'element-ui';
 class Interceptor {
   // 对请求数据做些什么
     request () {
@@ -38,15 +38,14 @@ class Interceptor {
         };
         axios.interceptors.request.use(function (request) {
             NProgress.start();
-      // 本地
+            // 本地
             if (CONFIG.DEV_MODE === 0) {
                 request.method = 'GET';
                 request.url = 'static/data/' + request.url + '.json?' + getParams(request.data || {});
-        // 线上
+            // 线上
             } else if (CONFIG.DEV_MODE === 1 && request.method.toLowerCase() === 'post') {
                 request.url = '/gateway/' + (request.url.split('.').length === 1 ? request.url : 'call');
-            }
-          //  clearNoneValueObj(request);
+            } 
             return request;
         }, function (error) {
             return Promise.reject(error);
@@ -62,11 +61,9 @@ class Interceptor {
                 } else if (response.data.code === 'SESSION_EXPIRED' || response.data.code === '5000') {
                     return Promise.reject(response);
                 } else {
-                    Message({
-                        showClose: true,
-                        message: response.data.message,
-                        type: 'error',
-                        duration: 0
+                    Notification.error({
+                        title: '错误',
+                        message: response.data.message
                     });
                     return response.data;
                 }

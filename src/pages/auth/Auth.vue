@@ -58,7 +58,8 @@ export default {
     methods: {
         ...mapActions({
             'userLogin': 'login',
-            'currentUser': 'currentUser'
+            'currentUser': 'currentUser',
+            'getroles': 'getroles'
         }),
         // 刷新验证码
         refreshCode () {
@@ -118,7 +119,14 @@ export default {
     },
     mounted () {
         this.refreshCode();
-    }
+    },
+    beforeRouteLeave (to, from, next) {
+        // 获取权限
+        console.log(123123);
+        this.getroles().then(() => {
+            next();
+        });
+    }  
 };
 </script>
 

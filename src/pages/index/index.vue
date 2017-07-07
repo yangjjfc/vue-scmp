@@ -139,7 +139,6 @@
 
 <script>
 import echarts from 'echarts';
-
 import {
 
     parseMone

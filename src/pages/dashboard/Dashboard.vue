@@ -21,34 +21,34 @@
 			<aside :class="collapsed?'menu-collapsed':'menu-expanded'" class="sidebar el-menu--dark">
 				<el-scrollbar tag="div" class="scrollbar-box" v-show="!collapsed">
 					<el-menu :default-active="$route.path" :default-openeds="($route.matched[1].meta.open || [])" class="el-menu-vertical-demo" unique-opened router theme="dark">
-						<template v-for="(item,index) in menuList" v-if="!item.hidden">
-							<el-submenu :index="index+''" v-if="item.son&&item.son.length>0" :key="index">
+						<template v-for="(item,index) in menuList" >
+							<el-submenu :index="index+''" v-if="item.children&&item.children.length>0" :key="index">
 								<template slot="title">
-									<i  class="sidebar-iconfont iconfont" :class="[item.icon]"></i>{{item.name}}
+									<i class="sidebar-iconfont iconfont" :class="[item.meta.icon]"></i>{{item.meta.name}}
 								</template>
-								<el-menu-item v-for="child in item.son" :index="child.state" :key="child.state" v-if="!child.hidden">{{child.name}}</el-menu-item>
+								<el-menu-item v-for="child in item.children" :index="child.path" :key="child.path" >{{child.meta.name}}</el-menu-item>
 							</el-submenu>
-							<el-menu-item v-if="!item.son" :index="item.state">
-								<i class="sidebar-iconfont iconfont"  :class="[item.icon]"></i>{{item.name}}
+							<el-menu-item v-if="!item.children" :index="item.path">
+								<i class="sidebar-iconfont iconfont" :class="[item.meta.icon]"></i>{{item.meta.name}}
 							</el-menu-item>
 						</template>
 					</el-menu>
 				</el-scrollbar>
 				<!--导航菜单-折叠后-->
 				<ul class="el-menu--dark el-menu-vertical-demo collapsed" v-show="collapsed" ref="menuCollapsed">
-					<li v-for="(item,index) in menuList" v-if="!item.hidden" class="el-submenu item">
-						<template v-if="item.son&&item.son.length>0">
+					<li v-for="(item,index) in menuList"  class="el-submenu item">
+						<template v-if="item.children&&item.children.length>0">
 							<div class="el-submenu__title" style="padding-left: 20px;" @mouseover="showMenu(index,true)" @mouseout="showMenu(index,false)">
-								<i class="sidebar-iconfont iconfont" :class="[item.icon]"></i>
+								<i class="sidebar-iconfont iconfont" :class="[item.meta.icon]"></i>
 							</div>
 							<ul class="el-menu submenu" :class="'submenu-hook-'+index" @mouseover="showMenu(index,true)" @mouseout="showMenu(index,false)">
-								<li v-for="child in item.son" v-if="!child.hidden" :key="child.state" class="el-menu-item" style="padding-left: 40px;" :class="$route.matched[1].meta.state==child.state?'is-active':''" @click="$router.push(child.state)">{{child.name}}</li>
+								<li v-for="child in item.children"  :key="child.path" class="el-menu-item" style="padding-left: 40px;" :class="$route.path==child.path?'is-active':''" @click="$router.push(child.path)">{{child.meta.name}}</li>
 							</ul>
 						</template>
 						<template v-else>
 							<li class="el-submenu">
-								<div class="el-submenu__title el-menu-item" style="padding-left: 20px;height: 56px;line-height: 56px;padding: 0 20px;" :class="$route.matched[1].meta.state==item.state?'is-active':''" @click="$router.push( item.state)">
-									<i class="sidebar-iconfont iconfont" :class="[item.icon]"></i>
+								<div class="el-submenu__title el-menu-item" style="padding-left: 20px;height: 56px;line-height: 56px;padding: 0 20px;" :class="$route.path==item.path?'is-active':''" @click="$router.push( item.path)">
+									<i class="sidebar-iconfont iconfont" :class="[item.meta.icon]"></i>
 								</div>
 							</li>
 						</template>
@@ -78,8 +78,7 @@
 </template>
 
 <script>
-import createMenu from '@/config/menu.js';
-import SweetAlert from '@/services/sweetalert';
+import { menu } from '@/router/index';
 import { mapState, mapMutations, mapActions } from 'vuex';
 // import CONFIG from '@/config/app.config';
 export default {
@@ -88,13 +87,13 @@ export default {
             sysName: '云供应链', // title
             collapsed: false, // 是否缩进
             sysUserName: '', // 客户名称
-            menuList: '', // 菜单
+            menuList: [], // 菜单
             activeMenu: {
                 classx: 'icon-index',
                 name: '首页'
             },
             sysUserAvatar: ''
-           
+
         };
     },
     methods: {
@@ -104,22 +103,15 @@ export default {
             'getroles': 'getroles'
         }),
 		/** 退出登 */
-        logout: function () {
-            var self = this;
-            SweetAlert.confirm({
-                title: '确认退出吗',
+        logout () {
+            this.$confirm('确认退出吗', '退出', {
                 cancelButtonText: '取消',
                 confirmButtonText: '确定',
-                width: '300px',
-                showCancelButton: true,
-                showLoaderOnConfirm: true,
-                allowOutsideClick: false,
-                preConfirm: function () {
-                    return self.userLoginout();
-                }
-            }).then(result => {
-                SweetAlert.success('操作成功');
-                self.$router.push('/auth');
+                type: 'warning'
+            }).then(() => {
+                this.userLoginout().then(result => {
+                    this.$router.push('/auth');
+                });
             });
         },
 		// 折叠导航
@@ -151,14 +143,38 @@ export default {
         if (!this.states.userInfo) {
             this.$router.push({ name: 'auth' });
         } else {
-            this.getroles().then(() => {
-                this.menuList = createMenu();
-                this.menuList.forEach(item => {
-                    item.state = '/dashboard' + item.state;
-                    item.son && item.son.forEach(son => {
-                        son.state = '/dashboard' + son.state;
-                    });
+            this.getroles().then((roles) => {
+				// 菜单配置 
+                //  = menus.map(item => {
+                //     item.state = '/dashboard/' + item.state;
+                //     item.son && item.son.forEach(son => {
+                //         son.state = '/dashboard/' + son.state;
+                //     });
+                //     return item;
+                // }); 
+                let menulist = [];
+                menu.forEach(item => {
+                    if (roles.indexOf(item.meta.role) === -1) {
+                        return;
+                    } else {
+                        item.path = '/dashboard/' + item.path;
+                        if (!item.meta.nochildren && item.children) {
+                            item.children.forEach(children => {
+                                if (roles.indexOf(children.meta.role) === -1) {
+                                    return;
+                                } else if (children.meta.nomenu) {
+                                    return; 
+                                } else {
+                                    item.path = '/dashboard/' + item.path + '/' + children.path;
+                                }
+                            });      
+                        } else { 
+                            delete item.children; 
+                        }
+                    }   
+                    menulist.push(item);    
                 });
+                this.menuList = menulist;
             });
         }
     },
@@ -199,7 +215,7 @@ $topColor: #20a0ff;
 				img {
 					width: 30px;
 					height: 30px;
-					border-radius: 20px;   
+					border-radius: 20px;
 					margin: 10px 0px 10px 10px;
 					float: right;
 				}
