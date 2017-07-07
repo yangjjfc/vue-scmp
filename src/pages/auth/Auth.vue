@@ -122,7 +122,6 @@ export default {
     },
     beforeRouteLeave (to, from, next) {
         // 获取权限
-        console.log(123123);
         this.getroles().then(() => {
             next();
         });

@@ -8,7 +8,8 @@ Vue.use(Vuex);
 export const state = {
     userInfo: null, // 用户信息
     $windowHeight: null, // 浏览器高度
-    roles: null // 用户权限
+    roles: null, // 用户权限
+    defaultOpen: null
 };
 
 export default new Vuex.Store({

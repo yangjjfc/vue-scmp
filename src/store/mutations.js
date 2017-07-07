@@ -1,4 +1,4 @@
-import { CHANGEUSER, REFRESH, CLEARSTATE, HEIGHTRESIZE, GETROLES } from './mutation-types.js';
+import { CHANGEUSER, REFRESH, CLEARSTATE, HEIGHTRESIZE, GETROLES, DEFAULTOPEN } from './mutation-types.js';
 
 export default {
     // 用户登入
@@ -11,7 +11,7 @@ export default {
         let user = JSON.parse(sessionStorage.getItem('user'));
         let roles = JSON.parse(sessionStorage.getItem('roles'));
         state.userInfo = user || null;
-        state.roles = roles || null;
+        state.roles = roles || null; 
     },
     // 用户退出,清除数据
     [CLEARSTATE] (state, data) {
@@ -27,6 +27,9 @@ export default {
     [GETROLES] (state, data) {
         state.roles = data;
         sessionStorage.setItem('roles', JSON.stringify(state.roles));
+    },
+    [DEFAULTOPEN] (state, data) {
+        state.defaultOpen = data ? [data[0]] : null; 
     }
 };
 

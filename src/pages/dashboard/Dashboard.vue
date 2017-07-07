@@ -20,15 +20,15 @@
 		<el-col :span="24" class="main">
 			<aside :class="collapsed?'menu-collapsed':'menu-expanded'" class="sidebar el-menu--dark">
 				<el-scrollbar tag="div" class="scrollbar-box" v-show="!collapsed">
-					<el-menu :default-active="$route.path" :default-openeds="($route.matched[1].meta.open || [])" class="el-menu-vertical-demo" unique-opened router theme="dark">
+					<el-menu :default-active="$route.path" :default-openeds="states.defaultOpen||['']" class="el-menu-vertical-demo" unique-opened router theme="dark">
 						<template v-for="(item,index) in menuList" >
-							<el-submenu :index="index+''" v-if="item.children&&item.children.length>0" :key="index">
+							<el-submenu :index="item.path" v-if="item.children&&item.children.length>0" :key="item.path">
 								<template slot="title">
 									<i class="sidebar-iconfont iconfont" :class="[item.meta.icon]"></i>{{item.meta.name}}
 								</template>
-								<el-menu-item v-for="child in item.children" :index="child.path" :key="child.path" >{{child.meta.name}}</el-menu-item>
+								<el-menu-item v-for="child in item.children" :index="child.state" :key="child.state" >{{child.meta.name}}</el-menu-item>
 							</el-submenu>
-							<el-menu-item v-if="!item.children" :index="item.path">
+							<el-menu-item v-if="!item.children" :index="item.state">
 								<i class="sidebar-iconfont iconfont" :class="[item.meta.icon]"></i>{{item.meta.name}}
 							</el-menu-item>
 						</template>
@@ -42,12 +42,12 @@
 								<i class="sidebar-iconfont iconfont" :class="[item.meta.icon]"></i>
 							</div>
 							<ul class="el-menu submenu" :class="'submenu-hook-'+index" @mouseover="showMenu(index,true)" @mouseout="showMenu(index,false)">
-								<li v-for="child in item.children"  :key="child.path" class="el-menu-item" style="padding-left: 40px;" :class="$route.path==child.path?'is-active':''" @click="$router.push(child.path)">{{child.meta.name}}</li>
+								<li v-for="child in item.children"  :key="child.state" class="el-menu-item" style="padding-left: 40px;" :class="$route.path==child.state?'is-active':''" @click="$router.push(child.state)">{{child.meta.name}}</li>
 							</ul>
 						</template>
 						<template v-else>
 							<li class="el-submenu">
-								<div class="el-submenu__title el-menu-item" style="padding-left: 20px;height: 56px;line-height: 56px;padding: 0 20px;" :class="$route.path==item.path?'is-active':''" @click="$router.push( item.path)">
+								<div class="el-submenu__title el-menu-item" style="padding-left: 20px;height: 56px;line-height: 56px;padding: 0 20px;" :class="$route.path==item.state?'is-active':''" @click="$router.push( item.state)">
 									<i class="sidebar-iconfont iconfont" :class="[item.meta.icon]"></i>
 								</div>
 							</li>
@@ -93,7 +93,6 @@ export default {
                 name: '首页'
             },
             sysUserAvatar: ''
-
         };
     },
     methods: {
@@ -152,12 +151,13 @@ export default {
                 //     });
                 //     return item;
                 // }); 
+                let menus = menu;
                 let menulist = [];
-                menu.forEach(item => {
+                menus.forEach(item => {
                     if (roles.indexOf(item.meta.role) === -1) {
                         return;
                     } else {
-                        item.path = '/dashboard/' + item.path;
+                        item.state = '/dashboard/' + item.path;
                         if (!item.meta.nochildren && item.children) {
                             item.children.forEach(children => {
                                 if (roles.indexOf(children.meta.role) === -1) {
@@ -165,7 +165,7 @@ export default {
                                 } else if (children.meta.nomenu) {
                                     return; 
                                 } else {
-                                    item.path = '/dashboard/' + item.path + '/' + children.path;
+                                    children.state = item.state + '/' + children.path;
                                 }
                             });      
                         } else { 

@@ -18,21 +18,37 @@ const router = new VueRouter({
  * router interceptor
  */
 router.beforeEach((to, from, next) => {
-    if (to.path !== '/auth' && from.path !== '/') { // 非登入页或不是'/'跳转
+    if (to.meta.open) {
+        store.commit('DEFAULTOPEN', to.meta.open);
+    } else { 
+        store.commit('DEFAULTOPEN', null);
+    } 
+    if (to.path === '/auth') {
+        next();
+    } else if (to.path !== '/auth' && from.path !== '/') { // 非登入页或不是'/'跳转
         if (store.state.roles) {
             next();
+            // if (store.state.roles.indexof(to.meat.role) !== -1) {
+            //     next();
+            // } else {
+            //     next({
+            //         path: '/auth' 
+            //     });  
+            // }
         } else {
             next({
                 path: '/auth'
             });
         }
-    } else if (from.path === '/') {
+    } else if (from.path === '/' && window.sessionStorage.getItem('roles')) {
      // 用户刷新
         next();
     } else {
-        next();
+        next({
+            path: '/auth'
+        }); 
     }
-});
+}); 
 
 export { router };
 
