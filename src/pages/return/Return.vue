@@ -169,7 +169,7 @@
             },
             // 查看
             detail (id, key) {
-                this.$router.push('/return/detail/' + id + '/' + key);
+                this.$router.push('return/detail/' + id + '/' + key);
             },
             // 重置
             reset () {

@@ -69,6 +69,7 @@ module.exports = {
         "func-style": 1,
         "indent": ["error", 4],
         "key-spacing": 1,
+        "eol-last":0,
         "max-depth": 2,
         "max-nested-callbacks": 2,
         "one-var": ["error", {

@@ -157,7 +157,7 @@
             },
             // 查看
             detail (row) {
-                this.$router.push('/logistic/detail/' + row.deliveryNo + '/' + row.passKey);
+                this.$router.push('logistic/detail/' + row.deliveryNo + '/' + row.passKey);
             },
             // 重置
             reset () {

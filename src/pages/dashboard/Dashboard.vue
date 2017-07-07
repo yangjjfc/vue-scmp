@@ -20,7 +20,7 @@
 		<el-col :span="24" class="main">
 			<aside :class="collapsed?'menu-collapsed':'menu-expanded'" class="sidebar el-menu--dark">
 				<el-scrollbar tag="div" class="scrollbar-box" v-show="!collapsed">
-					<el-menu :default-active="$route.matched[1].meta.state" :default-openeds="($route.matched[1].meta.open || [])" class="el-menu-vertical-demo" unique-opened router theme="dark">
+					<el-menu :default-active="$route.path" :default-openeds="($route.matched[1].meta.open || [])" class="el-menu-vertical-demo" unique-opened router theme="dark">
 						<template v-for="(item,index) in menuList" v-if="!item.hidden">
 							<el-submenu :index="index+''" v-if="item.son&&item.son.length>0" :key="index">
 								<template slot="title">
@@ -47,7 +47,7 @@
 						</template>
 						<template v-else>
 							<li class="el-submenu">
-								<div class="el-submenu__title el-menu-item" style="padding-left: 20px;height: 56px;line-height: 56px;padding: 0 20px;" :class="$route.matched[1].meta.state==item.state?'is-active':''" @click="$router.push(item.state)">
+								<div class="el-submenu__title el-menu-item" style="padding-left: 20px;height: 56px;line-height: 56px;padding: 0 20px;" :class="$route.matched[1].meta.state==item.state?'is-active':''" @click="$router.push( item.state)">
 									<i class="sidebar-iconfont iconfont" :class="[item.icon]"></i>
 								</div>
 							</li>
@@ -153,6 +153,12 @@ export default {
         } else {
             this.getroles().then(() => {
                 this.menuList = createMenu();
+                this.menuList.forEach(item => {
+                    item.state = '/dashboard' + item.state;
+                    item.son && item.son.forEach(son => {
+                        son.state = '/dashboard' + son.state;
+                    });
+                });
             });
         }
     },
