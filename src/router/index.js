@@ -22,7 +22,7 @@ const hospitalChart = r => require.ensure([], () => r(require('../pages/chart/ho
 const register = r => require.ensure([], () => r(require('../pages/cert/register/Register.vue')), 'register');
 export default [
     {
-        path: '/', redirect: '/dashboard'
+        path: '/', redirect: '/auth'
     },
     {
         path: '/auth', // 登入页面
