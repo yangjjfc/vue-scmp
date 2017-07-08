@@ -262,6 +262,13 @@ export const menu = [{
     }] // 客户销售   
 }];
 
+export const layout = {
+    path: '/dashboard', // 所有页面的父组件
+    name: 'dashboard',
+    component: dashboard,
+    children: menu
+};
+
 export default [
     {
         path: '/', redirect: '/auth'
@@ -270,12 +277,7 @@ export default [
         path: '/auth', // 登入页面
         name: 'auth',
         component: Auth
-    }, {
-        path: '/dashboard', // 所有页面的父组件
-        name: 'dashboard',
-        component: dashboard,
-        children: menu
-    },
+    }, layout,
     { path: '*', redirect: '/dashboard/index' }
 ];
 

@@ -3,7 +3,7 @@
  */
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import routes from './index.js';
+import routes, {layout} from './index.js';
 import store from '@/store/index';
 /**
  * router
@@ -18,25 +18,38 @@ const router = new VueRouter({
  * router interceptor
  */
 router.beforeEach((to, from, next) => {
+    // 添加菜单打开项
     if (to.meta.open) {
         store.commit('DEFAULTOPEN', to.meta.open);
     } 
+    // 跳转登录页
     if (to.path === '/auth') {
         next();
-    } else if (to.path !== '/auth' && from.path !== '/') { // 非登入页或不是'/'跳转
+    } else if (from.path !== '/') { // 从根路径跳转
+        // 判断权限是否存在
         if (store.state.roles) {
+            console.log(111);
             next();
-            // if (store.state.roles.indexof(to.meat.role) !== -1) {
-            //     next();
-            // } else {
-            //     next({
-            //         path: '/auth' 
-            //     });  
-            // }
         } else {
-            next({
-                path: '/auth'
-            });
+            console.log(222);
+            // 权限不存在,获取权限
+            store.dispatch('getroles').then(res => {
+                store.dispatch('generateRouters', res).then(() => {
+                    if (store.state.routers.length) {
+                        layout.children = store.state.routers;
+                        router.addRoutes(layout); 
+                        next({ ...to });
+                    } else {
+                        next({ 
+                            path: '/auth'
+                        });    
+                    }
+                });
+            }).catch(errs => {
+                next({ 
+                    path: '/auth'
+                });    
+            });  
         }
     } else if (from.path === '/' && window.sessionStorage.getItem('roles')) {
      // 用户刷新

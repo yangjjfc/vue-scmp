@@ -9,7 +9,8 @@ export const state = {
     userInfo: null, // 用户信息
     $windowHeight: null, // 浏览器高度
     roles: null, // 用户权限
-    defaultOpen: [] // 默认打开
+    defaultOpen: [], // 默认打开
+    routers: [] // 路由
 };
 
 export default new Vuex.Store({

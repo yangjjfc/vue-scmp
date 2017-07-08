@@ -119,13 +119,13 @@ export default {
     },
     mounted () {
         this.refreshCode();
-    },
-    beforeRouteLeave (to, from, next) {
-        // 获取权限
-        this.getroles().then(() => {
-            next();
-        });
-    }  
+    }
+    // beforeRouteLeave (to, from, next) {
+    //     // 获取权限
+    //     this.getroles().then(() => {
+    //         next();
+    //     });
+    // }  
 };
 </script>
 

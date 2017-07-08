@@ -1,4 +1,4 @@
-import { CHANGEUSER, REFRESH, CLEARSTATE, HEIGHTRESIZE, GETROLES, DEFAULTOPEN } from './mutation-types.js';
+import { CHANGEUSER, REFRESH, CLEARSTATE, HEIGHTRESIZE, GETROLES, DEFAULTOPEN, SET_ROUTERS } from './mutation-types.js';
 
 export default {
     // 用户登入
@@ -33,6 +33,10 @@ export default {
         if (state.defaultOpen.indexOf(data) === -1) {
             state.defaultOpen.push(data);  
         }
+    },
+    // 设置路由
+    [SET_ROUTERS] (state, data) {
+        state.routers = data;  
     }
 };
 

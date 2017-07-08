@@ -1,4 +1,5 @@
 import Http from '@/services/Http';
+import { menu } from '@/router/index';
 export default {
     // 登录
     login (context, data) {
@@ -51,10 +52,35 @@ export default {
                 if (res.data.permissionSet) {
                     commit('GETROLES', res.data.permissionSet);
                     resolve(state.roles);
+                } else {
+                    reject(); 
                 }
             }).catch(err => {
-                throw new Error(err);
+                reject(err);
             });
         });
+    },
+    async generateRouters ({commit, state}, roles) {
+        let menulist = [];
+        menu.forEach(item => {     
+            if (roles.indexOf(item.meta.role) === -1) {
+                return;  
+            } else {
+                item.state = '/dashboard/' + item.path;
+                if (!item.meta.nochildren && item.children) {
+                    item.children.forEach(children => {  
+                        if (roles.indexOf(children.meta.role) === -1) {
+                            return;
+                        } else {
+                            children.state = item.state + '/' + children.path;
+                        }
+                    });         
+                } else {
+                    delete item.children; 
+                }     
+            }   
+            menulist.push(item);    
+        });     
+        return await commit('SET_ROUTERS', menulist);
     }
 };
