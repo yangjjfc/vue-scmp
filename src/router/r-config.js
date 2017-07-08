@@ -20,8 +20,6 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
     if (to.meta.open) {
         store.commit('DEFAULTOPEN', to.meta.open);
-    } else { 
-        store.commit('DEFAULTOPEN', null);
     } 
     if (to.path === '/auth') {
         next();

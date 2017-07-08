@@ -36,9 +36,9 @@ export default {
     }
 };
 </script>
-<style lang="scss">
+<style lang="scss">      
 .adderss {
-    width: 32.5%;
+    width: 31.5%;
     margin-bottom: 5px;
 }
 </style>

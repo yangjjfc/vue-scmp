@@ -84,7 +84,7 @@
                 <log :showx.sync="showLog" :logmsg="msgx" ></log>
             </el-col> 
             <el-col :span="24" v-if="showAdd">
-                <add-supplier :showx.sync="showAdd" :transMsg="msgx"  @refresh="getList"></add-supplier>
+                <add-hospital :showx.sync="showAdd" :transMsg="msgx"  @refresh="getList"></add-hospital>
             </el-col>     
         </el-row>
     </section>
@@ -92,7 +92,7 @@
 <script>
 import detail from './mods/detail';
 import log from './mods/log';
-import addSupplier from './mods/addSupplier';
+import addHospital from './mods/addHospital';
 const URL = {
     LIST: 'scm.platformCustomer.pageCustomer', // 分页列表
     DETAIL: 'scm.platformSupplier.findEnterprise', // 详情-
@@ -282,7 +282,7 @@ export default {
     components: {
         detail,
         log,
-        addSupplier
+        addHospital
     }
 };
 

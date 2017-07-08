@@ -17,8 +17,8 @@
                 <el-checkbox label="长期" name="type" v-model="msg.lonrTime" @click.native="checked" class="long"></el-checkbox>
             </el-form-item>
             </div>
-            <el-form-item label="证件图片" prop="imgs">
-                <template scope="scope">
+            <el-form-item label="证件图片" prop="imgs" class="img-form">
+                <template scope="scope" >
                     <el-input placeholder="证件图片" size="small" v-model="msg.imgs" v-show="false"></el-input>
                     <file-upload :files.sync="msg.imglist" :max="1" :classx="msg.class" @getUrl="getUrl"></file-upload>
                     <span class="tips">支持格式 : png. jpg. bmp. gif. pdf , 大小不超过5MB</span>
@@ -144,6 +144,7 @@ export default {
 </script>
 
 <style scoped lang="scss" rel="stylesheet/scss">
+
 .content_title {
     background: orange;
     color: #fff;
@@ -186,7 +187,7 @@ export default {
 }
 .long{
      position: absolute;
-    top: 7px;
+    top: 1px;
     right: -60px;
 }
 

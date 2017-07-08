@@ -8,7 +8,11 @@
     line-height: 1;
 }
 .el-dialog__body{
+    font-size:12px;
     padding: 20px 20px 10px 20px;
+}
+.el-input--small {
+    font-size: 12px;
 }
 .el-form-item{
     margin-bottom: 0;
@@ -18,4 +22,16 @@
 }
 .el-form-item__error{
     position: inherit;
+}
+.el-scrollbar__wrap {
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+.el-input__inner{
+    line-height: normal;
+}
+.img-form{
+    .el-form-item__content{
+        line-height: 1;
+    }
 }

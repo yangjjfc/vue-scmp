@@ -20,7 +20,7 @@
 		<el-col :span="24" class="main">
 			<aside :class="collapsed?'menu-collapsed':'menu-expanded'" class="sidebar el-menu--dark">
 				<el-scrollbar tag="div" class="scrollbar-box" v-show="!collapsed">
-					<el-menu :default-active="$route.path" :default-openeds="states.defaultOpen||['']" class="el-menu-vertical-demo" unique-opened router theme="dark">
+					<el-menu :default-active="($route.matched[1]&&$route.matched[1].meta.active)||$route.path" :default-openeds="states.defaultOpen||['']" class="el-menu-vertical-demo" :unique-opened="false"  router theme="dark">
 						<template v-for="(item,index) in menuList" >
 							<el-submenu :index="item.path" v-if="item.children&&item.children.length>0" :key="item.path">
 								<template slot="title">
@@ -130,12 +130,7 @@ export default {
     },
     mounted () {
         this.sysUserName = this.states.userInfo.userName;
-		// this.sysUserAvatar = CONFIG.IMAGE_DOWNLOAD + User.msg.enterpriseLogo;
         this.sysUserAvatar = 'http://dfs.test.cloudyigou.com/dfs/s2/M00/25/39/rB4r9Vk3mwWAdctcAAFf5pjzdHU212_100x100.jpg';
-		// window.onresize = () => (() => {
-		//     let $height = document.body.clientHeight || document.documentElement.clientHeight;
-		//     this.HEIGHTRESIZE($height);
-		// })();
     },
     created () {
 		// 判断用户是否登录
@@ -143,32 +138,21 @@ export default {
             this.$router.push({ name: 'auth' });
         } else {
             this.getroles().then((roles) => {
-				// 菜单配置 
-                //  = menus.map(item => {
-                //     item.state = '/dashboard/' + item.state;
-                //     item.son && item.son.forEach(son => {
-                //         son.state = '/dashboard/' + son.state;
-                //     });
-                //     return item;
-                // }); 
-                let menus = menu;
                 let menulist = [];
-                menus.forEach(item => {
-                    if (roles.indexOf(item.meta.role) === -1) {
-                        return;
+                menu.forEach(item => {
+                    if (roles.indexOf(item.meta.role) === -1 || item.meta.nomenu) {
+                        return;  
                     } else {
                         item.state = '/dashboard/' + item.path;
                         if (!item.meta.nochildren && item.children) {
                             item.children.forEach(children => {
                                 if (roles.indexOf(children.meta.role) === -1) {
                                     return;
-                                } else if (children.meta.nomenu) {
-                                    return; 
                                 } else {
                                     children.state = item.state + '/' + children.path;
                                 }
                             });      
-                        } else { 
+                        } else {
                             delete item.children; 
                         }
                     }   
@@ -309,14 +293,16 @@ $topColor: #20a0ff;
 			flex: 0 0 60px;
 			width: 60px;
 			background: #324157;
+			height: 100%;
 		}
 		.menu-expanded {
 			flex: 0 0 $menuWidth;
 			width: $menuWidth;
+			height: 100%;
 		}
 		.content-container {
 			flex: 1;
-			overflow-y: scroll;
+			overflow-y: auto;
 			padding: 0 0 20px 0;
 			.breadcrumb-container {
 				font-size: 14px;
@@ -340,7 +326,7 @@ $topColor: #20a0ff;
 				}
 			}
 			.content-wrapper {
-				padding: 0 20px;
+				padding: 0 10px 0 20px;
 				box-sizing: border-box;
 			}
 		}

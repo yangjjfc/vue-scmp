@@ -98,7 +98,7 @@ import fileUpload from '@/components/FileUpload';
 import { mapGetters } from 'vuex';
 import { encryption, Validate, addEvent } from '@/services/global.common';
 export default {
-    name: 'staff-addUser',
+    name: 'staff-addhosiatl',
     props: {
         showx: { // 显示
             type: Boolean,
@@ -502,10 +502,7 @@ export default {
     width: 80%;
 }
 
-.scm {
-    position: relative;
-    top: 8px;
-}
+
 
 .nc_box {
     min-height: 100px;

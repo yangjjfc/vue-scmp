@@ -1,21 +1,13 @@
 ﻿<template>
     <div ref="img-upload">
-    <el-upload :action="action" :list-type="type" :headers="headers"
-     :on-success="success" 
-     :show-file-list="show"
-     class="upload-demo"
-     :on-error="errors"
-     :on-preview="review" 
-     :before-upload="beforeUpload"
-     :disabled = "disabled" 
-     :multiple="multiple" :drag="drag" :file-list="fileLists" :on-remove="remove" :class="classx">
-        <slot name='imgs'></slot>
-        <el-button size="small" type="primary" v-if="!show">点击上传</el-button>
-        <i class="el-icon-plus" v-else></i>
-    </el-upload>
-    <div v-show="false" ref="boxer">
-        <a v-for="(item,index) in fileLists" :href="item.fullUrl" :data-uid="item.uid"  :key="item.fullUrl" v-boxer="item.fullUrl"></a>
-    </div>
+        <el-upload :action="action" :list-type="type" :headers="headers" :on-success="success" :show-file-list="show" class="upload-demo" :on-error="errors" :on-preview="review" :before-upload="beforeUpload" :disabled="disabled" :multiple="multiple" :drag="drag" :file-list="fileLists" :on-remove="remove" :class="classx">
+            <slot name='imgs'></slot>
+            <el-button size="small" type="primary" v-if="!show">点击上传</el-button>
+            <i class="el-icon-plus" v-else></i>
+        </el-upload>
+        <div v-show="false" ref="boxer">
+            <a v-for="(item,index) in fileLists" :href="item.fullUrl" :data-uid="item.uid" :key="item.fullUrl" v-boxer="item.fullUrl"></a>
+        </div>
     </div>
 </template>
 <script>
@@ -72,7 +64,7 @@ export default {
         ...mapGetters([
             'token'
         ]),
-        
+
         chageFiles () {
             let src = (typeof this.files === 'string' ? [this.files] : (this.files instanceof Array ? this.files : null));
             src.forEach(item => {
@@ -96,33 +88,29 @@ export default {
         fileLists (val, oldval) {
             this.$emit('getUrl', this.imgUrls);
             this.$emit('update:files', this.imgUrls);
-            if (this.fileLists.length === this.max) {
-                if (this.fileLists.length === this.maxLength) {
-                    $('.' + this.classx).find('.el-upload--picture-card').hide();
-                } else {
-                    $('.' + this.classx).find('.el-upload--picture-card').show();
-                }
+            if (this.fileLists.length === this.maxLength) {
+                $('.' + this.classx).find('.el-upload--picture-card').hide();
+            } else {
+                $('.' + this.classx).find('.el-upload--picture-card').show();
             }
-        }  
-        // // 图片数据变化
-        // files () {
-        //     this.chageFiles;
-        // }
+        }
     },
-
-    methods: {
-
-        // 上传前
+    // // 图片数据变化
+    // files () {
+    //     this.chageFiles;
+    // }
+    methods: {   
+    // 上传前
         beforeUpload (file) {
-            // 文件类型
+        // 文件类型
             if (getFileType(file.name) === 'false') {
-                this.$notify.error({
+                this.$notify.error({ 
                     title: '错误',
                     message: '文件 ' + file.name + ' 格式不正确。'
                 });
-                return false;
+                return false;  
             }
-            // 文件大小
+        // 文件大小
             const isLt2M = file.size / 1024 / 1024 < 5;
             if (!isLt2M) {
                 this.$notify.error({
@@ -142,7 +130,7 @@ export default {
                 return false;
             }
         },
-        // 格式化文件
+    // 格式化文件
         formatFile (item, uid) {
             let thumbnail;
             switch (getFileType(item)) {
@@ -162,25 +150,25 @@ export default {
                 reUrl: item
             };
         },
-        // 点击放大镜查看
+    // 点击放大镜查看
         review (file) {
             $(this.$refs.boxer).find('[data-uid=' + file.uid + ']').trigger('click');
         },
-        // 上传失败错误
+    // 上传失败错误
         errors () {
             this.$notify.error({
                 title: '错误',
                 message: '文件上传失败。'
             });
         },
-        // 上传成功
+    // 上传成功
         success (response, file, fileList) {
             let res = JSON.parse(response);
             let formatUrl = this.formatFile(res.data, file.uid);
             this.fileLists.push(formatUrl);
             this.imgUrls.push(formatUrl.reUrl);
         },
-        // 删除
+    // 删除
         remove (file, fileList) {
             if (!file) {
                 return;
@@ -202,9 +190,11 @@ export default {
 
 <style lang="scss"  rel="stylesheet/scss">
 $width:100px;
-.el-form-item__content {
+.upload-demo {
     line-height: 1;
+    padding-top: 5px;
 }
+
 .el-upload--picture-card {
     background-color: #fbfdff;
     border: 1px dashed #c0ccda;
@@ -216,6 +206,7 @@ $width:100px;
     line-height: $width;
     vertical-align: top;
 }
+
 .el-upload-list--picture-card .el-upload-list__item {
     overflow: hidden;
     background-color: #fff;

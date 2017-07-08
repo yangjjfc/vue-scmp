@@ -2,20 +2,20 @@
 <el-col :span="24" class="toolbar">
     <el-form :inline="true">
         <el-form-item>
-            <el-select size="small" v-model="search.certType" placeholder="请选择" @change="getList()">
+            <el-select size="small" v-model="search.certType" placeholder="请选择" @change="getList(1)" class="w120">
                 <el-option v-for="item in certType" :label="item.text" :value="item.id" :key='item.id'>
                 </el-option>
             </el-select>
         </el-form-item>
         <el-form-item>
-            <el-select size="small" v-model="search.registStatus" placeholder="请选择" @change="getList()">
+            <el-select size="small" v-model="search.registStatus" placeholder="请选择" @change="getList(1)" class="w120">
                 <el-option v-for="item in searchState" :label="item.text" :value="item.id" :key='item.id'>
                 </el-option>
             </el-select>
         </el-form-item>
         <!--数据状态 -->
         <el-form-item v-if="search.certType == 1">
-            <el-select size="small" v-model="search.providerPaper" placeholder="请选择" @change="getList()">
+            <el-select size="small" v-model="search.providerPaper" placeholder="请选择" @change="getList(1)" class="w140">
                 <el-option v-for="item in searchSignature" :label="item.text" :value="item.id" :key='item.id'>
                 </el-option>
             </el-select>
@@ -23,13 +23,13 @@
 
         <!-- 筛选过期-->
         <el-form-item v-if="search.certType != 1">
-            <el-select v-model="search.pastType" placeholder="请选择" class="w100 "  size="small" @change="getList()">
+            <el-select v-model="search.pastType" placeholder="请选择" class="w140 "  size="small" @change="getList(1)">
                 <el-option v-for="item in pastType" :label="item.text" :value="item.id" :key="item.id"></el-option>
             </el-select>
         </el-form-item>
 
         <el-form-item>
-            <el-input placeholder="供应商名称/产品名称/注册证号" v-model="search.keywords" class="w300" size="small"></el-input>
+            <el-input placeholder="供应商名称/产品名称/注册证号" v-model="search.keywords" class="w300" size="small" @keyup.native.enter="getList(1)"></el-input>
         </el-form-item>
         
         <el-form-item>

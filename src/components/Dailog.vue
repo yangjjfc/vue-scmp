@@ -1,11 +1,11 @@
 //基本的dailog弹框组件
 <template>
     <section>
-        <el-dialog :title="title" :visible.sync="shows" :size="size" :custom-class="classx"  :close-on-click-modal="close" :close-on-press-escape="close" :before-close="cancel">
-            <slot name='content' ></slot>
+        <el-dialog :title="title" :visible.sync="shows" :size="size" :custom-class="classx"  :close-on-click-modal="close" :close-on-press-escape="close"  :before-close="cancel">
+            <slot name='content'></slot>
             <span slot="footer" class="dialog-footer" >
-                <el-button type="primary" @click="ok" v-if="!hide">确 定</el-button>
-                <el-button @click.sync="cancel">关闭</el-button>
+                <el-button type="primary" @click="ok" v-if="!hide" >确 定</el-button>
+                <el-button @click.sync="cancel" >关闭</el-button>
             </span>
         </el-dialog>
     </section>
@@ -41,7 +41,7 @@ export default {
         close: { // 禁用某些操作,可配置
             type: Boolean,
             default () {
-                return false;
+                return true;
             }
         },
         classx: String, // 自定义class
@@ -75,16 +75,23 @@ export default {
 <style  lang="scss" rel="stylesheet/scss">
   .el-dialog{
       min-width: 560px;
+      overflow: hidden;
   } 
  @media screen and (max-height: 700px){
+     .el-dialog__body{
+        max-height: 400px;
+        overflow:auto;
+    }
+}
+@media (min-height: 700px) and (max-height: 800px) {
      .el-dialog__body{
         max-height: 435px;
         overflow:auto;
     }
 }
-@media (min-height: 700px) and (max-height: 900px) {
+@media (min-height: 800px) and (max-height: 900px) {
      .el-dialog__body{
-        max-height: 435px;
+        max-height: 535px;
         overflow:auto;
     }
 }
@@ -95,6 +102,16 @@ export default {
     }
 }  
     
-      
 
+@media (min-width: 1380px)  {
+     .el-dialog--small {
+        width: 40%;
+     }
+}
+       
+@media (min-width: 1500px)  {
+     .el-dialog--small {
+        width: 35%;
+     }
+}
 </style>

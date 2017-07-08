@@ -28,8 +28,11 @@ export default {
         state.roles = data;
         sessionStorage.setItem('roles', JSON.stringify(state.roles));
     },
+    // 默认打开
     [DEFAULTOPEN] (state, data) {
-        state.defaultOpen = data ? [data[0]] : null; 
+        if (state.defaultOpen.indexOf(data) === -1) {
+            state.defaultOpen.push(data);  
+        }
     }
 };
 
