@@ -406,8 +406,16 @@ export default {
         selcetregionName () {
             this.Http.post(URL.GETCUSTOMAREA, {
             }).then((re) => {
-                this.msgx.regionShow = true;
-                this.msgx.regionData = re.data;
+                if (re.data && re.data.length > 0) {
+                    this.msgx.regionShow = true;
+                    this.msgx.regionData = re.data;
+                } else {
+                    this.$notify({
+                        title: '错误',
+                        message: '无区域选择',
+                        type: 'error' 
+                    });
+                }
             });
         },
         // 选择区域

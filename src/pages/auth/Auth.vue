@@ -108,7 +108,7 @@ export default {
             });
             if (!xflag) {
                 this.userLogin(param).then(msg => {
-                    this.$router.push({ name: 'index' });
+                    this.$router.push('dashboard/index');
                 }, err => {
                     // 记录错误信息
                     this.errorMsg = err.message;
@@ -120,12 +120,6 @@ export default {
     mounted () {
         this.refreshCode();
     }
-    // beforeRouteLeave (to, from, next) {
-    //     // 获取权限
-    //     this.getroles().then(() => {
-    //         next();
-    //     });
-    // }  
 };
 </script>
 

@@ -1,28 +1,53 @@
-﻿const Auth = r => require.ensure([], () => r(require('../pages/Auth/Auth')), 'auth'); // 登入页面
-const dashboard = r => require.ensure([], () => r(require('../pages/dashboard/Dashboard')), 'dashboard'); // 所有页面的父组件
-const index = r => require.ensure([], () => r(require('../pages/index/index')), 'index'); // 首页
-const supplier = r => require.ensure([], () => r(require('../pages/supplier/supplier')), 'supplier'); // 供应商管理
-const hospital = r => require.ensure([], () => r(require('../pages/hospital/hospital.vue')), 'hospital'); // 医院管理
-const product = r => require.ensure([], () => r(require('../pages/product/product.vue')), 'product'); // 产品管理
-const preserve = r => require.ensure([], () => r(require('../pages/cert/preserve/Preserve.vue')), 'preserve'); // 证件维护
-const electronic = r => require.ensure([], () => r(require('../pages/cert/electronic/Electronic.vue')), 'electronic'); // 电子签章
-const vendor = r => require.ensure([], () => r(require('../pages/cert/vendor/Vendor.vue')), 'vendor'); // 生产厂商
-const entrust = r => require.ensure([], () => r(require('../pages/cert/entrust/Entrust.vue')), 'entrust'); // 法人委托书
-const promise = r => require.ensure([], () => r(require('../pages/cert/promise/Promise.vue')), 'promise'); // 销售承诺书
-const certAuth = r => require.ensure([], () => r(require('../pages/cert/auth/CertAuth.vue')), 'certAuth'); // 经销授权书
-const cert = r => require.ensure([], () => r(require('../pages/cert/cert.vue')), 'cert'); // 证件管理
-const order = r => require.ensure([], () => r(require('../pages/order/Order.vue')), 'order'); // 订单管理
-const orderDetail = r => require.ensure([], () => r(require('../pages/order/detail/orderDetail.vue')), 'orderDetail'); // 订单管理详情
-const logistic = r => require.ensure([], () => r(require('../pages/logistic/Logistic')), 'logistic'); // 配送管理
-const logisticDetail = r => require.ensure([], () => r(require('../pages/logistic/mods/logisticDetail')), 'logisticDetail'); // 配送管理详情
-const salesReturn = r => require.ensure([], () => r(require('../pages/return/Return')), 'salesReturn'); // 退货管理
-const returnDetail = r => require.ensure([], () => r(require('../pages/return/detail/ReturnDetail')), 'returnDetail'); // 退货管理详情
-const user = r => require.ensure([], () => r(require('../pages/user/User')), 'user'); // 用户管理
-const chart = r => require.ensure([], () => r(require('../pages/chart/chart')), 'chart'); // 统计分析
-const supplierChart = r => require.ensure([], () => r(require('../pages/chart/supplier/SupplierChart')), 'supplierChart'); // 供应商销售
-const hospitalChart = r => require.ensure([], () => r(require('../pages/chart/hospital/HospitalChart')), 'hospitalChart'); // 客户销售
-const register = r => require.ensure([], () => r(require('../pages/cert/register/Register.vue')), 'register');
+﻿// const Auth = r => require.ensure([], () => r(require('../pages/Auth/Auth')), 'auth'); // 登入页面
+// const dashboard = r => require.ensure([], () => r(require('../pages/dashboard/Dashboard')), 'dashboard'); // 所有页面的父组件
+// const index = r => require.ensure([], () => r(require('../pages/index/index')), 'index'); // 首页
+// const supplier = r => require.ensure([], () => r(require('../pages/supplier/supplier')), 'supplier'); // 供应商管理
+// const hospital = r => require.ensure([], () => r(require('../pages/hospital/hospital.vue')), 'hospital'); // 医院管理
+// const product = r => require.ensure([], () => r(require('../pages/product/product.vue')), 'product'); // 产品管理
+// const preserve = r => require.ensure([], () => r(require('../pages/cert/preserve/Preserve.vue')), 'preserve'); // 证件维护
+// const electronic = r => require.ensure([], () => r(require('../pages/cert/electronic/Electronic.vue')), 'electronic'); // 电子签章
+// const vendor = r => require.ensure([], () => r(require('../pages/cert/vendor/Vendor.vue')), 'vendor'); // 生产厂商
+// const entrust = r => require.ensure([], () => r(require('../pages/cert/entrust/Entrust.vue')), 'entrust'); // 法人委托书
+// const promise = r => require.ensure([], () => r(require('../pages/cert/promise/Promise.vue')), 'promise'); // 销售承诺书
+// const certAuth = r => require.ensure([], () => r(require('../pages/cert/auth/CertAuth.vue')), 'certAuth'); // 经销授权书
+// const cert = r => require.ensure([], () => r(require('../pages/cert/cert.vue')), 'cert'); // 证件管理
+// const order = r => require.ensure([], () => r(require('../pages/order/Order.vue')), 'order'); // 订单管理
+// const orderDetail = r => require.ensure([], () => r(require('../pages/order/detail/orderDetail.vue')), 'orderDetail'); // 订单管理详情
+// const logistic = r => require.ensure([], () => r(require('../pages/logistic/Logistic')), 'logistic'); // 配送管理
+// const logisticDetail = r => require.ensure([], () => r(require('../pages/logistic/mods/logisticDetail')), 'logisticDetail'); // 配送管理详情
+// const salesReturn = r => require.ensure([], () => r(require('../pages/return/Return')), 'salesReturn'); // 退货管理
+// const returnDetail = r => require.ensure([], () => r(require('../pages/return/detail/ReturnDetail')), 'returnDetail'); // 退货管理详情
+// const user = r => require.ensure([], () => r(require('../pages/user/User')), 'user'); // 用户管理
+// const chart = r => require.ensure([], () => r(require('../pages/chart/chart')), 'chart'); // 统计分析
+// const supplierChart = r => require.ensure([], () => r(require('../pages/chart/supplier/SupplierChart')), 'supplierChart'); // 供应商销售
+// const hospitalChart = r => require.ensure([], () => r(require('../pages/chart/hospital/HospitalChart')), 'hospitalChart'); // 客户销售
+// const register = r => require.ensure([], () => r(require('../pages/cert/register/Register.vue')), 'register');
 
+const _import = require('./_import_' + process.env.NODE_ENV);// require('@/pages/' + file + '.vue')
+const Auth = _import('auth/Auth'); // 登入页面 
+const dashboard = _import('dashboard/Dashboard'); // 所有页面的父组件
+const index = _import('index/index');  // 首页
+const supplier = _import('supplier/supplier'); // 供应商管理
+const hospital = _import('hospital/hospital');     // 医院管理
+const product = _import('product/product');  // 产品管理
+const preserve = _import('cert/preserve/Preserve'); // 证件维护
+const electronic = _import('cert/electronic/Electronic'); // 电子签章
+const vendor = _import('cert/vendor/Vendor'); // 生产厂商
+const entrust = _import('cert/entrust/Entrust'); // 法人委托书
+const promise = _import('cert/promise/Promise'); // 销售承诺书
+const certAuth = _import('cert/auth/CertAuth');  // 经销授权书
+const register = _import('cert/register/Register'); 
+const cert = _import('cert/cert');  // 证件管理
+const order = _import('order/Order'); // 订单管理
+const orderDetail = _import('order/detail/orderDetail');  // 订单管理详情
+const logistic = _import('logistic/Logistic');// 配送管理
+const logisticDetail = _import('logistic/mods/LogisticDetail'); // 配送管理详情
+const salesReturn = _import('return/Return');// 退货管理
+const returnDetail = _import('return/detail/ReturnDetail'); // 退货管理详情
+const user = _import('user/User');  // 用户管理
+const chart = _import('chart/chart');  // 统计分析
+const supplierChart = _import('chart/supplier/SupplierChart'); // 供应商销售
+const hospitalChart = _import('chart/hospital/HospitalChart'); // 客户销售
 export const menu = [{
     path: 'index', // 首页
     component: index,
@@ -277,7 +302,7 @@ export default [
         path: '/auth', // 登入页面
         name: 'auth',
         component: Auth
-    }, layout,
-    { path: '*', redirect: '/dashboard/index' }
+    }
+    // { path: '*', redirect: '/dashboard/index' }
 ];
 

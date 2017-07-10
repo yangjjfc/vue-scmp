@@ -21,7 +21,7 @@
 			<aside :class="collapsed?'menu-collapsed':'menu-expanded'" class="sidebar el-menu--dark">
 				<el-scrollbar tag="div" class="scrollbar-box" v-show="!collapsed">
 					<el-menu :default-active="($route.matched[1]&&$route.matched[1].meta.active)||$route.path" :default-openeds="states.defaultOpen||['']" class="el-menu-vertical-demo" :unique-opened="false"  router theme="dark">
-						<template v-for="(item,index) in menuList" >
+						<template v-for="(item,index) in menuList" v-if="!item.meta.nomenu">
 							<el-submenu :index="item.path" v-if="item.children&&item.children.length>0" :key="item.path">
 								<template slot="title">
 									<i class="sidebar-iconfont iconfont" :class="[item.meta.icon]"></i>{{item.meta.name}}
@@ -36,7 +36,7 @@
 				</el-scrollbar>
 				<!--导航菜单-折叠后-->
 				<ul class="el-menu--dark el-menu-vertical-demo collapsed" v-show="collapsed" ref="menuCollapsed">
-					<li v-for="(item,index) in menuList"  class="el-submenu item">
+					<li v-for="(item,index) in menuList"  class="el-submenu item" v-if="!item.meta.nomenu">
 						<template v-if="item.children&&item.children.length>0">
 							<div class="el-submenu__title" style="padding-left: 20px;" @mouseover="showMenu(index,true)" @mouseout="showMenu(index,false)">
 								<i class="sidebar-iconfont iconfont" :class="[item.meta.icon]"></i>
@@ -78,7 +78,6 @@
 </template>
 
 <script>
-import { menu } from '@/router/index';
 import { mapState, mapMutations, mapActions } from 'vuex';
 // import CONFIG from '@/config/app.config';
 export default {
@@ -109,7 +108,7 @@ export default {
                 type: 'warning'
             }).then(() => {
                 this.userLoginout().then(result => {
-                    this.$router.push('/auth');
+                    location.reload();// 为了重新实例化vue-router对象 避免bug
                 });
             });
         },
@@ -137,29 +136,7 @@ export default {
         if (!this.states.userInfo) {
             this.$router.push({ name: 'auth' });
         } else {
-            this.getroles().then((roles) => {
-                let menulist = [];
-                menu.forEach(item => {
-                    if (roles.indexOf(item.meta.role) === -1 || item.meta.nomenu) {
-                        return;  
-                    } else {
-                        item.state = '/dashboard/' + item.path;
-                        if (!item.meta.nochildren && item.children) {
-                            item.children.forEach(children => {
-                                if (roles.indexOf(children.meta.role) === -1) {
-                                    return;
-                                } else {
-                                    children.state = item.state + '/' + children.path;
-                                }
-                            });      
-                        } else {
-                            delete item.children; 
-                        }
-                    }   
-                    menulist.push(item);    
-                });
-                this.menuList = menulist;
-            });
+            this.menuList = this.states.routers;
         }
     },
 	// F5刷新重新赋值

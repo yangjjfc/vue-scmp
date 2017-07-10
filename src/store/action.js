@@ -21,7 +21,6 @@ export default {
     async logout (context, data) {
         return await (function () {
             context.commit('CLEARSTATE');
-            sessionStorage.clear();
         }());
     },
     // 当前用户信息
@@ -40,6 +39,12 @@ export default {
                     reject(err);
                 });
         });
+    },
+    // 获取用户信息
+    async getInfo ({ commit, state }) {
+        return await (function () {
+            commit('REFRESH');
+        }());
     },
     // 获取用户权限
     getroles ({commit, state}) {
@@ -60,6 +65,7 @@ export default {
             });
         });
     },
+    // 生成路由
     async generateRouters ({commit, state}, roles) {
         let menulist = [];
         menu.forEach(item => {     
@@ -67,7 +73,7 @@ export default {
                 return;  
             } else {
                 item.state = '/dashboard/' + item.path;
-                if (!item.meta.nochildren && item.children) {
+                if (item.children) {
                     item.children.forEach(children => {  
                         if (roles.indexOf(children.meta.role) === -1) {
                             return;
