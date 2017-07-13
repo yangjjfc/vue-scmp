@@ -20,7 +20,7 @@
                         </el-select>
                     </el-form-item>
                      <el-form-item>
-                        <el-input placeholder="供应商名称/产品编号/产品名称/注册证号" v-model="from.keywords" class="w300" size="small"></el-input>
+                        <el-input placeholder="供应商名称/产品编号/产品名称/注册证号" v-model.trim="from.keywords" class="w300" size="small"></el-input>
                     </el-form-item>
                     <el-form-item>
                         <el-button type="primary" @click="getList()"  size="small">筛选</el-button>
@@ -92,7 +92,6 @@
     </section>
 </template>
 <script>
-import '@/assets/directive/vueDirective.js'; // jq boxer指令
 import CONFIG from '@/config/app.config'; // 配置
 import picture from '@/assets/images/zhu.png'; // daf
 import detail from './mods/detail';

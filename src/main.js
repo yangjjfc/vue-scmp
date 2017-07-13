@@ -6,14 +6,16 @@ import 'element-ui/lib/theme-default/index.css';
 import Http from './services/Http';
 import vueWaves from '@/assets/directive/waves';// 水波纹指令
 import pagination from '@/components/pagination'; // 分页组件
+window.$ = require('jquery');
+import boxer from '@/assets/directive/boxer.js'; // jq boxer指令
 import dailog from '@/components/Dailog'; // 弹框组件
 import App from './App';
 // register globally
 Vue.use(ElementUI);
 Vue.use(vueWaves);
+Vue.use(boxer);
 Vue.component('pagination', pagination);
 Vue.component('dailog', dailog);
-window.$ = require('jquery');
 Vue.prototype.Http = Http;
 Vue.config.productionTip = false; // 在应用启动时，可以通过设置 Vue.config.productionTip = false 来关闭生产模式下给出的提示
 

@@ -11,7 +11,7 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item>
-                    <el-input placeholder="企业名称" v-model="search.keywords"   @keyup.native.enter="getList(1)" class="w200" size="small"></el-input>
+                    <el-input placeholder="企业名称" v-model.trim="search.keywords"   @keyup.native.enter="getList(1)" class="w200" size="small"></el-input>
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="getList(1)" size="small">查询</el-button>

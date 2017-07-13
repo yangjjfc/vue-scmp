@@ -11,7 +11,7 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item>
-                    <el-input placeholder="供应商名称" v-model="search.supplierNo" class="w200"  @keyup.native.enter="getList(1)" size="small"></el-input>
+                    <el-input placeholder="供应商名称" v-model.trim="search.supplierNo" class="w200"  @keyup.native.enter="getList(1)" size="small"></el-input>
                 </el-form-item>
                 <el-form-item>
                     <el-input placeholder="产品编号/注册证编号/产品名称" v-model="search.keywords"   @keyup.native.enter="getList(1)" class="w300" size="small"></el-input>

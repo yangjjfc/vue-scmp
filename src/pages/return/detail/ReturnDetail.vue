@@ -51,19 +51,19 @@
                     </el-table-column>
                     <el-table-column prop="registNo" label="注册证号" min-width="150" align="" >
                     </el-table-column>
-                    <el-table-column prop="factory" label="生产厂家" min-width="120" align="center" >
+                    <el-table-column prop="factory" label="生产厂家" min-width="160" align="center" >
                     </el-table-column>
-                    <el-table-column prop="brand" label="品牌" width="160" align="center" >
+                    <el-table-column prop="brand" label="品牌" width="120" align="center" >
                     </el-table-column>
 
-                    <el-table-column   label="规格/单位" min-width="140" align="center" >
+                    <el-table-column   label="规格/单位" min-width="130" align="center" >
                         <template scope="scope">
                             {{ scope.row.spec}} / {{scope.row.unit }}
                         </template>
                     </el-table-column>
-                    <el-table-column  prop="rnum" label="退货数" min-width="140" align="center" >
+                    <el-table-column  prop="rnum" label="退货数" width="100" align="center" >
                     </el-table-column>
-                    <el-table-column  prop="price" label="单价" min-width="140" align="right" >
+                    <el-table-column  prop="price" label="单价" width="100" align="right" >
                     </el-table-column>
                     <el-table-column  prop="total" label="金额" min-width="140"  align="right" >
                     </el-table-column>

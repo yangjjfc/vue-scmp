@@ -12,7 +12,6 @@
 </template>
 <script>
 import $ from 'jquery';
-import '../assets/directive/vueDirective.js'; // jq boxer指令
 import { changeImgSize, getFileType } from '@/services/global.common'; // 文件格式
 import { mapGetters } from 'vuex';
 import CONFIG from '../config/app.config'; // 配置
@@ -103,7 +102,7 @@ export default {
     // 上传前
         beforeUpload (file) {
         // 文件类型
-            if (getFileType(file.name) === 'false') {
+            if (!getFileType(file.name)) {
                 this.$notify.error({ 
                     title: '错误',
                     message: '文件 ' + file.name + ' 格式不正确。'

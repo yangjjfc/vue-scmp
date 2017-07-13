@@ -20,7 +20,7 @@
                         </el-select>
                     </el-form-item>
                      <el-form-item>
-                        <el-input placeholder="客户名称/联系人" v-model="from.keywords" @keyup.native.enter="getList(1)" class="w300" size="small"></el-input>
+                        <el-input placeholder="客户名称/联系人" v-model.trim="from.keywords" @keyup.native.enter="getList(1)" class="w300" size="small"></el-input>
                     </el-form-item>
                     <el-form-item>
                         <el-button type="primary" @click="getList(1)"  size="small">筛选</el-button>
@@ -37,11 +37,11 @@
                 <el-table :data="tableDate" border >
                     <el-table-column prop="index" label="序号" width="70" align="center" >
                     </el-table-column>
-                     <el-table-column prop="customerNo" label="客户编号" min-width="140" align="" >
+                     <el-table-column prop="customerNo" label="客户编号" width="130" align="center" >
                     </el-table-column>
                      <el-table-column prop="customerName" label="客户名称" min-width="150"  >
                     </el-table-column>
-                     <el-table-column  label="客户类型" min-width="100" align="center" >
+                     <el-table-column  label="客户类型" width="100" align="center" >
                          <template scope="scope">
                               <span v-html="scope.row.enterpriseType"></span>
                         </template>
@@ -51,12 +51,20 @@
                      <el-table-column prop="customerPhone" label="联系电话" width="120" align="center" >
                     </el-table-column>
                      <el-table-column   prop="supplierNum" label="供应商数量	" width="100" align="center" >
+                         <template scope="scope">
+                              <router-link :to="{ name: 'hosSupplier', query: { no: scope.row.customerNo }}" v-if="scope.row.supplierNum>0"><span class="blue">{{scope.row.supplierNum}}</span></router-link>
+                              <span v-html="scope.row.supplierNum" v-else></span>
+                        </template>
                     </el-table-column>
                      <el-table-column   prop="productNum" label="产品数量" width="100" align="center" >
+                            <template scope="scope">
+                              <router-link :to="{ name: 'hosProduct', query: { no: scope.row.customerNo }}" v-if="scope.row.productNum>0"><span class="blue">{{scope.row.productNum}}</span></router-link>
+                              <span v-html="scope.row.productNum" v-else></span>
+                        </template> 
                     </el-table-column>
                      <el-table-column prop="erps" label="SCM" width="80" align="center" >
                          <template scope="scope">
-                              <span v-html="scope.row.scm"></span>
+                              <span v-html="scope.row.scmx"></span>
                         </template>
                     </el-table-column>
                      <el-table-column  label="审核状态" width="100" align="center" >
@@ -69,7 +77,7 @@
                             <el-button size="mini" type="primary"  @click="detailSuppiler(scope.row.customerNo,'detail')">详情</el-button>
                             <el-button size="mini" type="primary"  @click="detailLog(scope.row.customerNo)" >日志</el-button>
                             <el-button size="mini" type="warning"  @click="detailSuppiler(scope.row.customerNo,'audit')" v-if="scope.row.status =='2'">审核</el-button>
-                            <el-button size="mini" type="warning"  @click="enabled(scope.row)" v-if="scope.row.scm =='0' && scope.row.status ==3">开通scm</el-button>
+                            <el-button size="mini" type="warning"  @click="enabled(scope.row.customerNo)" v-if="(scope.row.scm =='0' && scope.row.status =='3')">开通scm</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -217,7 +225,7 @@ export default {
                             default:
                                 break;
                             }
-                            item.scm = (item.scm === '1' ? '<span class="green">已启用</span>' : '<span class="gray">未启用</span>');
+                            item.scmx = (item.scm === '1' ? '<span class="green">已启用</span>' : '<span class="gray">未启用</span>');
                             return item;
                         });
                     } else {
@@ -263,14 +271,16 @@ export default {
                 type: 'warning'
             }).then(() => {
                 this.Http.post(URL.ENABLE, {
-                    enterpriseNo: msg.supplierNo
+                    enterpriseNo: msg
                 }).then((re) => {
-                    this.getList();
-                    this.$notify({
-                        title: '成功',
-                        message: '开通成功',
-                        type: 'success'
-                    });  
+                    if (re.code === 'SUCCESS') {
+                        this.getList();
+                        this.$notify({
+                            title: '成功',
+                            message: '开通成功',
+                            type: 'success'
+                        });    
+                    }
                 });  
             }).catch(function () {});
         }        

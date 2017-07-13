@@ -28,7 +28,11 @@ const Auth = _import('auth/Auth'); // 登入页面
 const dashboard = _import('dashboard/Dashboard'); // 所有页面的父组件
 const index = _import('index/index');  // 首页
 const supplier = _import('supplier/supplier'); // 供应商管理
+const supCustomer = _import('supplier/customer'); // 供应商管理-客户列表
+const supProduct = _import('supplier/product'); // 供应商管理-产品列表
 const hospital = _import('hospital/hospital');     // 医院管理
+const hosSupplier = _import('hospital/supplier');     // 医院管理-供应商列表
+const hosProduct = _import('hospital/product');     // 医院管理-产品列表
 const product = _import('product/product');  // 产品管理
 const preserve = _import('cert/preserve/Preserve'); // 证件维护
 const electronic = _import('cert/electronic/Electronic'); // 电子签章
@@ -69,6 +73,30 @@ export const menu = [{
     }
 }, // 供应商管理
 {
+    path: 'supplier/customer',
+    component: supCustomer,
+    name: 'supCustomer',
+    meta: {
+        active: '/dashboard/supplier',
+        nomenu: true,
+        name: '供应商管理 / 客户列表',
+        icon: 'icon-qiye',
+        role: 'platform:supplier'
+    }
+}, // 供应商管理-客户列表
+{
+    path: 'supplier/product',
+    component: supProduct,
+    name: 'supProduct',
+    meta: {
+        active: '/dashboard/supplier',
+        nomenu: true,
+        name: '供应商管理 / 产品列表',
+        icon: 'icon-qiye',
+        role: 'platform:supplier'
+    }
+}, // 供应商管理-产品列表
+{
     path: 'hospital',
     component: hospital,
     name: 'hospital',
@@ -78,6 +106,30 @@ export const menu = [{
         role: 'platform:hospital'
     }
 }, // 医院管理
+{
+    path: 'hospital/supplier',
+    component: hosSupplier,
+    name: 'hosSupplier',
+    meta: {
+        active: '/dashboard/hospital',
+        nomenu: true,
+        name: '客户管理-供应商列表', 
+        icon: 'icon-iconfontyiyuan',
+        role: 'platform:hospital'
+    }
+}, // 医院管理-供应商列表
+{
+    path: 'hospital/product',
+    component: hosProduct,
+    name: 'hosProduct',
+    meta: {
+        active: '/dashboard/hospital',
+        nomenu: true,
+        name: '客户管理-产品列表', 
+        icon: 'icon-iconfontyiyuan',
+        role: 'platform:hospital'
+    }
+}, // 医院管理-产品列表
 {
     path: 'product',
     component: product,

@@ -16,7 +16,7 @@ import { changeImgSize, getFileType } from '@/services/global.common'; // 文件
 import CONFIG from '../config/app.config'; // 配置
 import pdf from '@/assets/images/pdf.png'; // daf
 import defaultImg from '@/assets/images/noimage.png';
-import '../assets/directive/vueDirective.js'; // jq boxer指令
+import '../assets/directive/boxer.js'; // jq boxer指令
 export default {
     data () {
         return {

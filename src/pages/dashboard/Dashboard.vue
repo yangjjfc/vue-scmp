@@ -68,7 +68,9 @@
 					</el-col>
 					<el-col :span="24" class="content-wrapper">
 						<transition name="fade" mode="out-in">
-							<router-view></router-view>
+							<keep-alive include="Logistic,supplier">
+								<router-view></router-view>
+							</keep-alive>
 						</transition>
 					</el-col>
 				</div>

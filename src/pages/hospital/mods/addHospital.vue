@@ -11,7 +11,7 @@
                     </el-form-item>
                     <el-form-item label="客户名称" prop="companyName">
                         <template scope="scope">
-                            <el-input placeholder="客户名称" v-model="msgx.companyName" class="companyName" :readonly="msgx.curtomer.isEdit" @click.native="getNcList" size="small"></el-input>
+                            <el-input placeholder="客户名称" v-model.trim="msgx.companyName" class="companyName" :readonly="msgx.curtomer.isEdit" @click.native="getNcList" size="small"></el-input>
                             <ul class="nc_box" v-show="msgx.curtomer.showchild">
                                 <li v-if="!msgx.curtomer.childData.length">查询无结果</li>
                                 <li v-else v-for="(item,index) in msgx.curtomer.childData" :key="index" @click="checkChild(item)">{{item.companyName}}</li>
@@ -20,24 +20,24 @@
     
                     </el-form-item>
                     <el-form-item label="院长" prop="legalPerson">
-                        <el-input placeholder="院长" type="legalPerson" v-model="msgx.legalPerson" size="small"></el-input>
+                        <el-input placeholder="院长" type="legalPerson" v-model.trim="msgx.legalPerson" size="small"></el-input>
                     </el-form-item>
                     <el-form-item label="联系人" prop="linkPerson">
-                        <el-input placeholder="联系人" type="linkPerson" v-model="msgx.linkPerson" size="small"></el-input>
+                        <el-input placeholder="联系人" type="linkPerson" v-model.trim="msgx.linkPerson" size="small"></el-input>
                     </el-form-item>
                     <el-form-item label="联系电话" prop="linkTelphone">
-                        <el-input placeholder="联系电话" v-model="msgx.linkTelphone" size="small"></el-input>
+                        <el-input placeholder="联系电话" v-model.trim="msgx.linkTelphone" size="small"></el-input>
                     </el-form-item>
     
                     <el-form-item label="注册地址" prop="registAddr">
                         <template scope="scope">
                             <region-picker :region.sync="msgx.address"></region-picker>
-                            <el-input placeholder="注册地址" v-model="msgx.registAddr" size="small" style="margin-bottom:6px"></el-input>
+                            <el-input placeholder="注册地址" v-model.trim="msgx.registAddr" size="small" style="margin-bottom:6px"></el-input>
                         </template>
                     </el-form-item>
                     <el-form-item label="区域" prop="regionName">
                         <template scope="scope">
-                            <el-input placeholder="区域" v-model="msgx.regionName" size="small" :readonly="true" @click.native="selcetregionName"></el-input>
+                            <el-input placeholder="区域" v-model.trim="msgx.regionName" size="small" :readonly="true" @click.native="selcetregionName"></el-input>
                             <el-tabs type="border-card" class="zone_box" v-if="msgx.regionShow" :activeName="msgx.regionData[0].areaNo" @click.native.stop="">
                                 <el-tab-pane v-for="(item,index) in msgx.regionData" :label="item.areaName" :name="item.areaNo" :key="item.areaNo">
                                     <ul>
@@ -57,25 +57,25 @@
                     </el-form-item>
                     <div class="content_title">账号信息</div>
                     <el-form-item label="登入账号" prop="loginAccount">
-                        <el-input placeholder="登入账号" v-model="msgx.loginAccount" size="small"></el-input>
+                        <el-input placeholder="登入账号" v-model.trim="msgx.loginAccount" size="small"></el-input>
                     </el-form-item>
                     <el-form-item label="密码" prop="password">
-                        <el-input placeholder="密码" type="password" v-model="msgx.password" size="small"></el-input>
+                        <el-input placeholder="密码" type="password" v-model.trim="msgx.password" size="small"></el-input>
                     </el-form-item>
                     <el-form-item label="重复密码" prop="repassword">
-                        <el-input placeholder="重复密码" type="password" v-model="msgx.repassword" size="small"></el-input>
+                        <el-input placeholder="重复密码" type="password" v-model.trim="msgx.repassword" size="small"></el-input>
                     </el-form-item>
                     <el-form-item label="真实姓名" prop="userName">
-                        <el-input placeholder="真实姓名" v-model="msgx.userName" size="small"></el-input>
+                        <el-input placeholder="真实姓名" v-model.trim="msgx.userName" size="small"></el-input>
                     </el-form-item>
                     <el-form-item label="手机号码" prop="mobile">
-                        <el-input placeholder="手机号码" v-model="msgx.mobile" size="small"></el-input>
+                        <el-input placeholder="手机号码" v-model.trim="msgx.mobile" size="small"></el-input>
                     </el-form-item>
                     <el-form-item label="邮箱" prop="email">
-                        <el-input placeholder="邮箱" v-model="msgx.email" size="small"></el-input>
+                        <el-input placeholder="邮箱" v-model.trim="msgx.email" size="small"></el-input>
                     </el-form-item>
                     <el-form-item label="开通SCM" prop="scm" v-if="!msgx.nature">
-                        <el-checkbox name="type" v-model="msgx.scm" class="scm"></el-checkbox>
+                        <el-checkbox name="type" v-model.trim="msgx.scm" class="scm"></el-checkbox>
                     </el-form-item>
                 </el-form>
                 <certs :transMsg="item" :ref="'cert'+index" :key="index" v-for="(item,index) in msgx.certs"></certs>
@@ -224,8 +224,8 @@ export default {
                     { pattern: /^\S{0,30}$/, message: '联系人不能超过30个字符', trigger: 'blur,change' }
                 ],
                 linkTelphone: [
-                    { pattern: /^1[34578]\d{9}$/, message: '联系电话格式有误,有效11个字符', trigger: 'blur,change' },
-                     { validator: Validate.validatePhone.bind(this), trigger: 'blur' }
+                     { required: true, message: '请输入联系电话', trigger: 'blur,change' },
+                    { pattern: /^((1[34578]\d{9})|(0\d{2,3}-\d{7,8})|(0\d{2,3}\d{7,8}))$/, message: '联系电话格式有误', trigger: 'blur,change' }
                 ],
                 registAddr: [
                     { required: true, message: '请输入注册地址' },

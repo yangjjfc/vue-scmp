@@ -11,7 +11,7 @@
                     </el-form-item>
                     <el-form-item label="公司名称" prop="enterpriseName">
                         <template scope="scope">
-                            <el-input placeholder="公司名称" v-model="msgx.enterpriseName" :readonly="msgx.enterprise.isEdit" @click.native="getNcList" size="small"></el-input>
+                            <el-input placeholder="公司名称" v-model.trim="msgx.enterpriseName" :readonly="msgx.enterprise.isEdit" @click.native="getNcList" size="small"></el-input>
                             <query-list @change="getNcList" :keyWords.sync="search.keywords" :showx.sync="msgx.enterprise.showNc" :pageSize="search.pageSize" :pageIndex.sync="search.pageIndex" :total="search.total">
                                 <ul slot="quire_content">
                                     <li v-if="search.info.length>0" v-for="(item,index) in search.info" :key="index"  @click="checkNc(item)">{{item.supplierName}}</li>
@@ -21,39 +21,39 @@
                         </template>
                     </el-form-item>
                     <el-form-item label="法人代表" prop="legalPerson">
-                        <el-input placeholder="法人代表" type="legalPerson" v-model="msgx.legalPerson" size="small"></el-input>
+                        <el-input placeholder="法人代表" type="legalPerson" v-model.trim="msgx.legalPerson" size="small"></el-input>
                     </el-form-item>
                     <el-form-item label="联系人" prop="linkPerson">
-                        <el-input placeholder="联系人" type="linkPerson" v-model="msgx.linkPerson" size="small"></el-input>
+                        <el-input placeholder="联系人" type="linkPerson" v-model.trim="msgx.linkPerson" size="small"></el-input>
                     </el-form-item>
                     <el-form-item label="联系电话" prop="linkTelphone">
-                        <el-input placeholder="联系电话" v-model="msgx.linkTelphone" size="small"></el-input>
+                        <el-input placeholder="联系电话" v-model.trim="msgx.linkTelphone" size="small"></el-input>
                     </el-form-item>
     
                     <el-form-item label="注册地址" prop="registAddr">
                         <template scope="scope">
                             <region-picker :region.sync="msgx.address"></region-picker>
-                            <el-input placeholder="注册地址" v-model="msgx.registAddr" size="small"></el-input>
+                            <el-input placeholder="注册地址" v-model.trim="msgx.registAddr" size="small"></el-input>
                         </template>
                     </el-form-item>
                     <div class="content_title">账号信息</div>
                     <el-form-item label="登入账号" prop="loginAccount">
-                        <el-input placeholder="登入账号" v-model="msgx.loginAccount" size="small"></el-input>
+                        <el-input placeholder="登入账号" v-model.trim="msgx.loginAccount" size="small"></el-input>
                     </el-form-item>
                     <el-form-item label="密码" prop="password">
-                        <el-input placeholder="密码" type="password" v-model="msgx.password" size="small"></el-input>
+                        <el-input placeholder="密码" type="password" v-model.trim="msgx.password" size="small"></el-input>
                     </el-form-item>
                     <el-form-item label="重复密码" prop="repassword">
-                        <el-input placeholder="重复密码" type="password" v-model="msgx.repassword" size="small"></el-input>
+                        <el-input placeholder="重复密码" type="password" v-model.trim="msgx.repassword" size="small"></el-input>
                     </el-form-item>
                     <el-form-item label="真实姓名" prop="userName">
-                        <el-input placeholder="真实姓名" v-model="msgx.userName" size="small"></el-input>
+                        <el-input placeholder="真实姓名" v-model.trim="msgx.userName" size="small"></el-input>
                     </el-form-item>
                     <el-form-item label="手机号码" prop="mobile">
-                        <el-input placeholder="手机号码" v-model="msgx.mobile" size="small"></el-input>
+                        <el-input placeholder="手机号码" v-model.trim="msgx.mobile" size="small"></el-input>
                     </el-form-item>
                     <el-form-item label="邮箱" prop="email">
-                        <el-input placeholder="邮箱" v-model="msgx.email" size="small"></el-input>
+                        <el-input placeholder="邮箱" v-model.trim="msgx.email" size="small"></el-input>
                     </el-form-item>
                 </el-form>
                 <certs :transMsg="item" :verify="msgx.childRule" :ref="'cert'+index" :key="index" v-for="(item,index) in msgx.certs" ></certs>

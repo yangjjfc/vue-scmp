@@ -30,7 +30,7 @@
                     </el-form-item>
 
                     <el-form-item>
-                        <el-input placeholder="退货单号/订单编号/供应商/客户名称" v-model="search.keys" @keyup.native.enter="getList(1)" class="w300" size="small"></el-input>
+                        <el-input placeholder="退货单号/订单编号/供应商/客户名称" v-model.trim="search.keys" @keyup.native.enter="getList(1)" class="w300" size="small"></el-input>
                     </el-form-item>
                     <el-form-item>
                         <el-button type="primary" @click="getList(1)"  size="small">查询</el-button>

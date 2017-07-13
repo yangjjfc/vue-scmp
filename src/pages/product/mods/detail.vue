@@ -57,7 +57,7 @@
                                     <td class="table_name">产品规格</td>
                                     <td>{{msgx.product.spec + ' / ' + msgx.product.unit}}</td>
                                 </tr>
-                                 <tr>
+                                 <tr v-if="msgx.product.certType==1 ">
                                     <td class="table_name">证照图片</td>
                                     <td >
                                         <fileList :files="msgx.product.registImg" :isMaster="true"></fileList>
@@ -199,7 +199,6 @@ import fileList from '@/components/FileList.vue';
 import CONFIG from '@/config/app.config'; // 配置
 import { formatFile } from '@/services/global.common';
 import noimg from '@/assets/images/noimage.png'; // 没有图片
-import '@/assets/directive/vueDirective.js'; // jq boxer指令
 export default {
     name: 'supplier-detail',
     props: {

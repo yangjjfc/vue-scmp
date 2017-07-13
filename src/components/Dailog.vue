@@ -109,9 +109,9 @@ export default {
      }
 }
        
-@media (min-width: 1500px)  {
-     .el-dialog--small {
-        width: 35%;
-     }
-}
+// @media (min-width: 1500px)  {
+//      .el-dialog--small {
+//         width: 35%;
+//      }
+// }
 </style>

@@ -29,7 +29,7 @@
         </el-form-item>
 
         <el-form-item>
-            <el-input placeholder="供应商名称/产品名称/注册证号" v-model="search.keywords" class="w300" size="small" @keyup.native.enter="getList(1)"></el-input>
+            <el-input placeholder="供应商名称/产品名称/注册证号" v-model.trim="search.keywords" class="w300" size="small" @keyup.native.enter="getList(1)"></el-input>
         </el-form-item>
         
         <el-form-item>

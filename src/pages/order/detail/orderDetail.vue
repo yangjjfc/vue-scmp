@@ -58,12 +58,12 @@
                     </el-table-column>
                     <el-table-column prop="registNo" label="注册证号" min-width="150" align="" >
                     </el-table-column>
-                    <el-table-column prop="factory" label="生产厂家" min-width="120" align="center" >
+                    <el-table-column prop="factory" label="生产厂家" min-width="200"  >
                     </el-table-column>
-                    <el-table-column prop="brand" label="品牌" width="160" align="center" >
+                    <el-table-column prop="brand" label="品牌" width="130" align="center" >
                     </el-table-column>
 
-                    <el-table-column   label="规格/单位" min-width="140" align="center" >
+                    <el-table-column   label="规格/单位" min-width="140"  >
                         <template scope="scope">
                             {{ scope.row.spec}} / {{scope.row.unit }}
                         </template>
@@ -77,7 +77,7 @@
                     </el-table-column>
                     <el-table-column  prop="price" label="单价" width="100" align="right" >
                     </el-table-column>
-                    <el-table-column  prop="total" label="金额" width="100"  align="right" >
+                    <el-table-column  prop="total" label="金额" width="140"  align="right" >
                     </el-table-column>
                 </el-table>
                 <p class="align-right">
@@ -160,7 +160,7 @@
                         this.list = re.data.rows.map((item, index) => {
                             item.index = index + 1 + (this.pageIndex - 1) * this.pageSize;
                             item.price = parseMone(item.price);
-                            item.total = parseMone(parseFloat(item.price) * parseFloat(item.rnum) || 0);
+                            item.total = parseMone(item.total);
                             return item;
                         });
                     });

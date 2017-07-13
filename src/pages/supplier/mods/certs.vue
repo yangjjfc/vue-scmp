@@ -5,14 +5,14 @@
                 <p>{{msg.name}}</p>
             </div>
             <el-form-item label="证件号码" prop="certNo">
-                <el-input placeholder="证件号码" v-model="msg.certNo" size="small"></el-input>
+                <el-input placeholder="证件号码" v-model.trim="msg.certNo" size="small"></el-input>
             </el-form-item>
             <el-form-item label="开始时间" class="stateTime" prop="startTime">
-                <el-date-picker v-model="msg.startTime" type="date" placeholder="开始日期" :picker-options="pickerOptions_sta"  :editable="false" @change="dateChangeTime_sta" ref="startTime" size="small">
+                <el-date-picker v-model.trim="msg.startTime" type="date" placeholder="开始日期" :picker-options="pickerOptions_sta"  :editable="false" @change="dateChangeTime_sta" ref="startTime" size="small">
                 </el-date-picker>
             </el-form-item>
             <el-form-item label="截止日期" class="endTime" prop="endTime">
-                <el-date-picker v-model="msg.endTime" type="date" placeholder="结束日期" :disabled="offEndTime" :picker-options="pickerOptions_end"  :editable="false" @change="dateChangeTime_end" ref="endTime" size="small">
+                <el-date-picker v-model.trim="msg.endTime" type="date" placeholder="结束日期" :disabled="offEndTime" :picker-options="pickerOptions_end"  :editable="false" @change="dateChangeTime_end" ref="endTime" size="small">
                 </el-date-picker>
                 <el-checkbox label="长期" name="type" v-model="msg.lonrTime" @click.native="checked" class="long"></el-checkbox>
             </el-form-item>

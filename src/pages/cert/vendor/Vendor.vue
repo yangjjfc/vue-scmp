@@ -5,7 +5,7 @@
         <el-col :span="24" class="toolbar">
             <el-form :inline="true">
                 <el-form-item>
-                    <el-input placeholder="供应商名称" v-model="search.searchParm"  @keyup.native.enter="getList(1)" class="w300" size="small" ></el-input>
+                    <el-input placeholder="供应商名称" v-model.trim="search.searchParm"  @keyup.native.enter="getList(1)" class="w300" size="small" ></el-input>
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="getList(1)" size="small" >查询</el-button>

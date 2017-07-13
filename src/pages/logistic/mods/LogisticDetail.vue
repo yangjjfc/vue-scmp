@@ -81,19 +81,19 @@
                     </el-table-column>
                     <el-table-column prop="spec" label="规格" min-width="120" align="center">
                     </el-table-column>
-                    <el-table-column prop="num" label="配送数量" width="160" align="center">
+                    <el-table-column prop="num" label="配送数量" width="100" align="center">
                     </el-table-column>
                     <el-table-column prop="batch" label="批号" min-width="140" align="center">
                     </el-table-column>
-                    <el-table-column prop="validDate" label="效期" min-width="140" align="center">
+                    <el-table-column prop="validDate" label="效期" min-width="120" align="center">
                     </el-table-column>
                     <el-table-column prop="invoice" label="发票号" min-width="140" align="center">
                     </el-table-column>
                     <el-table-column prop="invoiceDate" label="开票日期" min-width="140" align="center">
                     </el-table-column>
-                    <el-table-column prop="unit" label="单位" min-width="140" align="center">
+                    <el-table-column prop="unit" label="单位" width="80" align="center">
                     </el-table-column>
-                    <el-table-column prop="price" label="单价" min-width="140" align="right">
+                    <el-table-column prop="price" label="单价" min-width="120" align="right">
                     </el-table-column>
                     <el-table-column prop="total" label="金额" min-width="140" align="right">
                     </el-table-column>
@@ -160,7 +160,7 @@ export default {
 
 </script>
 
-<style lang="scss" scoped>
+<style  scoped lang="scss" rel="stylesheet/scss">
 h3 {
     line-height: 30px;
 }

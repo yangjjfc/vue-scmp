@@ -25,7 +25,7 @@
                     </el-form-item>
 
                     <el-form-item>
-                        <el-input placeholder="供应商" v-model="search.keywords" class="w300" @keyup.native.enter="getList(1)" size="small"></el-input>
+                        <el-input placeholder="供应商" v-model.trim="search.keywords" class="w300" @keyup.native.enter="getList(1)" size="small"></el-input>
                     </el-form-item>
                     <el-form-item>
                         <el-button type="primary" @click="getList(1)"  size="small">查询</el-button>

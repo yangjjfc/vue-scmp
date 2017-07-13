@@ -15,7 +15,7 @@
                         </el-select>
                     </el-form-item>
                      <el-form-item>
-                        <el-input placeholder="供应商名称/联系人" v-model="from.keywords" @keyup.native.enter="getList(1)" class="w300" size="small"></el-input>
+                        <el-input placeholder="供应商名称/联系人" v-model.trim="from.keywords" @keyup.native.enter="getList(1)" class="w200" size="small"></el-input>
                     </el-form-item>
                     <el-form-item>
                         <el-button type="primary" @click="getList(1)"  size="small">筛选</el-button>
@@ -32,17 +32,25 @@
                 <el-table :data="tableDate" border >
                     <el-table-column prop="index" label="序号" width="70" align="center" >
                     </el-table-column>
-                     <el-table-column prop="supplierNo" label="供应商编号" min-width="140" align="" >
+                     <el-table-column prop="supplierNo" label="供应商编号" width="130" align="center" >
                     </el-table-column>
-                     <el-table-column prop="supplierName" label="供应商名称" min-width="150"  >
+                     <el-table-column prop="supplierName" label="供应商名称" min-width="150">
                     </el-table-column>
                      <el-table-column prop="supplierLinkman" label="联系人" min-width="100" align="center" >
                     </el-table-column>
                      <el-table-column prop="supplierPhone" label="联系电话" width="120" align="center" >
                     </el-table-column>
-                     <el-table-column   prop="customerNum" label="客户数量" width="100" align="center" >
+                     <el-table-column    label="客户数量" width="100" align="center" >
+                         <template scope="scope">
+                              <router-link :to="{ name: 'supCustomer', query: { no: scope.row.supplierNo,name:scope.row.supplierName }}" v-if="scope.row.customerNum>0"><span class="blue">{{scope.row.customerNum}}</span></router-link>
+                              <span v-html="scope.row.customerNum" v-else></span>
+                        </template>
                     </el-table-column>
-                     <el-table-column   prop="productNum" label="产品数量" width="100" align="center" >
+                     <el-table-column   label="产品数量" width="100" align="center" >
+                         <template scope="scope">
+                               <router-link :to="{ name: 'supProduct', query: { no: scope.row.supplierNo}}" v-if="scope.row.productNum>0"><span class="blue">{{scope.row.productNum}}</span></router-link>
+                              <span v-html="scope.row.productNum" v-else></span>
+                        </template>
                     </el-table-column>
                      <el-table-column prop="erps" label="ERP" width="80" align="center" >
                          <template scope="scope">
@@ -54,7 +62,7 @@
                               <span v-html="scope.row.statusx"></span>
                         </template>
                     </el-table-column>
-                    <el-table-column label="操作"  width="300">
+                    <el-table-column label="操作"  width="300" >
                         <template scope="scope">
                             <el-button size="mini" type="primary"  @click="detailSuppiler(scope.row.supplierNo,'detail')">详情</el-button>
                             <el-button size="mini" type="warning"  @click="detailSuppiler(scope.row.supplierNo,'audit')" v-if="scope.row.status =='2'">审核</el-button>
