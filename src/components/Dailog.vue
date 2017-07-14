@@ -17,7 +17,6 @@ export default {
     name: 'Dailog',
     data () {
         return {
-            shows: false
         };
     },
     props: {
@@ -47,13 +46,10 @@ export default {
         classx: String, // 自定义class
         hide: [String, Boolean] // 隐藏按钮
     },
-    watch: {
-        show (val, oldval) {
-            this.shows = this.show; // 监听show的变化
+    computed: {
+        shows () { 
+            return this.show;
         }
-    },
-    created () {
-        this.shows = this.show;
     },
     methods: {
         // 确认事件
@@ -62,7 +58,6 @@ export default {
         },
         // 取消事件
         cancel () {
-            this.shows = false;
             this.$emit('update:show', false); // 更新父组件shows
             this.$emit('reset');
         }

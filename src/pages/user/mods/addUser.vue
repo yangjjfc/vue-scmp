@@ -71,8 +71,8 @@ export default {
     data () {
         return {
             myshow: false, // 是否显示弹框
-            malis_state: true,
-            phone_state: true,
+            email_state: true,
+            mobilePhone_state: true,
             loginAccount_state: true,
             send_status: true,
             msgx: {

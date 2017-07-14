@@ -3,7 +3,7 @@
         <!--工具条-->
         <el-row>
             <el-col :span="24" class="toolbar">
-                <el-form :inline="true">
+                <el-form :inline="true" @submit.native.prevent="">
                     <el-form-item class="pull-right">
                         <el-button type="primary" @click="add" size="small">新增用户</el-button>
                     </el-form-item>

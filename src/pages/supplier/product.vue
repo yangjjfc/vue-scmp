@@ -172,7 +172,6 @@ export default {
                             }
                             return item;
                         });
-                        console.log(this.tableDate);
                     } else {
                         this.tableDate = [];
                     }

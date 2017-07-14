@@ -18,15 +18,15 @@
 			</el-col>
 		</el-col>
 		<el-col :span="24" class="main">
-			<aside :class="collapsed?'menu-collapsed':'menu-expanded'" class="sidebar el-menu--dark">
-				<el-scrollbar tag="div" class="scrollbar-box" v-show="!collapsed">
-					<el-menu :default-active="($route.matched[1]&&$route.matched[1].meta.active)||$route.path" :default-openeds="states.defaultOpen||['']" class="el-menu-vertical-demo" :unique-opened="false"  router theme="dark">
+			<aside :class="collapsed?'collapsed':'expanded'" class="sidebar el-menu--dark">
+				<el-scrollbar tag="div" class="scrollbar-box" >
+					<el-menu :default-active="($route.matched[1]&&$route.matched[1].meta.active)||$route.path" :default-openeds="states.defaultOpen||['']" class="el-menu-vertical-demo" :unique-opened="false" router theme="dark">
 						<template v-for="(item,index) in menuList" v-if="!item.meta.nomenu">
 							<el-submenu :index="item.path" v-if="item.children&&item.children.length>0" :key="item.path">
 								<template slot="title">
 									<i class="sidebar-iconfont iconfont" :class="[item.meta.icon]"></i>{{item.meta.name}}
 								</template>
-								<el-menu-item v-for="child in item.children" :index="child.state" :key="child.state" >{{child.meta.name}}</el-menu-item>
+								<el-menu-item v-for="child in item.children" :index="child.state" :key="child.state">{{child.meta.name}}</el-menu-item>
 							</el-submenu>
 							<el-menu-item v-if="!item.children" :index="item.state">
 								<i class="sidebar-iconfont iconfont" :class="[item.meta.icon]"></i>{{item.meta.name}}
@@ -34,37 +34,15 @@
 						</template>
 					</el-menu>
 				</el-scrollbar>
-				<!--导航菜单-折叠后-->
-				<ul class="el-menu--dark el-menu-vertical-demo collapsed" v-show="collapsed" ref="menuCollapsed">
-					<li v-for="(item,index) in menuList"  class="el-submenu item" v-if="!item.meta.nomenu">
-						<template v-if="item.children&&item.children.length>0">
-							<div class="el-submenu__title" style="padding-left: 20px;" @mouseover="showMenu(index,true)" @mouseout="showMenu(index,false)">
-								<i class="sidebar-iconfont iconfont" :class="[item.meta.icon]"></i>
-							</div>
-							<ul class="el-menu submenu" :class="'submenu-hook-'+index" @mouseover="showMenu(index,true)" @mouseout="showMenu(index,false)">
-								<li v-for="child in item.children"  :key="child.state" class="el-menu-item" style="padding-left: 40px;" :class="$route.path==child.state?'is-active':''" @click="$router.push(child.state)">{{child.meta.name}}</li>
-							</ul>
-						</template>
-						<template v-else>
-							<li class="el-submenu">
-								<div class="el-submenu__title el-menu-item" style="padding-left: 20px;height: 56px;line-height: 56px;padding: 0 20px;" :class="$route.path==item.state?'is-active':''" @click="$router.push( item.state)">
-									<i class="sidebar-iconfont iconfont" :class="[item.meta.icon]"></i>
-								</div>
-							</li>
-						</template>
-					</li>
-				</ul>
-	
-				<!--导航菜单-->
+			</aside>
+			<section class="content-container" :class="collapsed?'content-collapsed':'content-expanded'">
 				<div class="tools" @click.prevent="collapse">
 					<i :class="collapsed?'el-icon-d-arrow-right':'el-icon-d-arrow-left'"></i>
 				</div>
-			</aside>
-			<section class="content-container">
 				<div class="grid-content bg-purple-light">
 					<el-col :span="24" class="breadcrumb-container">
-						<i class="iconfont " :class="$route.matched[1].meta.icon"></i>
-						<span v-text="$route.matched[1].meta.name"></span>
+						<i class="iconfont " :class="setionHeardClass"></i>
+						<span v-text="setionHeardName"></span>
 					</el-col>
 					<el-col :span="24" class="content-wrapper">
 						<transition name="fade" mode="out-in">
@@ -81,7 +59,6 @@
 
 <script>
 import { mapState, mapMutations, mapActions } from 'vuex';
-// import CONFIG from '@/config/app.config';
 export default {
     data () {
         return {
@@ -117,16 +94,6 @@ export default {
 		// 折叠导航
         collapse () {
             this.collapsed = !this.collapsed;
-            if (document.createEvent) {
-                var event = document.createEvent('HTMLEvents');
-                event.initEvent('resize', true, true);
-                window.dispatchEvent(event);
-            } else if (document.createEventObject) {
-                window.fireEvent('onresize');
-            }
-        },
-        showMenu (i, status) {
-            this.$refs.menuCollapsed.getElementsByClassName('submenu-hook-' + i)[0].style.display = status ? 'block' : 'none';
         }
     },
     mounted () {
@@ -143,12 +110,21 @@ export default {
     },
 	// F5刷新重新赋值
     computed: mapState({
+		// 状态
         states: function (state) {
             if (!state.userInfo) {
                 this.REFRESH();
             }
             return state;
-        }
+        },
+		// icon
+        setionHeardClass () {
+            return this.$route.meta.icon;
+        },
+		// name
+        setionHeardName () {
+            return this.$route.meta.name;
+        } 
     })
 
 };
@@ -158,11 +134,12 @@ export default {
 $menuWidth: 180px;
 $menuHeight: 50px;
 $topColor: #20a0ff;
+$transition-time:.2s;
 .container {
 	position: absolute;
 	top: 0px;
 	bottom: 0px;
-	width: 100%;
+	width: 100%; //head 头部
 	.header {
 		height: $menuHeight;
 		line-height: $menuHeight;
@@ -185,11 +162,8 @@ $topColor: #20a0ff;
 			}
 		}
 		.logo {
-			//width:230px;
-			height: $menuHeight;
 			font-size: 22px;
 			padding-left: 20px;
-			padding-right: 20px;
 			width: $menuWidth;
 			img {
 				width: 30px;
@@ -200,17 +174,20 @@ $topColor: #20a0ff;
 				color: #fff;
 			}
 		}
-	}
+	} //主体
 	.main {
 		display: flex;
 		position: absolute;
 		top: $menuHeight;
 		bottom: 0px;
 		overflow: hidden;
-		aside {
+		.sidebar {
+			position: absolute;
+			height: 100%;
+			z-index: 22;
 			.sidebar-iconfont {
 				vertical-align: baseline;
-				margin-right: 10px;
+				margin-right: 15px;
 				font-style: normal;
 				font-weight: 400;
 				font-variant: normal;
@@ -232,57 +209,49 @@ $topColor: #20a0ff;
 					}
 				}
 			}
-			position: relative;
-			flex: 0 0 $menuWidth;
-			width: $menuWidth;
 			.el-menu {
+				width: 180px;
 				height: 100%;
+			} 
+			.el-submenu .el-menu-item{
+				padding-left: 58px !important;
 			}
-			.collapsed {
-				width: 60px;
-				.item {
-					position: relative;
-				}
-				.submenu {
-					position: absolute;
-					top: 0px;
-					left: 60px;
-					z-index: 99999;
-					height: auto;
-					display: none;
-				}
+			
+			&:hover{
+				width:180px;
+				transition: width $transition-time;
 			}
-			.tools {
-				position: absolute;
-				top: 46%;
-				height: 87px;
-				width: 14px; //background:rgba(49,49,49,0.6);
-				border-radius: 2px;
-				right: -14px;
-				cursor: pointer;
-				i {
-					font-size: 14px;
-					line-height: 87px;
-					text-align: center;
-					color: $topColor;
-				}
-			}
+			
 		}
-		.menu-collapsed {
-			flex: 0 0 60px;
-			width: 60px;
-			background: #324157;
-			height: 100%;
+		//展开
+		.expanded {
+			width:180px;
+			transition: width $transition-time; 
 		}
-		.menu-expanded {
-			flex: 0 0 $menuWidth;
-			width: $menuWidth;
-			height: 100%;
+		//收缩
+		.collapsed {
+			width:53px;
+			transition: width $transition-time; 
+			.el-menu {
+				position:relative;
+				left:-3px;
+			} 
+		}
+		//展开
+		.content-expanded {
+			margin-left:180px;
+			transition: all $transition-time; 
+		}
+		//收缩
+		.content-collapsed {
+			margin-left:53px;
+			transition: all $transition-time;
 		}
 		.content-container {
 			flex: 1;
 			overflow-y: auto;
 			padding: 0 0 20px 0;
+			position: relative;
 			.breadcrumb-container {
 				font-size: 14px;
 				font-weight: bold;
@@ -307,6 +276,21 @@ $topColor: #20a0ff;
 			.content-wrapper {
 				padding: 0 10px 0 20px;
 				box-sizing: border-box;
+			}
+			.tools {
+				position: absolute;
+				top: 46%;
+				height: 87px;
+				width: 14px; //background:rgba(49,49,49,0.6);
+				border-radius: 2px;
+				left: 0;
+				cursor: pointer;
+				i {
+					font-size: 14px;
+					line-height: 87px;
+					text-align: center;
+					color: $topColor;
+				}
 			}
 		}
 	}
