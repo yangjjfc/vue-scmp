@@ -2,7 +2,7 @@
 <template>
     <section>
         <dailog size="tiny" :show.sync="myshow" classx="" title="员工权限配置" @ok="quire">
-            <el-tree slot="content" :data="tree_data" ref="tree" show-checkbox node-key="id" :default-expand-all="true"  :default-checked-keys="defaultChecked" :props="defaultProps">
+            <el-tree slot="content" :data="tree_data" ref="tree" show-checkbox node-key="id" :default-expand-all="true" :default-checked-keys="defaultChecked" :props="defaultProps">
             </el-tree>
         </dailog>
     </section>
@@ -41,18 +41,40 @@ export default {
         }
     },
     methods: {
+        getKeyslist (data) {
+            let checked = [];
+            let findPresentId = (data, present) => {
+                for (let item of data) {
+                    present = present || item.id;
+                    if (this.getKeys.indexOf(item.id) > -1) {
+                        checked.push(present);
+                        break;
+                    }
+                    if (!item.isLeaf) {
+                        findPresentId(item.children, item.id);
+                    } 
+                }      
+            };  
+            findPresentId(data);
+            return checked;
+        },    
         // 确认
         quire () {
+            let keys = [];
+            if (this.getKeys.length > 0) {
+                keys.push(this.tree_data[0].id);
+                keys = Array.from(new Set(keys.concat(this.getKeyslist(this.tree_data)).concat(this.getKeys))); // 数组去重
+            }
             this.Http.post(URL.RIGHTS_EDIT, {
                 userNo: this.useMsg.userNo,
                 appCode: 'YSCM',
-                rightIds: this.getKeys,
-                appRole: 'Supplier'
+                rightIds: keys,
+                appRole: 'Platform'
             }).then(re => {
                 if (re.data === 'SUCCESS') {
                     this.$notify({
                         title: '成功',
-                        message: this.type === 'add' ? '添加成功' : '编辑成功',
+                        message: '权限配置成功',
                         type: 'success'
                     });
                     this.myshow = false;
@@ -64,7 +86,7 @@ export default {
             await this.Http.post(URL.RIGHTS_LIST, {
                 userNo: this.useMsg.userNo,
                 appCode: 'YSCM',
-                appRole: 'Supplier'
+                appRole: 'Platform'
             }).then((re) => {
                 if (re.data && re.data.length > 0) {
                     this.tree_data = re.data;

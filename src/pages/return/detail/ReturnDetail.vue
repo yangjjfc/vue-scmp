@@ -156,7 +156,7 @@
 
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
    
     h3{
         line-height:30px;

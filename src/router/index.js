@@ -53,13 +53,22 @@ const chart = _import('chart/chart');  // 统计分析
 const supplierChart = _import('chart/supplier/SupplierChart'); // 供应商销售
 const hospitalChart = _import('chart/hospital/HospitalChart'); // 客户销售
 export const menu = [{
+    path: 'suoqi', // 缩起
+    meta: {
+        name: '缩起菜单',
+        icon: 'icon-zengjiasuojinliang',
+        role: '',
+        whitemenu: true
+    }
+}, {
     path: 'index', // 首页
     component: index,
     name: 'index',
     meta: {
         name: '首页',
         icon: 'icon-index',
-        role: 'platform:index'
+        role: 'platform:index',
+        whitemenu: true
     }
 },
 {

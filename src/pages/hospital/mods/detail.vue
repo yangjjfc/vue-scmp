@@ -55,7 +55,7 @@
                                     <div class="left">
                                         <dl>
                                             <dd>
-                                                <h5 class="green">{{item.certName}}</h5>
+                                                <h5 class="green">{{item.certType=="yljgzyxkz"&&msgx.nature=='1'?"事业单位法人证":(item.certType=="sydwfrz"?"营业执照":'医疗机构执业许可证')}}</h5>
                                             </dd>
                                             <dd>证件编号 : {{item.certCode}}</dd>
                                             <dd>证件效期 : {{item.startTime}} 至 {{item.endTime_format}}</dd>

@@ -153,7 +153,7 @@ const URL = {
 };
 
 export default {
-
+    name: 'index',
     data () {
         return {
             data: [],

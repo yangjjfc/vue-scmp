@@ -25,6 +25,15 @@
   }
 }
 
+@mixin bg-linear-gradients{
+  background: rgba(31,153,239,0.9);
+  background: -webkit-linear-gradient(left, #3e7bd9, #1bb2f9);
+  background: -moz-linear-gradient(left, #3e7bd9, #1bb2f9);
+  background: -o-linear-gradient(left, #3e7bd9, #1bb2f9);
+  background: linear-gradient(to right, #3e7bd9, #1bb2f9); 
+ 
+}
+
 @mixin relative {
   position: relative;
   width: 100%;
@@ -35,6 +44,11 @@
   width: #{$pct};
   position: relative;
   margin: 0 auto;
+}
+
+@mixin menuchange($width,$obj){
+  width: #{$width};
+	transition: #{$obj} $transition-time;
 }
 
 @mixin triangle($width, $height, $color, $direction) {

@@ -1,7 +1,7 @@
 <template>
 <div id="flow_chart" >
     <ul>
-        <li :class="temp.className" v-for="(temp,index) in list" :key="temp">
+        <li :class="temp.className" v-for="(temp,index) in list" :key="index">
             <div class="mode">
                 <div class="img"></div>
                 <div class="time">{{temp.time}}</div>
@@ -14,38 +14,38 @@
 </template>
 
 <script>
-    let flow = [
-        {
-            msg: '提交订单',
-            className: 'flow1',
-            status: 'trade_pending'
-        },
-        {
-            msg: '确认订单',
-            className: 'flow2',
-            status: 'trade_confirm'
-        },
-        {
-            msg: '部分发货',
-            className: 'flow3',
-            status: ['trade_partship', 'trade_consign']
-        },
-        {
-            msg: '配送中',
-            className: 'flow4',
-            status: 'trade_finish'
-        },
-        {
-            msg: '订单完成',
-            className: 'flow5',
-            status: 'trade_finish'
-        }
-    ];
     export default {
         name: 'step',
         data () {
             return {
-                list: []
+                list: [],
+                defaultFlow: [
+                    {
+                        msg: '提交订单',
+                        className: 'flow1',
+                        status: 'trade_pending'
+                    },
+                    {
+                        msg: '确认订单',
+                        className: 'flow2',
+                        status: 'trade_confirm'
+                    },
+                    {
+                        msg: '部分发货',
+                        className: 'flow3',
+                        status: ['trade_partship', 'trade_consign']
+                    },
+                    {
+                        msg: '配送中',
+                        className: 'flow4',
+                        status: 'trade_finish'
+                    },
+                    {
+                        msg: '订单完成',
+                        className: 'flow5',
+                        status: 'trade_finish'
+                    }
+                ]
             };
         },
         props: {
@@ -56,7 +56,7 @@
         },
         methods: {
             init () {
-                flow.forEach((item, num) => { 
+                this.defaultFlow.forEach((item, num) => { 
                     item.status = typeof item.status === 'string' ? [item.status] : item.status;
                     this.flow.forEach(function (data) {
                         if (~item.status.indexOf(data.status)) {
@@ -70,7 +70,7 @@
                         }
                     });
                 });
-                this.list = flow;
+                this.list = this.defaultFlow;
             }
         },
         // 流程图 待确认(trade_pending)，已确认(trade_confirm)，部分发货(trade_partship)，全部发货(trade_consign)，订单完成(trade_finish)

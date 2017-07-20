@@ -31,8 +31,11 @@ export default {
     },
     // 默认打开
     [DEFAULTOPEN] (state, data) {
-        if (state.defaultOpen.indexOf(data) === -1) {
+        if (!state.defaultOpen) {
+            state.defaultOpen = [];
             state.defaultOpen.push(data);  
+        } else if (state.defaultOpen.indexOf(data) === -1) { 
+            state.defaultOpen.push(data);   
         }
     },
     // 设置路由

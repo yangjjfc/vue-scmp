@@ -32,7 +32,7 @@
                     <el-form-item label="注册地址" prop="registAddr">
                         <template scope="scope">
                             <region-picker :region.sync="msgx.address"></region-picker>
-                            <el-input placeholder="注册地址" v-model.trim="msgx.registAddr" size="small" style="margin-bottom:6px"></el-input>
+                            <el-input placeholder="注册地址" v-model.trim="msgx.registAddr" size="small" ></el-input>
                         </template>
                     </el-form-item>
                     <el-form-item label="区域" prop="regionName">
@@ -126,7 +126,7 @@ export default {
                 info: []
             }, 
             cert_sydwfrz: {
-                name: '事业单位法人证 (必填)',
+                name: '营业执照 (必填)',
                 certNo: '',
                 startTime: '',
                 endTime: '',
@@ -197,7 +197,7 @@ export default {
                 scm: false,
                 certs: [
                     {
-                        name: '医疗器械经营企业许可证 (必填)',
+                        name: '事业单位法人证 (必填)',
                         certNo: '',
                         startTime: '',
                         endTime: '',
@@ -379,14 +379,20 @@ export default {
             this.msgx = this.resetmsg;
             this.$refs.forms.resetFields();
             if (val === 22) {
+                this.msgx.certs[0].name = '医疗器械经营企业许可证  (必填)';
                 if (this.msgx.certs.length > 1) {
                     this.msgx.certs.pop();
                 }
                 this.msgx.curtomer.isEdit = true;
                 this.msgx.nature = '检验子公司';
             } else {
-                if (this.msgx.certs.length === 1 && this.msgx.natureType.value === 0) {
-                    this.msgx.certs.push(this.cert_sydwfrz);
+                if (this.msgx.certs.length === 1) {
+                    if (this.msgx.natureType.value === 0) {
+                        this.msgx.certs[0].name = '医疗器械经营企业许可证  (必填)';
+                        this.msgx.certs.push(this.cert_sydwfrz);
+                    } else { 
+                        this.msgx.certs[0].name = '事业单位法人证  (必填)';
+                    }
                 }
                 this.msgx.curtomer.isEdit = false;
                 this.msgx.nature = '';
@@ -427,8 +433,10 @@ export default {
         // 更改医院性质
         changeNatureType (val) {
             if (val === 0) {
+                this.msgx.certs[0].name = '医疗器械经营企业许可证  (必填)';
                 this.msgx.certs.push(this.cert_sydwfrz);
             } else {
+                this.msgx.certs[0].name = '事业单位法人证  (必填)';
                 this.msgx.certs.pop();
             }
         }

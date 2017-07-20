@@ -18,15 +18,19 @@
 			</el-col>
 		</el-col>
 		<el-col :span="24" class="main">
-			<aside :class="collapsed?'collapsed':'expanded'" class="sidebar el-menu--dark">
-				<el-scrollbar tag="div" class="scrollbar-box" >
+			<aside class="sidebar el-menu--dark" :class="collapsed?'collapsed':'expandeds'">
+				<el-scrollbar tag="div" class="scrollbar-box">
+					<div class="tools" @click.prevent="collapse" :class="collapsed?'collapsed':'expandeds'">
+					</div>
 					<el-menu :default-active="($route.matched[1]&&$route.matched[1].meta.active)||$route.path" :default-openeds="states.defaultOpen||['']" class="el-menu-vertical-demo" :unique-opened="false" router theme="dark">
 						<template v-for="(item,index) in menuList" v-if="!item.meta.nomenu">
 							<el-submenu :index="item.path" v-if="item.children&&item.children.length>0" :key="item.path">
 								<template slot="title">
 									<i class="sidebar-iconfont iconfont" :class="[item.meta.icon]"></i>{{item.meta.name}}
 								</template>
-								<el-menu-item v-for="child in item.children" :index="child.state" :key="child.state">{{child.meta.name}}</el-menu-item>
+								<el-menu-item v-for="child in item.children" :index="child.state" :key="child.state">
+									<i class="submenu-iconfont iconfont icon-iconfonticonfontyuandian"></i>{{child.meta.name}}
+								</el-menu-item>
 							</el-submenu>
 							<el-menu-item v-if="!item.children" :index="item.state">
 								<i class="sidebar-iconfont iconfont" :class="[item.meta.icon]"></i>{{item.meta.name}}
@@ -36,9 +40,6 @@
 				</el-scrollbar>
 			</aside>
 			<section class="content-container" :class="collapsed?'content-collapsed':'content-expanded'">
-				<div class="tools" @click.prevent="collapse">
-					<i :class="collapsed?'el-icon-d-arrow-right':'el-icon-d-arrow-left'"></i>
-				</div>
 				<div class="grid-content bg-purple-light">
 					<el-col :span="24" class="breadcrumb-container">
 						<i class="iconfont " :class="setionHeardClass"></i>
@@ -46,7 +47,7 @@
 					</el-col>
 					<el-col :span="24" class="content-wrapper">
 						<transition name="fade" mode="out-in">
-							<keep-alive include="Logistic,supplier">
+							<keep-alive include="Logistic,supplier,order">
 								<router-view></router-view>
 							</keep-alive>
 						</transition>
@@ -62,7 +63,7 @@ import { mapState, mapMutations, mapActions } from 'vuex';
 export default {
     data () {
         return {
-            sysName: '云供应链', // title
+            sysName: '云供应链平台端', // title
             collapsed: false, // 是否缩进
             sysUserName: '', // 客户名称
             menuList: [], // 菜单
@@ -94,6 +95,13 @@ export default {
 		// 折叠导航
         collapse () {
             this.collapsed = !this.collapsed;
+			// if (document.createEvent) {      
+			//     var event = document.createEvent('HTMLEvents');  
+			//     event.initEvent('resize', true, true); 
+			//     window.dispatchEvent(event);
+			// } else if (document.createEventObject) {
+			//     window.fireEvent('onresize');
+			// }    
         }
     },
     mounted () {
@@ -108,7 +116,7 @@ export default {
             this.menuList = this.states.routers;
         }
     },
-	// F5刷新重新赋值
+	// F5刷新重新赋值    
     computed: mapState({
 		// 状态
         states: function (state) {
@@ -124,17 +132,23 @@ export default {
 		// name
         setionHeardName () {
             return this.$route.meta.name;
-        } 
+        }
     })
 
 };
 </script>
  
 <style  lang="scss">
+@import '../../style/mixin.scss';
 $menuWidth: 180px;
 $menuHeight: 50px;
 $topColor: #20a0ff;
 $transition-time:.2s;
+.border-menu-style {
+	border-top: 1px #50576a solid;
+	border-bottom: 1px #2d3446 solid;
+}
+
 .container {
 	position: absolute;
 	top: 0px;
@@ -143,8 +157,8 @@ $transition-time:.2s;
 	.header {
 		height: $menuHeight;
 		line-height: $menuHeight;
-		background: $topColor;
 		color: #fff;
+		@include bg-linear-gradients;
 		.userinfo {
 			text-align: right;
 			padding-right: 35px;
@@ -162,17 +176,12 @@ $transition-time:.2s;
 			}
 		}
 		.logo {
-			font-size: 22px;
+			line-height: $menuHeight;
+			font-size: 26px;
+			font-family: "黑体", "微软雅黑", "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei";
+			font-weight: bold;
 			padding-left: 20px;
-			width: $menuWidth;
-			img {
-				width: 30px;
-				float: left;
-				margin: 10px 10px 10px 18px;
-			}
-			.txt {
-				color: #fff;
-			}
+			letter-spacing: 1px;
 		}
 	} //主体
 	.main {
@@ -181,10 +190,17 @@ $transition-time:.2s;
 		top: $menuHeight;
 		bottom: 0px;
 		overflow: hidden;
+		//菜单
 		.sidebar {
 			position: absolute;
 			height: 100%;
-			z-index: 22;
+			z-index: 22; //展开
+			&.expandeds {
+				@include menuchange($menuWidth, width);
+			} //收缩
+			&.collapsed {
+				@include menuchange($menuWidth - 127px, width);
+			} //icon
 			.sidebar-iconfont {
 				vertical-align: baseline;
 				margin-right: 15px;
@@ -200,64 +216,78 @@ $transition-time:.2s;
 				font-size: 21px;
 				top: 2px;
 			}
+			.submenu-iconfont {
+				@extend .sidebar-iconfont;
+				font-size: 16px;
+				color: #feac31;
+			}
 			.scrollbar-box {
+				//侧边栏盒子
 				height: 100%;
 				.el-scrollbar__wrap {
 					height: 100%;
 					.el-scrollbar__view {
+						position: relative;
 						height: 100%;
+						.tools {
+							position: absolute;
+							top: 0;
+							height: 56px;
+							left: 0;
+							z-index: 999;
+							cursor: pointer;
+							background: rgba(255, 255, 255, 0);
+							&.expandeds {
+								width: $menuWidth;
+							} //收缩
+							&.collapsed {
+								width: $menuWidth - 127px;
+							}
+						}
 					}
 				}
 			}
 			.el-menu {
-				width: 180px;
+				width: $menuWidth + 6px;
 				height: 100%;
-			} 
-			.el-submenu .el-menu-item{
-				padding-left: 58px !important;
+				position: relative;
+				left: -3px;
+				.el-menu-item {
+					@extend .border-menu-style;
+					&:nth-of-type(1) {
+						border-top: none;
+					}
+				}
+				.el-submenu {
+					@extend .border-menu-style;
+					.el-menu-item {
+						padding-left: 28px !important;
+						border: none;
+					}
+				}
 			}
-			
-			&:hover{
-				width:180px;
-				transition: width $transition-time;
-			}
-			
 		}
-		//展开
-		.expanded {
-			width:180px;
-			transition: width $transition-time; 
-		}
-		//收缩
-		.collapsed {
-			width:53px;
-			transition: width $transition-time; 
-			.el-menu {
-				position:relative;
-				left:-3px;
-			} 
-		}
-		//展开
-		.content-expanded {
-			margin-left:180px;
-			transition: all $transition-time; 
-		}
-		//收缩
-		.content-collapsed {
-			margin-left:53px;
-			transition: all $transition-time;
-		}
+		//内容部分
 		.content-container {
 			flex: 1;
 			overflow-y: auto;
 			padding: 0 0 20px 0;
-			position: relative;
-			.breadcrumb-container {
+			position: relative; 
+			&.content-expanded {//展开
+				margin-left: $menuWidth;
+				transition: all $transition-time;
+			} 
+			&.content-collapsed {//收缩
+				margin-left: $menuWidth - 127px;
+				transition: all $transition-time;
+			}
+			//内容头部
+			.breadcrumb-container {        
 				font-size: 14px;
 				font-weight: bold;
 				color: #666;
 				height: 50px;
-				background: #fff;
+				background: #f4f4f4;
 				line-height: 50px;
 				margin-bottom: 10px;
 				border-bottom: 1px solid #ccc;
@@ -274,23 +304,8 @@ $transition-time:.2s;
 				}
 			}
 			.content-wrapper {
-				padding: 0 10px 0 20px;
+				padding: 0 10px;
 				box-sizing: border-box;
-			}
-			.tools {
-				position: absolute;
-				top: 46%;
-				height: 87px;
-				width: 14px; //background:rgba(49,49,49,0.6);
-				border-radius: 2px;
-				left: 0;
-				cursor: pointer;
-				i {
-					font-size: 14px;
-					line-height: 87px;
-					text-align: center;
-					color: $topColor;
-				}
 			}
 		}
 	}

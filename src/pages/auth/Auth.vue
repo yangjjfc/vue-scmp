@@ -34,6 +34,7 @@
     </div>
 </template>
 <script type="text/javascript">
+import store from '@/store/index';
 import CONFIG from '@/config/app.config';
 import { mapState, mapActions } from 'vuex';
 import {encryption} from '@/services/global.common';
@@ -119,7 +120,7 @@ export default {
     },
     mounted () {
         this.refreshCode();
-    }
+    } 
 };
 </script>
 

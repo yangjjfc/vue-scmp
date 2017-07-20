@@ -200,7 +200,7 @@ export default {
                     { pattern: /^\S{0,30}$/, message: '联系人不能超过30个字符', trigger: 'blur,change' }
                 ],
                 linkTelphone: [
-                    { pattern: /^(((13[0-9]{1})|(14[0-9]{1})|(15[0-9]{1})|(17[0-9]{1})|(18[0-9]{1}))+\d{8})$/, message: '联系电话格式有误,有效11个字符', trigger: 'blur,change' }
+                    { pattern: /^((1[34578]\d{9})|(0\d{2,3}-\d{7,8})|(0\d{2,3}\d{7,8}))$/, message: '联系电话格式有误', trigger: 'blur,change' }
                 ],
                 registAddr: [
                     { required: true, message: '请输入注册地址' },

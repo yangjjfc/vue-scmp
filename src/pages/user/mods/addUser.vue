@@ -4,26 +4,26 @@
         <dailog size="tiny" :show.sync="myshow" classx="staff-add-user"  :title="title" @ok="quire">
             <el-form slot="content" :rules="rules" ref="forms" label-width="100px" class="demo-dynamic" :model="msgx">
                 <el-form-item label="登录账号" prop="loginAccount" >
-                   <el-input placeholder="登录账号"  v-model="msgx.loginAccount" size="small" :disabled="this.type=='edit'"></el-input>
+                   <el-input placeholder="登录账号"  v-model.trim="msgx.loginAccount" size="small" :disabled="this.type=='edit'"></el-input>
                 </el-form-item>
                 <el-form-item label="密码" prop="password" v-if="this.type=='add'">
-                    <el-input placeholder="密码" type="password" v-model="msgx.password" size="small"></el-input>
+                    <el-input placeholder="密码" type="password" v-model.trim="msgx.password" size="small"></el-input>
                 </el-form-item>
                 <el-form-item label="重复密码" prop="repassword" v-if="this.type=='add'">
-                    <el-input placeholder="重复密码" type="password" v-model="msgx.repassword" size="small"></el-input>
+                    <el-input placeholder="重复密码" type="password" v-model.trim="msgx.repassword" size="small"></el-input>
                 </el-form-item>
                 <el-form-item label="真实姓名" prop="userName" >
-                    <el-input placeholder="真实姓名" v-model="msgx.userName" size="small"></el-input>
+                    <el-input placeholder="真实姓名" v-model.trim="msgx.userName" size="small"></el-input>
                 </el-form-item>
                 <el-form-item label="手机号码" prop="mobilePhone" >
-                    <el-input placeholder="手机号码" v-model="msgx.mobilePhone" size="small"></el-input>
+                    <el-input placeholder="手机号码" v-model.trim="msgx.mobilePhone" size="small"></el-input>
                 </el-form-item>
             
                  <el-form-item label="电子邮箱" prop="email" >
-                    <el-input placeholder="电子邮箱" v-model="msgx.email" size="small"></el-input>
+                    <el-input placeholder="电子邮箱" v-model.trim="msgx.email" size="small"></el-input>
                 </el-form-item>
                  <el-form-item label="身份证号码" prop="idcard" >
-                    <el-input placeholder="身份证号码" v-model="msgx.idcard" size="small"></el-input>
+                    <el-input placeholder="身份证号码" v-model.trim="msgx.idcard" size="small"></el-input>
                 </el-form-item>
                  <el-form-item label="身份证照片" prop="idcardCertImg" >
                     <template scope="scope">

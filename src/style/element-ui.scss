@@ -35,3 +35,16 @@
         line-height: 1;
     }
 }
+.el-menu-item.is-active{
+    color: #fff;
+    @include bg-linear-gradients;
+    .submenu-iconfont{
+         color: #fff !important;
+    }
+}
+.el-menu--dark{
+    background: #424a5d;
+    .el-submenu .el-menu {
+        background-color: #2d3445;
+    }
+}

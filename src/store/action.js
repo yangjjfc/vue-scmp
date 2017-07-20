@@ -69,18 +69,25 @@ export default {
     async generateRouters ({commit, state}, roles) {
         let menulist = [];
         menu.forEach(item => {     
-            if (roles.indexOf(item.meta.role) === -1) {
+            if (roles.indexOf(item.meta.role) === -1 && !item.meta.whitemenu) {
                 return;  
             } else {
                 item.state = '/dashboard/' + item.path;
-                if (item.children) {
+                if (item.children) { // 子节点
+                    let childrenMenu = [];
                     item.children.forEach(children => {  
-                        if (roles.indexOf(children.meta.role) === -1) {
+                        if (roles.indexOf(children.meta.role) === -1) { // 没权限
                             return;
                         } else {
                             children.state = item.state + '/' + children.path;
+                            childrenMenu.push(children);
                         }
-                    });         
+                    }); 
+                    if (childrenMenu.length > 0) { // 有获取到子节点权限
+                        item.children = childrenMenu;
+                    } else { 
+                        delete item.children;  // 无限权删除
+                    }        
                 } else {
                     delete item.children; 
                 }     

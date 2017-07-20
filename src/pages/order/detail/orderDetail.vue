@@ -85,7 +85,7 @@
                 </p>
             </el-col>
 
-            <el-col :span="24">
+            <el-col :span="24" v-if="logisticList.length>0">
                 <h3>配送订单</h3>
                 <el-table :data="logisticList" border >
                     <el-table-column prop="index" label="序号" width="70" align="center" >
@@ -116,7 +116,7 @@
         NUMBER_LIST: 'scm.order.queryOrderDetail' // 配送单列表
     };
     export default {
-        name: 'Return',
+        name: 'order-detail',
         data () {
             return {
                 total: 0,
@@ -155,7 +155,7 @@
                         default:
                             break;
                         }
-                        this.order.status = statusStr;
+                        this.order.statusx = statusStr;
                         this.order.totalMoney = parseMone(this.order.totalMoney);
                         this.list = re.data.rows.map((item, index) => {
                             item.index = index + 1 + (this.pageIndex - 1) * this.pageSize;
@@ -215,7 +215,7 @@
 
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
    
     h3{
         line-height:30px;

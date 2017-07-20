@@ -1,5 +1,5 @@
-@import './element-ui.scss';
 @import './mixin.scss';
+@import './element-ui.scss';
 body, div, span, header, footer, nav, section, aside, article, ul, dl, dt, dd, li, a, p, h1, h2, h3, h4,h5, h6, i, b, textarea, button, input, select, figure, figcaption {
     padding: 0;
     margin: 0;
@@ -111,8 +111,8 @@ textarea { -webkit-appearance: none;}
 }
 
 .toolbar {
-    background: #f2f2f2;
-    padding: 10px;
+    // background: #f2f2f2;
+    padding: 0;
     margin: 10px 0px;
     .ivu-form-item {
         margin-bottom: 0;

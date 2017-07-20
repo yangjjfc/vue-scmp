@@ -25,11 +25,13 @@ router.beforeEach((to, from, next) => {
     }
     // 跳转登录页
     if (to.path === '/auth') {
-        next();
+        store.dispatch('logout').then(() => {
+            next(); 
+        });
     } else {
         // 判断权限是否存在  
         if (store.state.roles) {
-            if (store.state.roles.indexOf(to.meta.role) > 0) { // 判断该路由是否有权限
+            if (store.state.roles.indexOf(to.meta.role) > 0 || to.meta.whitemenu) { // 判断该路由是否有权限
                 next();
             } else {
                 next('/auth');
@@ -56,6 +58,5 @@ router.beforeEach((to, from, next) => {
         }
     }
 });
-
 export { router };
 
