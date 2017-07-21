@@ -47,7 +47,7 @@
                 </el-table-column>
             </el-table>
         </el-col>
-        <el-col :span="24" class="toolbar">
+        <el-col :span="24" class="toolbar" v-show="total>0">
             <pagination :total="total" :pageSize.sync="pageSize"  :pageIndex.sync="pageIndex" @change="getList"></pagination>
         </el-col>
         <el-col :span="24" v-if="showPreserve" >

@@ -1,6 +1,6 @@
 <template>
     <section class="container_setion">
-        <dailog size="tiny" :show.sync="myshow" classx="staff-add-user" title="证件详情【生产厂商证照】" @ok="quire">
+        <dailog size="tiny" :show.sync="myshow" classx="staff-add-user" title="证件详情【生产厂商证照】" :hide="true">
             <div slot="content">
                 <el-col :span="24" class="ui-table">
                     <table>
@@ -81,14 +81,17 @@ export default {
         }
     },
     beforeMount () {
-        this.getData();
-        this.myshow = this.showx;
+        this.getData().then(() => {
+            this.myshow = this.showx; 
+        }).catch(() => {
+            this.$emit('update:showx', false);
+        });
     },
     methods: {
         // 获取列表
-        getData () {
-            this.Http.post(URL.DETAIL,
-                {
+        async getData () {
+            await this.Http.post(URL.DETAIL,
+                {   
                     params: {
                         factoryNo: this.cert.certNo
                     }

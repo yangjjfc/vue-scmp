@@ -11,7 +11,7 @@
                     </div>
                     <div class="password">
                         <div class="passwordinner">
-                            <input type="password" name="password" id="password" maxlength="20" placeholder="请输入密码" v-model="form.password" />
+                            <input type="password" name="password" id="password" maxlength="20" placeholder="请输入密码" v-model="form.password"  @keyup.enter="login"/>
                         </div>
                     </div>
                     <div class="verify">
@@ -34,7 +34,6 @@
     </div>
 </template>
 <script type="text/javascript">
-import store from '@/store/index';
 import CONFIG from '@/config/app.config';
 import { mapState, mapActions } from 'vuex';
 import {encryption} from '@/services/global.common';

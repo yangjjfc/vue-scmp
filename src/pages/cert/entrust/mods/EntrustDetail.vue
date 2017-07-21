@@ -1,6 +1,6 @@
 <template >
 <section class="container_setion">
-    <dailog size="tiny" :show.sync="myshow" classx="staff-add-user" title="证件详情【法人委托书】" @ok="quire">
+    <dailog size="tiny" :show.sync="myshow" classx="staff-add-user" title="证件详情【法人委托书】" :hide="true">
         <div slot="content">
             <el-col :span="24" class="ui-table">
                 <table>
@@ -83,13 +83,16 @@
             }
         },
         beforeMount () {
-            this.getData();
-            this.myshow = this.showx;
+            this.getData().then(() => {
+                this.myshow = this.showx; 
+            }).catch(() => {
+                this.$emit('update:showx', false);
+            });
         },
         methods: {
             // 获取列表
-            getData () {
-                this.Http.post(URL.DETAIL,
+            async getData () {
+                await this.Http.post(URL.DETAIL,
                     {
                         params: {
                             certNo: this.cert.certNo
@@ -97,11 +100,6 @@
                     }).then((re) => {
                         this.result = re.data; 
                     });
-            },
-            
-            // 确定
-            quire () {
-                this.myshow = false;
             }
         },
         mounted () {

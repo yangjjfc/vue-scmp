@@ -68,15 +68,15 @@
                     </el-table-column>
                     <el-table-column label="操作"  width="300">
                         <template scope="scope">
-                            <el-button size="mini" type="primary"  @click="detailSuppiler(scope.row.productNo,'detail')">详情</el-button>
-                            <el-button size="mini" type="primary"  @click="detailLog(scope.row.productNo)" >日志</el-button>
-                            <el-button size="mini" type="warning"  @click="detailSuppiler(scope.row.productNo,'audit')" v-if="scope.row.status =='2' && scope.row.certType !=1">审核</el-button>
+                            <el-button size="mini" type="link"  @click="detailSuppiler(scope.row.productNo,'detail')">详情</el-button>
+                            <el-button size="mini" type="link"  @click="detailLog(scope.row.productNo)" >日志</el-button>
+                            <el-button size="mini" type="link"  @click="detailSuppiler(scope.row.productNo,'audit')" v-if="scope.row.status =='2' && scope.row.certType !=1">审核</el-button>
                             <el-button size="mini" type="warning"  @click="handleDown(scope.row.productNo)" v-if="scope.row.status =='5'">强制下架</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
             </el-col>
-            <el-col :span="24" class="toolbar">
+            <el-col :span="24" class="toolbar" v-show="total>0">
                 <pagination :total="total" :pageSize.sync="pageSize" :pageIndex.sync="pageIndex" @change="getList"></pagination>
             </el-col>
             <el-col :span="24" v-if="showDetail">

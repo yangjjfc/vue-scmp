@@ -21,7 +21,7 @@
                             </el-table-column>
                         </el-table>
                     </el-col>
-                    <el-col :span="24" class="toolbar">
+                    <el-col :span="24" class="toolbar" v-show="total>0">
                         <pagination :total="total" :pageSize="pageSize" :pageIndex="pageIndex" @change="getData"></pagination>
                     </el-col>
             </el-row>

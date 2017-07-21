@@ -1,6 +1,6 @@
 <template>
     <section >
-       <dailog size="small" :show.sync="myshow" classx="staff-add-user"  title="电子签章详情" @ok="quire">
+       <dailog size="small" :show.sync="myshow" classx="staff-add-user"  title="电子签章详情" :hide="type == 'detail'" @quire="quire">
             <div slot="content">
                 <el-col :span="24" class="ui-table">
                     <el-form :model="checkForm" :rules="rules" ref="checkForm"  class="demo-ruleForm">
@@ -95,8 +95,11 @@
             }
         },
         beforeMount () {
-            this.getData();
-            this.myshow = this.showx;
+            this.getData().then(() => {
+                this.myshow = this.showx; 
+            }).catch(() => {
+                this.$emit('update:showx', false);
+            });
         },
         methods: {
             changeChecked (src) {
@@ -106,12 +109,12 @@
                 this.$refs.checkForm.resetFields();
             },
             // 获取列表
-            getData () {
+            async getData () {
                 let param = {
                     enterpriseNo: this.cert.enterpriseNo,
                     secret: this.cert.secret
                 };
-                this.Http.post(URL.DETAIL,
+                await this.Http.post(URL.DETAIL,
                     {
                         params: param
                     }).then((re) => {

@@ -40,16 +40,16 @@
                     </el-table-column>
                     <el-table-column prop="cnum" label="操作" min-width="200">
                         <template scope="scope">
-                            <el-button size="mini" type="primary" @click="editUser(scope.row)" v-if="scope.row.status !='3'">编辑</el-button>
-                            <el-button size="mini" type="success" @click="enabled(scope.row,'1')" v-if="scope.row.status=='2'">启用</el-button>
-                            <el-button size="mini" type="warning" @click="enabled(scope.row,'2')" v-if="scope.row.status=='1'">禁用</el-button>
-                            <el-button size="mini" type="danger" @click="enabled(scope.row,'3')" v-if="scope.row.status !='3'">删除</el-button>
-                            <el-button size="mini" type="primary" @click="permission(scope.row)" v-if="scope.row.status !='3'">权限</el-button>
+                            <el-button size="mini" type="link" @click="editUser(scope.row)" v-if="scope.row.status !='3'">编辑</el-button>
+                            <el-button size="mini" type="link" @click="enabled(scope.row,'1')" v-if="scope.row.status=='2'">启用</el-button>
+                            <el-button size="mini" type="link" @click="enabled(scope.row,'2')" v-if="scope.row.status=='1'">禁用</el-button>
+                            <el-button size="mini" type="link" @click="enabled(scope.row,'3')" v-if="scope.row.status !='3'">删除</el-button>
+                            <el-button size="mini" type="link" @click="permission(scope.row)" v-if="scope.row.status !='3'">权限</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
             </el-col>
-            <el-col :span="24" class="toolbar">
+            <el-col :span="24" class="toolbar" v-show="total>0">
                 <pagination :total="total" :pageSize.sync="pageSize" :pageIndex.sync="pageIndex" @change="getList"></pagination>
             </el-col>
     

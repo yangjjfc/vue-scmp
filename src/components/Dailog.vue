@@ -4,8 +4,8 @@
         <el-dialog :title="title" :visible.sync="shows" :size="size" :custom-class="classx"  :close-on-click-modal="close" :close-on-press-escape="close"  :before-close="cancel">
             <slot name='content'></slot>
             <span slot="footer" class="dialog-footer" >
-                <el-button type="primary" @click="ok" v-if="!hide" >确 定</el-button>
-                <el-button @click.sync="cancel" >关闭</el-button>
+                <el-button type="primary" @click="ok" v-if="!hide" size="small">确 定</el-button>
+                <el-button @click.sync="cancel" size="small">关闭</el-button>
             </span>
         </el-dialog>
     </section>

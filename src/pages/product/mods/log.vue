@@ -33,7 +33,7 @@
                             </el-table>
                         </el-tab-pane>
                     </el-tabs>
-                    <el-col :span="24" class="toolbar">
+                    <el-col :span="24" class="toolbar" v-show="page.total>0">
                         <pagination :total="page.total" :pageIndex.sync="page.pageIndex" :pageSize.sync="page.pageSize" @change="getData"></pagination>
                     </el-col>
                 </el-col>
@@ -77,13 +77,16 @@ export default {
         }
     },
     beforeMount () {
-        this.getData();
-        this.myshow = this.showx;
+        this.getData().then(() => {
+            this.myshow = this.showx; 
+        }).catch(() => {
+            this.$emit('update:showx', false);
+        });    
     },
     methods: {
         // 获取列表
-        getData (pageIndex = this.page.pageIndex, pageSize = this.page.pageSize) {
-            this.Http.post(URL.LOG,
+        async getData (pageIndex = this.page.pageIndex, pageSize = this.page.pageSize) {
+            await this.Http.post(URL.LOG,
                 {
                     params: {
                         productNo: this.logmsg.no,

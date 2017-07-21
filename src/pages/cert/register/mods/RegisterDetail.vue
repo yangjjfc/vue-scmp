@@ -1,6 +1,6 @@
 <template >
 <section class="container_setion">
-    <dailog size="small" :show.sync="myshow" classx="staff-add-user" :title="title" @ok="quire">
+    <dailog size="small" :show.sync="myshow" classx="staff-add-user" :title="title" @ok="quire" :hide="type == 'detail'">
         <div slot="content">
             <el-col :span="24" class="ui-table">
                 <el-form :model="checkForm" :rules="rules" ref="checkForm"  class="demo-ruleForm">

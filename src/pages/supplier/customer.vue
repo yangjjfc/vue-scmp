@@ -28,9 +28,9 @@
                     </el-table-column>
                      <el-table-column prop="customerLinkman" label="联系人" width="100" align="center" >
                     </el-table-column>
-                     <el-table-column prop="customerPhone" label="联系电话" width="120" align="center" >
+                     <el-table-column prop="customerPhone" label="联系电话" width="140" align="center" >
                     </el-table-column>
-                     <el-table-column  prop="applyTime" label="申请时间" width="150" align="center" >
+                     <el-table-column  prop="applyTime" label="申请时间" width="170" align="center" >
                     </el-table-column>
                     <el-table-column label="客户状态"  width="100" align="center">
                         <template scope="scope">
@@ -39,7 +39,7 @@
                     </el-table-column>
                 </el-table>
             </el-col>
-            <el-col :span="24" class="toolbar">
+            <el-col :span="24" class="toolbar" v-show="total>0">
                 <pagination :total="total" :pageSize.sync="pageSize" :pageIndex.sync="pageIndex" @change="getList"></pagination>
             </el-col>
         </el-row>

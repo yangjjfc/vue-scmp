@@ -64,16 +64,16 @@
                     </el-table-column>
                     <el-table-column label="操作"  width="300" >
                         <template scope="scope">
-                            <el-button size="mini" type="primary"  @click="detailSuppiler(scope.row.supplierNo,'detail')">详情</el-button>
-                            <el-button size="mini" type="warning"  @click="detailSuppiler(scope.row.supplierNo,'audit')" v-if="scope.row.status =='2'">审核</el-button>
-                            <el-button size="mini" type="primary"  @click="detailLog(scope.row.supplierNo)" >日志</el-button>
-                            <el-button size="mini" type="info"  @click="setTime(scope.row.supplierNo)" >时间设置</el-button>
-                            <el-button size="mini" type="warning"  @click="enabled(scope.row)" v-if="scope.row.erp =='0' && scope.row.status ==3">开通erp</el-button>
+                            <el-button size="mini" type="link"  @click="detailSuppiler(scope.row.supplierNo,'detail')">详情</el-button>
+                            <el-button size="mini" type="link"  @click="detailSuppiler(scope.row.supplierNo,'audit')" v-if="scope.row.status =='2'">审核</el-button>
+                            <el-button size="mini" type="link"  @click="detailLog(scope.row.supplierNo)" >日志</el-button>
+                            <el-button size="mini" type="link"  @click="setTime(scope.row.supplierNo)" >时间设置</el-button>
+                            <el-button size="mini" type="link"  @click="enabled(scope.row)" v-if="scope.row.erp =='0' && scope.row.status ==3">开通erp</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
             </el-col>
-            <el-col :span="24" class="toolbar">
+            <el-col :span="24" class="toolbar" v-show="total>0">
                 <pagination :total="total" :pageSize.sync="pageSize" :pageIndex.sync="pageIndex" @change="getList"></pagination>
             </el-col>
             <el-col :span="24" v-if="showDetail">

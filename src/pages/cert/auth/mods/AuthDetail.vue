@@ -1,6 +1,6 @@
 <template >
-<section class="container_setion">
-    <dailog size="tiny" :show.sync="myshow" classx="staff-add-user" title="证件详情【销售承诺书】" @ok="quire">
+<section >
+    <dailog size="tiny" :show.sync="myshow" classx="staff-add-user" title="证件详情【销售承诺书】"  :hide="true">
         <div slot="content">
             <el-col :span="24" class="ui-table">
                 <table>
@@ -28,7 +28,7 @@
                             <div class="clear">
                             <fileList :files="result.url"></fileList>
                             </div>
-                            <p ><el-button size="mini" type="link"  @click="print(result.url)">打印</el-button></p>
+                            <!--<p ><el-button size="mini" type="link"  @click="print(result.url)">打印</el-button></p>-->
                         </td>
                     </tr>
                     <tr>
@@ -37,7 +37,7 @@
                             <div class="clear">
                             <fileList :files="result.supplierAuthorizeDataListImg"></fileList>
                             </div>
-                            <p> <el-button size="mini" type="link" @click="print($event,result.supplierAuthorizeDataListImg)">打印</el-button></p>
+                            <!--<p> <el-button size="mini" type="link" @click="print($event,result.supplierAuthorizeDataListImg)">打印</el-button></p>-->
                         </td>
                     </tr>
                 </table>
@@ -61,7 +61,6 @@
         name: 'auth-detail',
         data () {
             return {
-                
                 result: {},
                 myshow: false // 是否显示弹框
             };
@@ -84,13 +83,16 @@
             }
         },
         beforeMount () {
-            this.getData();
-            this.myshow = this.showx;
+            this.getData().then(() => {
+                this.myshow = this.showx; 
+            }).catch(() => {
+                this.$emit('update:showx', false);
+            });
         },
         methods: {
-            // 获取列表
-            getData () {
-                this.Http.post(URL.DETAIL,
+            // 获取列表   
+            async getData () {
+                await this.Http.post(URL.DETAIL,
                     {
                         params: {
                             certNo: this.cert.certNo,
@@ -111,10 +113,6 @@
                         document.getElementById('FILEtoPrint').contentWindow.print();
                     }, 500);
                 }
-            },
-            // 确定
-            quire () {
-                this.myshow = false;
             }
         },
         mounted () {
@@ -127,8 +125,7 @@
 
 </script>
 
-<style lang="scss">
-   
+<style lang="scss" scoped>
     h3{
         line-height:30px;
     }

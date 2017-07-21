@@ -4,7 +4,6 @@
     <el-row>
         <!-- //搜索框 -->
         <RegisterSearch  @getList="getList" ></RegisterSearch>
-
         <RegisterTable v-if="search.certType == 1" :search="search" :index.sync="pageIndex"></RegisterTable>
         <productTable v-if="search.certType != 1" :search="search" :index.sync="pageIndex"></productTable>
     </el-row>

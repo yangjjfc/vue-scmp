@@ -1,6 +1,6 @@
 <template >
 <section class="container_setion">
-    <dailog size="mini" :show.sync="myshow" classx="staff-add-user" title="日志详情" @ok="quire">
+    <dailog size="mini" :show.sync="myshow" classx="staff-add-user" title="日志详情"  :hide="true">
         <div slot="content">
             <el-col :span="24" class="ui-table">
                  <el-tabs v-model="logType" @tab-click="changeType">
@@ -42,7 +42,7 @@
                         </el-table>
                     </el-tab-pane>
                 </el-tabs>
-                <el-col :span="24" class="toolbar">
+                <el-col :span="24" class="toolbar" v-show="page.total>0">
                     <pagination :total="page.total" :pageIndex.sync ="page.pageIndex" :pageSize.sync ="page.pageSize" @change="getData"></pagination>
                 </el-col>
             </el-col>
@@ -87,13 +87,14 @@
             }
         },
         beforeMount () {
-            this.getData();
-            this.myshow = this.showx;
+            this.getData().then(() => {
+                this.myshow = this.showx; 
+            });  
         },
         methods: {
             // 获取列表
-            getData (pageSize = this.page.pageSize, pageIndex = this.page.pageIndex) {
-                this.Http.post(URL.LOG,
+            async getData (pageSize = this.page.pageSize, pageIndex = this.page.pageIndex) {
+                await this.Http.post(URL.LOG,
                     {
                         params: {
                             supplierNo: this.cert.supplierNo,
@@ -114,10 +115,6 @@
             },
             changeType () {
                 this.getData();
-            },
-            // 确定
-            quire () {
-                this.myshow = false;
             }
         },
         mounted () {
