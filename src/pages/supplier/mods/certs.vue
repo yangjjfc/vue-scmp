@@ -83,14 +83,16 @@ export default {
         },
         // 长期
         checked () {
-            if (this.msg.lonrTime) {
-                this.$refs.forms.validateField('endTime');
-                this.msg.endTime = '2099-01-01';
-                this.offEndTime = true;
-            } else {
-                this.msg.endTime = '';
-                this.offEndTime = false;
-            }
+            setTimeout(() => {
+                if (this.msg.lonrTime) {
+                    this.$refs.forms.validateField('endTime');
+                    this.msg.endTime = '2099-01-01';
+                    this.offEndTime = true;
+                } else {
+                    this.msg.endTime = '';
+                    this.offEndTime = false;
+                }   
+            }, 200);
         }
     },
     watch: {
