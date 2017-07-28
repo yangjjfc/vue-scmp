@@ -91,12 +91,11 @@
                 height: 120px;
                 clear: both;
                 overflow: hidden;
-                margin: 0 auto;
+                margin: 10px auto;
                 min-width: 761px;
                 padding:10px 0;
                 display:flex;
                 li {
-                    
                     text-align: center;
                     height: 100%;
                     width:20%;

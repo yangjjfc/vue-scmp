@@ -2,17 +2,11 @@
     <section class="container_setion">
         <!--工具条-->
         <el-row>
-            <el-col :span="24" class="toolbar">
-                <el-form :inline="true">
-                    <el-form-item>
-                        <h4>配送单号：
-                            <span v-text="no"></span>
-                        </h4>
-                    </el-form-item>
-                    <el-form-item class="pull-right">
-                        <el-button @click="returns" size="small">返回</el-button>
-                    </el-form-item>
-                </el-form>
+            <el-col :span="24" class="header_top">
+                <el-button @click="returns" size="small" class="right">返回</el-button>
+                <h4>配送单号：
+                    <span v-text="no"></span>
+                </h4>
             </el-col>
             <el-col :span="24" class="ui-table">
                 <h3>配送单信息</h3>
@@ -98,7 +92,7 @@
                     <el-table-column prop="total" label="金额" min-width="140" align="right">
                     </el-table-column>
                 </el-table>
-                <p class="align-right">
+                <p class="align-right allTotal">
                     合计金额 ：
                     <b class="red" v-text="order.totalMoney"></b> 元
                 </p>
@@ -164,7 +158,7 @@ export default {
 h3 {
     line-height: 30px;
 }
- 
+
 .align-right {
     text-align: right;
     font-size: 16px;
@@ -174,6 +168,23 @@ h3 {
 .ui-table {
     td {
         width: 33.3%;
+    }  
+}
+
+.allTotal {
+    margin: 7px 0;
+    b {
+        font-size: 20px;
+        font-weight: bold;
+    }
+}
+
+.header_top {
+    height: 40px;
+    line-height: 40px;
+    border-bottom: 1px #e3eaee solid;
+    h4 {
+        font-size: 14px;
     }
 }
 </style>

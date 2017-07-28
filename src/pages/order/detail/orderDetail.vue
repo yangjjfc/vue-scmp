@@ -2,15 +2,9 @@
     <section class="container_setion">
         <!--工具条-->
         <el-row>
-            <el-col :span="24" class="toolbar">
-                <el-form :inline="true">
-                    <el-form-item>
-                    <h4>订单编号:<span v-text="no"></span></h4>
-                    </el-form-item>
-                    <el-form-item class="pull-right">
-                        <el-button @click="returns"  size="small">返回</el-button>
-                    </el-form-item>
-                </el-form>
+            <el-col :span="24" class="header_top">
+                <el-button @click="returns"  size="small" class="right">返回</el-button>
+                <h4 >订单编号:<span v-text="no"></span></h4>
             </el-col>
             <el-col :span="18" :offset="3" v-if="!~['trade_close','trade_cancel'].indexOf(order.status)">
                 <Step :flow="flow"></step>
@@ -80,8 +74,8 @@
                     <el-table-column  prop="total" label="金额" width="140"  align="right" >
                     </el-table-column>
                 </el-table>
-                <p class="align-right">
-                    合计金额 ：<b class="red" >￥ {{order.totalMoney }}</b> 元
+                <p class="align-right allTotal">
+                    合计金额 ：<span class="red" >￥ <b>{{order.totalMoney }}</b></span> 元
                 </p>
             </el-col>
 
@@ -218,7 +212,7 @@
 <style lang="scss" scoped>
    
     h3{
-        line-height:30px;
+        line-height:38px;
     }
     .align-right{
         text-align:right;
@@ -230,5 +224,20 @@
         }
     }
 
+    .allTotal{
+        margin:7px 0;
+        b{
+            font-size: 20px;
+            font-weight: bold;
+        }
+    }
+    .header_top{
+        height: 40px;
+        line-height: 40px;
+        border-bottom: 1px #e3eaee solid;
+        h4{
+            font-size:14px;
+        }
+    }
   
 </style>

@@ -11,25 +11,24 @@ class Interceptor {
                 return this.replace(/^\s+|\s+$/g, '');
             };
         }
-        let getClass = (object) => Object.prototype.toString.call(object).match(/^\[object\s(.*)\]$/)[1];
-    // 清空无值对象
-        let clearNoneValueObj = (obj) => {
-            for (let i in obj) {
-                if (getClass(obj[i]) === 'Object') {
-                    clearNoneValueObj(obj[i]);
-                } else {
-                    typeof obj[i] === String && (obj[i] = obj[i].trim());
-                    if (!obj.notClearValue && (obj[i] === undefined || obj[i] === null || obj[i] === '')) {
-                       // delete obj[i];
-                    }
-                }
-            }
-        };
+     //   let getClass = (object) => Object.prototype.toString.call(object).match(/^\[object\s(.*)\]$/)[1];
+    // // 清空无值对象
+    //     let clearNoneValueObj = (obj) => {
+    //         for (let i in obj) {
+    //             if (getClass(obj[i]) === 'Object') {
+    //                 clearNoneValueObj(obj[i]);
+    //             } else {
+    //                 typeof obj[i] === String && (obj[i] = obj[i].trim());
+    //                 if (!obj.notClearValue && (obj[i] === undefined || obj[i] === null || obj[i] === '')) {
+    //                    // delete obj[i];
+    //                 }
+    //             }
+    //         }
+    //     };
     // 把对象键值转换成数组形式
         let getParams = (obj) => {
             let result = [];
             let keys = Object.keys(obj);
-
             keys && keys.forEach(function (val) {
                 var str = val + '=' + (typeof obj[val] === 'string' ? obj[val].toString() : JSON.stringify(obj[val]));
                 result.push(str);
@@ -76,7 +75,6 @@ class Interceptor {
     }
 
     init () {
-      //  const postState = {};
         this.request();
         this.response();
     }

@@ -1,6 +1,6 @@
 <template>
 	<el-row class="container">
-		<el-col :span="24" class="header">
+		<el-col :span="24" class="header" v-waves>
 			<el-col :span="10" class="logo ">
 				{{sysName}}
 			</el-col>
