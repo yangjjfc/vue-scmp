@@ -27,7 +27,7 @@ For detailed explanation on how things work, checkout the [guide](http://vuejs-t
 ## 目录结构
 |   .babelrc
 |   .editorconfig
-|   .eslintignore
+|   .eslintignore 
 |   .eslintrc.js
 |   .gitignore
 |   .postcssrc.js
