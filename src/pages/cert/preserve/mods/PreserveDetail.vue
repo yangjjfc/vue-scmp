@@ -1,5 +1,5 @@
 <template>
-    <section class="container_setion">
+    <section >
        <dailog size="small" :show.sync="myshow" classx="staff-add-user"  title="证件维护" @ok="quire">
             <div slot="content">
                 <el-col :span="24" class="ui-table">

@@ -1,5 +1,5 @@
 <template >
-<section class="container_setion">
+<section >
     <dailog size="tiny" :show.sync="myshow" classx="staff-add-user" title="证件详情【销售承诺书】" @ok="quire">
         <div slot="content">
             <el-col :span="24" class="ui-table">

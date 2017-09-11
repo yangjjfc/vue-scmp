@@ -1,5 +1,5 @@
 <template >
-    <section class="container_setion">
+    <section >
         <!--工具条-->
         <el-row>
             <el-col :span="24" class="header_top">

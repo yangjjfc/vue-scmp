@@ -8,20 +8,20 @@ function resolve (dir) {
 }
 
 module.exports = {
-  entry: {
-    app: ["babel-polyfill", "./src/main.js"]
+  entry: { 
+    app: ["babel-polyfill", "./src/main.js"] //babel-polyfill是新属性兼容老浏览器
   },
   output: {
-    path: config.build.assetsRoot,
-    filename: '[name].js',
-    publicPath: process.env.NODE_ENV === 'production'
+    path: config.build.assetsRoot, //输出地址
+    filename: '[name].js', //文件名
+    publicPath: process.env.NODE_ENV === 'production'  //创建的每个 URL加前缀
       ? config.build.assetsPublicPath
       : config.dev.assetsPublicPath
   },
-  resolve: {
-    extensions: ['.js', '.vue', '.json'],
+  resolve: { //解析
+    extensions: ['.js', '.vue', '.json'], //自动解析确定的扩展,引用文件不需要加扩展名
     alias: {
-      'vue$': 'vue/dist/vue.esm.js',
+      'vue$': 'vue/dist/vue.esm.js', //别名
       '@': resolve('src')
     }
   },
@@ -29,25 +29,25 @@ module.exports = {
     rules: [
       {
         test: /\.(js|vue)$/,
-        loader: 'eslint-loader',
-        enforce: 'pre',
-        include: [resolve('src'), resolve('test')],
+        loader: 'eslint-loader', //应用模块
+        enforce: 'pre', //指定 loader 种类
+        include: [resolve('src'), resolve('test')], //检测的文件路径
         options: {
-          formatter: require('eslint-friendly-formatter')
+          formatter: require('eslint-friendly-formatter') //格式化
         }
       },
       {
-        test: /\.vue$/,
+        test: /\.vue$/, 
         loader: 'vue-loader',
         options: vueLoaderConfig
       },
       {
         test: /\.js$/,
-        loader: 'babel-loader',
+        loader: 'babel-loader', //es6
         include: [resolve('src'), resolve('test')]
       },
       {
-        test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+        test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,  //图片处理
         loader: 'url-loader',
         options: {
           limit: 10000,
@@ -55,7 +55,7 @@ module.exports = {
         }
       },
       {
-        test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+        test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/, //字体处理
         loader: 'url-loader',
         options: {
           limit: 10000,
