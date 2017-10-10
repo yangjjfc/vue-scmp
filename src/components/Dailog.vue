@@ -47,8 +47,13 @@ export default {
         hide: [String, Boolean] // 隐藏按钮
     },
     computed: {
-        shows () { 
-            return this.show;
+        shows: { 
+            get () {
+                return this.show; 
+            },
+            set (newValue) {
+                this.$emit('update:show', newValue); // 更新父组件shows
+            }
         }
     },
     methods: {
@@ -58,7 +63,8 @@ export default {
         },
         // 取消事件
         cancel () {
-            this.$emit('update:show', false); // 更新父组件shows
+            this.shows = false;
+            // this.$emit('update:show', false); // 更新父组件shows
             this.$emit('reset');
         }
     }

@@ -44,7 +44,9 @@ class Interceptor {
             } else if (CONFIG.DEV_MODE === 1 && request.method.toLowerCase() === 'post' && !this.req[this.urlGuid]) {
                 request.url = '/gateway/' + (request.url.split('.').length === 1 ? request.url : 'call');
                 this.req[this.urlGuid] = request;
-            }  
+            } else if (this.req[this.urlGuid]) {
+                return Promise.reject('重复请求');
+            }
             NProgress.start();
             return request;
         }, (error) => Promise.reject(error));

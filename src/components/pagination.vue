@@ -27,6 +27,16 @@ export default {
             required: true
         }
     },
+    // computed: {
+    //     index: {
+    //         get (ev) {
+    //             return this.pageIndex;
+    //         },
+    //         set (val) {
+    //             this.$emit('update:pageIndex', val); // .sync 
+    //         }
+    //     }
+    // },
     mounted () {
         this.index = this.pageIndex;
     },
@@ -37,11 +47,8 @@ export default {
                 this.flag = false;  
             }
         }
-        // pageSize (val, oldval) {
-        //     this.size = val;
-        // }
     },
-    methods: {
+    methods: {      
         // 改变页码
         changePage (page) {
             if (!this.flag) {
@@ -55,7 +62,7 @@ export default {
         },
         // 改变总条数
         changeSize (size) {
-            // this.flag = false;  
+            this.flag = this.index === 1;  
             this.size = size;
             this.$emit('update:pageSize', size);
             this.$emit('change', 1, size);
